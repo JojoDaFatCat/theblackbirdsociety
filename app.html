@@ -254,6 +254,7 @@ const store = {
 const SB_URL = "https://yrlwhjswrrgmqdhacnkj.supabase.co", SB_KEY = "sb_publishable_yr0YqHEeD-j38qKSPBLdJA_xYFhDG6C";
 let sb = null;
 const OTP_CODES = false; /* switch to true once the email template includes the 6-digit code (needs custom SMTP) */
+let fromLink = /access_token=|[?&]code=|type=magiclink|type=signup/.test(location.href);
 try{ if(window.supabase && location.protocol==="https:" && !/claude|claudeusercontent/.test(location.hostname)) sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ sb = null; }
 const cloud = {
   async load(){
@@ -261,7 +262,10 @@ const cloud = {
     try{
       const { data:{ session } } = await sb.auth.getSession(); if(!session) return;
       const { data:p } = await sb.from("profiles").select("*").eq("id", session.user.id).single();
-      if(p){ st.user = {name:p.name, email:session.user.email, since:Date.parse(p.created_at), no:p.member_no, username:p.username||"", cloud:true}; st.showRank = p.show_rank; st.total = Math.max(st.total, p.total_workouts); }
+      if(p){ st.user = {name:p.name, email:session.user.email, since:Date.parse(p.created_at), no:p.member_no, username:p.username||"", cloud:true}; st.showRank = p.show_rank; st.total = Math.max(st.total, p.total_workouts);
+        if(p.plan && !st.profile){ st.profile = p.plan; store.set("bbt_profile", p.plan); }
+        else if(!p.plan && st.profile){ cloud.save({plan:st.profile}); } }
+      if(fromLink){ fromLink = false; st.view = "me"; st.sheet = false; }
       const { data:prem } = await sb.rpc("is_premium"); st.premium = !!prem;
       const { data:lb } = await sb.rpc("weekly_leaderboard"); st.board = lb || null;
       store.set("bbt_user", st.user); render();
@@ -967,10 +971,10 @@ function me(){
         ${OTP_CODES?`<input class="field" id="otp-code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="${t("enterCode")}" style="font-size:24px;letter-spacing:.3em;text-align:center">
         <button class="btn btn-gold" type="submit">${t("verify")} ${I.arrow}</button>`:""}
         <button class="linkbtn" type="button" data-act="otpback">${t("resend")}</button>
-      </form>` : `<form id="signup" style="display:flex;flex-direction:column;gap:10px" novalidate>
-        <input class="field" id="su-name" autocomplete="given-name" placeholder="${t("name")}">
-        <input class="field" id="su-user" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" maxlength="20" placeholder="${t("usernamePh")}">
-        <input class="field" id="su-email" type="email" autocomplete="email" placeholder="${t("email")}">
+      </form>` : `<form id="signup" style="display:flex;flex-direction:column;gap:10px" novalidate autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other">
+        <input class="field" id="su-name" autocomplete="given-name" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other" placeholder="${t("name")}">
+        <input class="field" id="su-user" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other" maxlength="20" placeholder="${t("usernamePh")}">
+        <input class="field" id="su-email" type="email" autocomplete="email" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other" placeholder="${t("email")}">
         <button class="btn btn-gold" type="submit">${t("create")} ${I.arrow}</button>
       </form>`}
       ${sb?"":`<p class="small">${t("protoNote")}</p>`}
@@ -996,7 +1000,7 @@ function me(){
       <div class="row"><b class="grow">${t("language")}</b><button class="pill" data-act="lang">${LANGS.find(l=>l[0]===st.lang)[1]}</button></div>
       <div class="row"><div class="grow"><b>${t("calm")}</b></div><button class="switch" role="switch" aria-checked="${st.calm}" aria-label="${t("calm")}" data-act="calm"></button></div>
       <form id="rename" class="row" novalidate><input class="field grow" id="rn-name" autocomplete="given-name" maxlength="20" value="${u.name.replace(/"/g,"&quot;")}" aria-label="${t("name")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
-      <form id="userform" class="row" novalidate><input class="field grow" id="un-name" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" maxlength="20" value="${(u.username||"").replace(/"/g,"&quot;")}" placeholder="${t("usernamePh")}" aria-label="${t("username")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
+      <form id="userform" class="row" novalidate autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other"><input class="field grow" id="un-name" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-bwignore="true" data-form-type="other" maxlength="20" value="${(u.username||"").replace(/"/g,"&quot;")}" placeholder="${t("usernamePh")}" aria-label="${t("username")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
       <p class="muted" style="font-size:12px;margin-top:-10px">${t("usernameHint")}</p>
       <div class="row"><div class="grow"><b>${t("showRank")}</b><p class="muted" style="font-size:13px">${t("showRankHint")}</p></div><button class="switch" role="switch" aria-checked="${st.showRank}" aria-label="${t("showRank")}" data-act="showrank"></button></div>
       <div class="row"><b class="grow">${t("reminders")}</b><button class="pill" data-act="soon">${t("soon2")}</button></div>
@@ -1030,7 +1034,7 @@ function render(){
   document.body.classList.toggle("calm", !!st.calm);
   document.documentElement.lang = st.lang;
   let h = "";
-  if(!st.profile && st.view!=="quiz") st.view = "quiz";
+  if(!st.profile && st.view!=="quiz" && !(st.view==="me" && st.user)) st.view = "quiz";
   if(st.view==="quiz") h = quiz();
   else if(st.view==="home") h = home();
   else if(st.view==="work") h = workout() + (st.sheet ? sheet() : "");
@@ -1104,8 +1108,8 @@ app.addEventListener("click", e => {
     case "gymtoggle": { const k = el.dataset.eq; st.gym.has(k) ? st.gym.delete(k) : st.gym.add(k); store.set("bbt_gym",[...st.gym]); break; }
     case "qpick": { const k = el.dataset.k; st.q[k] = k==="days" ? +el.dataset.v : el.dataset.v; st.qi++; break; }
     case "qback": st.qi = Math.max(0, st.qi-1); break;
-    case "qskip": st.profile = {goal:"muscle",level:"mid",days:3,place:"gym",...st.q}; store.set("bbt_profile", st.profile); st.view = "home"; break;
-    case "qfinish": st.profile = {...st.q}; store.set("bbt_profile", st.profile); st.view = "home"; break;
+    case "qskip": st.profile = {goal:"muscle",level:"mid",days:3,place:"gym",...st.q}; store.set("bbt_profile", st.profile); cloud.save({plan:st.profile}); st.view = "home"; break;
+    case "qfinish": st.profile = {...st.q}; store.set("bbt_profile", st.profile); cloud.save({plan:st.profile}); st.view = "home"; break;
     case "requiz": st.q = {...(st.profile||{})}; st.qi = 0; st.profile = null; st.view = "quiz"; break;
     case "start": {
       const p = PROGRAMS.find(x => x.id===el.dataset.id);
