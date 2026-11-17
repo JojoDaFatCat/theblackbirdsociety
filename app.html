@@ -969,7 +969,7 @@ function me(){
         <button class="linkbtn" type="button" data-act="otpback">${t("resend")}</button>
       </form>` : `<form id="signup" style="display:flex;flex-direction:column;gap:10px" novalidate>
         <input class="field" id="su-name" autocomplete="given-name" placeholder="${t("name")}">
-        <input class="field" id="su-user" autocomplete="username" maxlength="20" placeholder="${t("usernamePh")}">
+        <input class="field" id="su-user" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" maxlength="20" placeholder="${t("usernamePh")}">
         <input class="field" id="su-email" type="email" autocomplete="email" placeholder="${t("email")}">
         <button class="btn btn-gold" type="submit">${t("create")} ${I.arrow}</button>
       </form>`}
@@ -996,7 +996,7 @@ function me(){
       <div class="row"><b class="grow">${t("language")}</b><button class="pill" data-act="lang">${LANGS.find(l=>l[0]===st.lang)[1]}</button></div>
       <div class="row"><div class="grow"><b>${t("calm")}</b></div><button class="switch" role="switch" aria-checked="${st.calm}" aria-label="${t("calm")}" data-act="calm"></button></div>
       <form id="rename" class="row" novalidate><input class="field grow" id="rn-name" autocomplete="given-name" maxlength="20" value="${u.name.replace(/"/g,"&quot;")}" aria-label="${t("name")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
-      <form id="userform" class="row" novalidate><input class="field grow" id="un-name" autocomplete="username" maxlength="20" value="${(u.username||"").replace(/"/g,"&quot;")}" placeholder="${t("usernamePh")}" aria-label="${t("username")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
+      <form id="userform" class="row" novalidate><input class="field grow" id="un-name" autocomplete="nickname" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" maxlength="20" value="${(u.username||"").replace(/"/g,"&quot;")}" placeholder="${t("usernamePh")}" aria-label="${t("username")}" style="min-height:44px"><button class="pill" type="submit">${t("saveName")}</button></form>
       <p class="muted" style="font-size:12px;margin-top:-10px">${t("usernameHint")}</p>
       <div class="row"><div class="grow"><b>${t("showRank")}</b><p class="muted" style="font-size:13px">${t("showRankHint")}</p></div><button class="switch" role="switch" aria-checked="${st.showRank}" aria-label="${t("showRank")}" data-act="showrank"></button></div>
       <div class="row"><b class="grow">${t("reminders")}</b><button class="pill" data-act="soon">${t("soon2")}</button></div>
