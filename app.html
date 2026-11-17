@@ -1153,7 +1153,7 @@ function me(){
       ${sb?"":`<p class="small">${t("protoNote")}</p>`}
     </main>${tabs()}`;
   }
-  const u = st.user, wd = weekDone().length, isPro = st.test;
+  const u = st.user, wd = weekDone().length, isPro = st.test || st.premium;
   return `${topBar()}<main>
     ${memberCard(u)}
     <input id="avfile" type="file" accept="image/*" hidden>
