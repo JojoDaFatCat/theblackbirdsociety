@@ -55,7 +55,7 @@
   <div class="sec-head"><p class="eyebrow">Reviews</p><h2>What members say.</h2><p class="muted" id="rvavg"></p></div>
   <div class="grid" id="rvlist"></div>
 </div></section>
-<style>.rvst{color:var(--green);letter-spacing:2px;font-size:16px}.rvst i{font-style:normal;color:var(--line2)}#rvlist p{overflow-wrap:anywhere;line-height:1.5}#rvlist small{color:var(--muted);margin-top:auto}</style>
+<style>.rvst{color:var(--green);letter-spacing:2px;font-size:16px}.rvst i{font-style:normal;color:var(--line2)}#rvlist p{overflow-wrap:anywhere;line-height:1.5}#rvlist small{color:var(--muted)}#rvlist .card>p{flex:1}.rvrep{margin-top:6px;padding:10px 12px;border-left:2px solid var(--green);background:rgba(124,255,79,.05)}.rvrep b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:4px}.rvrep p{margin:0;font-size:14px;color:var(--fg)}</style>
 <script>
 (function(){
   var U="https://yrlwhjswrrgmqdhacnkj.supabase.co/rest/v1/rpc/public_reviews", K="sb_publishable_yr0YqHEeD-j38qKSPBLdJA_xYFhDG6C";
@@ -65,7 +65,7 @@
     if(!d||!d.length) return;
     var avg=d.reduce(function(a,x){return a+x.rating;},0)/d.length;
     document.getElementById("rvavg").innerHTML=st(Math.round(avg))+" <b style=\"color:var(--fg)\">"+avg.toFixed(1)+"</b> from "+d.length+" member review"+(d.length>1?"s":"")+".";
-    document.getElementById("rvlist").innerHTML=d.slice(0,9).map(function(x){return '<div class="card">'+st(x.rating)+'<p>“'+e(x.body)+'”</p><small>'+e(x.name)+' · Member #'+String(x.member_no).padStart(4,"0")+'</small></div>';}).join("");
+    document.getElementById("rvlist").innerHTML=d.slice(0,9).map(function(x){return '<div class="card">'+st(x.rating)+'<p>“'+e(x.body)+'”</p><small>'+e(x.name)+' · Member #'+String(x.member_no).padStart(4,"0")+'</small>'+(x.reply?'<div class="rvrep"><b>The Black Bird Society</b><p>'+e(x.reply)+'</p></div>':'')+'</div>';}).join("");
     document.getElementById("reviews").hidden=false;
   }).catch(function(){});
 })();
