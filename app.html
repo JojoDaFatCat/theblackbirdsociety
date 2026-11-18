@@ -2023,10 +2023,10 @@ function me(){
     ${partnersBlock()}
     ${st.meBoard ? rankBlock() : ""}
     ${tribe(dayIdx()+5)}
-    <form id="inviteform" class="card" novalidate autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other" style="display:flex;flex-direction:column;gap:10px">
+    ${isPro ? "" : `    <form id="inviteform" class="card" novalidate autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other" style="display:flex;flex-direction:column;gap:10px">
       <p class="eyebrow gold">${t("inviteTitle")}</p>
       <div class="row" style="gap:10px"><input class="field grow" id="inv-code" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other" maxlength="24" autocapitalize="characters" spellcheck="false" placeholder="${t("invitePh")}" aria-label="${t("invitePh")}" style="min-height:48px;text-transform:uppercase;letter-spacing:.08em"><button class="pill" type="submit">${t("redeem")}</button></div>
-    </form>
+    </form>`}
     <div class="card row"><div class="grow"><p class="eyebrow">${isPro?t("premium"):t("free")}</p><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${u.email}</b></div>
       ${isPro?`<span class="badge">PRO</span>`:`<button class="pill" data-act="tab" data-v="pro" style="color:var(--gold);border-color:var(--gold-dim)">${t("upgrade")}</button>`}</div>
     ${st.meBoard ? challengeBlock() : ""}
