@@ -393,8 +393,14 @@ const store = {
 const SB_URL = "https://yrlwhjswrrgmqdhacnkj.supabase.co", SB_KEY = "sb_publishable_yr0YqHEeD-j38qKSPBLdJA_xYFhDG6C";
 /* Paddle (sandbox = test mode). Switch PADDLE_ENV to "production" + live token/prices at launch. */
 if(location.protocol==="https:") { try{ localStorage.removeItem("bbt_test"); }catch(e){} }
-const PADDLE_ENV = "sandbox", PADDLE_TOKEN = "test_c923421fdb8020de3b621b73454",
-      PADDLE_PRICES = { month: "pri_01m7nrbt23fb11z8f1pcgbmf30", year: "pri_01m7nrcyps5p3w745zpeseq21f" };
+/* GO LIVE: set PADDLE_LIVE = true once Paddle has approved the account and the domain. */
+const PADDLE_LIVE = false;
+const PADDLE_CFG = {
+  sandbox: { token: "test_c923421fdb8020de3b621b73454", prices: { month: "pri_01m7nrbt23fb11z8f1pcgbmf30", year: "pri_01m7nrcyps5p3w745zpeseq21f" } },
+  live:    { token: "live_c676e039d9108b0bb9da312b2af", prices: { month: "pri_01m7ke02smtdnse68m5aazgfsr", year: "pri_01m7ke1r4a4vdhbtcqb3npak5x" } }
+};
+const PADDLE_ENV = PADDLE_LIVE ? "production" : "sandbox", PADDLE_TOKEN = PADDLE_CFG[PADDLE_LIVE ? "live" : "sandbox"].token,
+      PADDLE_PRICES = PADDLE_CFG[PADDLE_LIVE ? "live" : "sandbox"].prices;
 let paddleReady = null;
 function loadPaddle(){
   if(paddleReady) return paddleReady;
