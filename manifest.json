@@ -1,20 +1,17 @@
 {
+ "id": "/app",
  "name": "Black Bird Training",
  "short_name": "Black Bird",
+ "description": "Smart gym, home and adaptive workouts, meals and a tribe. By The Black Bird Society.",
  "start_url": "/app",
+ "scope": "/",
  "display": "standalone",
- "background_color": "#050605",
+ "orientation": "portrait",
+ "background_color": "#030403",
  "theme_color": "#050605",
  "icons": [
-  {
-   "src": "/icon.png",
-   "sizes": "512x512",
-   "type": "image/png"
-  },
-  {
-   "src": "/apple-touch-icon.png",
-   "sizes": "180x180",
-   "type": "image/png"
-  }
+  {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+  {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+  {"src": "/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
  ]
 }
