@@ -1571,10 +1571,20 @@ function breathStart(){
     brT = setTimeout(() => { if(left <= 0 && ph % 3 === 0){ breathStop(); toast(t("mdDone")); render(); } else step(); }, P[1]*1000); };
   setTimeout(step, 60);
 }
-function speakStop(){ try{ if("speechSynthesis" in window) speechSynthesis.cancel(); }catch(e){} st.speaking = null; }
+const MD_AUDIO = {en:[1,2,4,6]}; let mdAudio = null;
+function speakStop(){ try{ if(mdAudio){ mdAudio.pause(); mdAudio = null; } }catch(e){} try{ if("speechSynthesis" in window) speechSynthesis.cancel(); }catch(e){} st.speaking = null; }
 function speak(i){
   const L = mindL(), txt = L.talks[i][2];
   st.mdOpen = i;
+  const lgA = mindLang();
+  if((MD_AUDIO[lgA]||[]).includes(i+1) && !speak.noFile){
+    speakStop(); const a = new Audio("audio/" + lgA + "-" + (i+1) + ".mp3"); mdAudio = a; st.speaking = i;
+    const done = () => { if(mdAudio === a){ mdAudio = null; if(st.speaking === i){ st.speaking = null; if(st.view === "mind") render(); } } };
+    a.onended = done;
+    a.onerror = () => { if(mdAudio !== a) return; mdAudio = null; speak.noFile = true; speak(i); speak.noFile = false; render(); };
+    a.play().catch(() => { if(mdAudio !== a) return; mdAudio = null; speak.noFile = true; speak(i); speak.noFile = false; render(); });
+    return;
+  }
   if(!("speechSynthesis" in window)){ toast(t("mdNoVoice")); return; }
   speechSynthesis.cancel();
   const lg = mindLang(), u = new SpeechSynthesisUtterance(txt);
