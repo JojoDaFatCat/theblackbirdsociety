@@ -440,6 +440,7 @@ const cloud = {
     if(!sb) return;
     try{
       const { data:{ session } } = await sb.auth.getSession(); if(!session) return;
+      cloud.flushPending();
       const { data:p } = await sb.from("profiles").select("*").eq("id", session.user.id).single();
       if(p){ st.user = {name:p.name, email:session.user.email, since:Date.parse(p.created_at), no:p.member_no, username:p.username||"", last:p.last_name||"", bday:p.birthday||"", avatar:p.avatar_url||store.get(AV_KEY,null), cloud:true}; st.showRank = p.show_rank; st.findable = p.findable !== false; st.total = Math.max(st.total, p.total_workouts);
         if(p.plan && !st.profile){ st.profile = p.plan; store.set("bbt_profile", p.plan); }
@@ -452,7 +453,14 @@ const cloud = {
     }catch(e){}
   },
   async save(fields){ if(!sb || !st.user || !st.user.cloud) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(session) await sb.from("profiles").update(fields).eq("id", session.user.id); }catch(e){} },
-  async workout(row){ if(!sb || !st.user || !st.user.cloud) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(session){ await sb.from("workouts").insert({...row, user_id:session.user.id}); const { data:lb } = await sb.rpc("weekly_leaderboard"); st.board = lb || st.board; } }catch(e){} }
+  async workout(row){ if(!st.user || !st.user.cloud) return;
+    const queue = () => { const q = store.get("bbt_pendw", []); q.push(row); store.set("bbt_pendw", q.slice(-50)); };
+    if(!sb || !navigator.onLine){ queue(); return; }
+    try{ const { data:{ session } } = await sb.auth.getSession(); if(session){ const { error } = await sb.from("workouts").insert({...row, user_id:session.user.id}); if(error) throw error; const { data:lb } = await sb.rpc("weekly_leaderboard"); st.board = lb || st.board; } }catch(e){ queue(); } },
+  async flushPending(){ const q = store.get("bbt_pendw", []); if(!q.length || !sb || !navigator.onLine) return;
+    try{ const { data:{ session } } = await sb.auth.getSession(); if(!session) return; const left = [];
+      for(const row of q){ const { error } = await sb.from("workouts").insert({...row, user_id:session.user.id}); if(error) left.push(row); }
+      store.set("bbt_pendw", left); }catch(e){} }
 };
 
 /* ================= words ================= */
@@ -2295,6 +2303,8 @@ document.addEventListener("keydown", e => { if(e.key==="Escape" && st.sheet){ st
 render();
 cloud.load();
 if(sb) sb.auth.onAuthStateChange((ev) => { if(ev==="SIGNED_IN"){ st.otp = null; cloud.load(); } });
+window.addEventListener("online", () => cloud.flushPending());
+if("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("/sw.js").catch(() => {});
 })();
 </script>
 
