@@ -394,7 +394,7 @@ const SB_URL = "https://yrlwhjswrrgmqdhacnkj.supabase.co", SB_KEY = "sb_publisha
 /* Paddle (sandbox = test mode). Switch PADDLE_ENV to "production" + live token/prices at launch. */
 if(location.protocol==="https:") { try{ localStorage.removeItem("bbt_test"); }catch(e){} }
 /* GO LIVE: set PADDLE_LIVE = true once Paddle has approved the account and the domain. */
-const PADDLE_LIVE = false;
+const PADDLE_LIVE = true;
 const PADDLE_CFG = {
   sandbox: { token: "test_c923421fdb8020de3b621b73454", prices: { month: "pri_01m7nrbt23fb11z8f1pcgbmf30", year: "pri_01m7nrcyps5p3w745zpeseq21f" } },
   live:    { token: "live_c676e039d9108b0bb9da312b2af", prices: { month: "pri_01m7ke02smtdnse68m5aazgfsr", year: "pri_01m7ke1r4a4vdhbtcqb3npak5x" } }
