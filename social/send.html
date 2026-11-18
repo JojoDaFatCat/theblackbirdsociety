@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>send</title>
+<body style="background:#111;color:#eee;font:20px sans-serif"><div id="s">sending</div>
+<script>
+(async()=>{const id=new URLSearchParams(location.search).get('id');const s=document.getElementById('s');
+try{const r=await fetch('posts/'+id+'.png?'+Date.now());const bl=await r.blob();
+if(!window.opener)throw new Error('no opener');
+window.opener.postMessage({bbsImg:true,id,blob:bl},'*');s.textContent='sent '+id+' '+bl.size;setTimeout(()=>window.close(),800);}catch(e){s.textContent='ERR '+e.message}})();
+</script>
