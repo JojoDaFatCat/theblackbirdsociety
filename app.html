@@ -209,6 +209,25 @@ textarea.field{min-height:96px;padding:12px 16px;line-height:1.45;resize:vertica
 .hcdot{display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);font-size:12px;font-weight:800}.hcrow small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ingbtn{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer}.ingbtn span:first-child{flex:1;min-width:0}.ingic{flex:none;display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--gold-dim);border-radius:50%;color:var(--gold);font-size:15px}.ingalt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 2px}.ingalt small{color:var(--muted);font-size:12px;margin-right:2px}
 .hknote{display:flex;flex-direction:column;gap:6px;align-items:flex-start}.hknote b{color:var(--gold);font-size:13px}.hknote span{font-size:13px;line-height:1.45}.hkkit{display:flex;flex-direction:column;gap:10px}
+.flamechip{display:inline-flex;align-items:center;gap:4px;padding:0 10px}.flamechip svg{width:16px;height:16px;fill:var(--muted)}.flamechip.on svg{fill:#ff9a3c;filter:drop-shadow(0 0 4px #ff9a3c88)}.flamechip b{font-size:14px}
+.bigflame{display:grid;place-items:center;width:64px;height:64px;flex:none;border-radius:50%;border:1px solid var(--line2)}.bigflame svg{width:38px;height:38px;fill:var(--muted)}.bigflame.on{border-color:#ff9a3c66;box-shadow:0 0 18px #ff9a3c33}.bigflame.on svg{fill:#ff9a3c;filter:drop-shadow(0 0 6px #ff9a3caa)}.bigflame.sm{width:46px;height:46px}.bigflame.sm svg{width:26px;height:26px}
+.flcard{display:flex;flex-direction:column;gap:12px}.frz{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}.frz b{font-size:18px;color:#8fd8ff}.frz small{font-size:11px;color:var(--muted)}
+.fdots{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.fdot{display:flex;flex-direction:column;align-items:center;gap:4px}.fdot i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);font-style:normal;font-size:15px;color:#8fd8ff}.fdot i svg{width:18px;height:18px;fill:#ff9a3c}.fdot.on i{border-color:#ff9a3c88;background:#ff9a3c14}.fdot.fz i{border-color:#8fd8ff66}.fdot.today i{outline:2px solid var(--gold-dim);outline-offset:2px}.fdot small{font-size:11px;color:var(--muted);text-transform:uppercase}
+.lvbar{display:flex;flex-direction:column;gap:8px;width:100%}.lvn{font-family:var(--font-d);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}.bar{height:10px;border-radius:6px;background:var(--surface2);overflow:hidden;border:1px solid var(--line2)}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));box-shadow:0 0 10px var(--gold-dim);transition:width .6s}
+.progcard{display:flex;align-items:center;gap:14px;width:100%;cursor:pointer;color:inherit;font:inherit}.progcard b{display:block;font-size:15px;margin-bottom:6px}
+.pgform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:end}.pgform label{display:flex;flex-direction:column;gap:4px;min-width:0}.pgform small{font-size:11px;color:var(--muted)}.pgform .field{width:100%;min-height:48px}.pgform .btn{grid-column:1/-1}
+.wchart{width:100%;height:auto;display:block}.wline{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}.wdot{fill:var(--bg);stroke:var(--gold);stroke-width:2}.wgoal{stroke:var(--muted);stroke-dasharray:4 4;stroke-width:1}.wlbl{fill:var(--muted);font-size:10px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}.bdg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:4px;border:1px solid var(--line2);background:none;color:var(--muted);font:inherit;cursor:pointer;opacity:.45}.bdg .rune{font-size:24px;line-height:1}.bdg small{font-size:10.5px;line-height:1.2;text-align:center}.bdg.on{opacity:1;color:var(--fg);border-color:var(--gold-dim);box-shadow:inset 0 0 14px #7cff4f14}.bdg.on .rune{color:var(--gold);text-shadow:0 0 10px var(--gold-dim)}.bdesc{margin:0;font-size:13px;color:var(--muted)}
+.throw{display:flex;flex-wrap:wrap;gap:8px}.thm{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line2);background:none;color:var(--fg);font:inherit;font-size:13px;cursor:pointer}.thm i{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}.thm[disabled]{opacity:.4;cursor:default}.thm.on{border-color:var(--c)}
+.duel{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line2);padding-top:10px}.dbar{height:8px;border-radius:5px;background:var(--surface2);overflow:hidden}.dbar i{display:block;height:100%;background:var(--gold)}.dbar.them i{background:#8fd8ff}
+.cmp{position:relative;width:100%;aspect-ratio:3/4;max-width:100%;border-radius:4px;overflow:hidden;border:1px solid var(--line2)}.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.cmp .cmpa{clip-path:inset(0 calc(100% - var(--p)) 0 0)}.cmp input{position:absolute;left:0;right:0;bottom:10px;width:90%;margin:0 5%}.cmpl,.cmpr{position:absolute;top:8px;font-size:11px;padding:3px 6px;background:#000a;border-radius:3px}.cmpl{left:8px}.cmpr{right:8px}
+.phos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.pho{display:flex;flex-direction:column;gap:4px;min-width:0}.pho img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:3px}.pho small{font-size:11px;color:var(--muted)}
+.cele{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:#000d;padding:24px max(16px,env(safe-area-inset-left,0px))}.celebox{position:relative;width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:28px 22px;border:1px solid var(--gold);border-radius:6px;background:var(--bg);box-shadow:0 0 40px #7cff4f33;animation:celein .45s cubic-bezier(.2,1.4,.4,1)}.celerune{font-size:64px;line-height:1;color:var(--gold);text-shadow:0 0 24px var(--gold)}.conf{position:absolute;inset:0;overflow:hidden;pointer-events:none}.conf i{position:absolute;top:-10px;left:var(--x);width:8px;height:14px;background:var(--gold);opacity:.85;transform:rotate(var(--r));animation:fall 2.4s var(--d) ease-in forwards}.conf i:nth-child(3n){background:#ff9a3c}.conf i:nth-child(4n){background:#8fd8ff}
+@keyframes fall{to{transform:translateY(110vh) rotate(calc(var(--r) + 540deg))}}@keyframes celein{from{transform:scale(.7);opacity:0}}
+@media (prefers-reduced-motion:reduce){.conf{display:none}.celebox{animation:none}}
+.wkic{display:grid;place-items:center;width:38px;height:38px;flex:none;border:1px solid var(--line2);border-radius:50%;background:none;color:var(--fg);cursor:pointer}.wkic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.wkic.on{border-color:var(--gold);color:var(--gold)}
+.musrow{display:flex;flex-direction:column;gap:8px}.musrow .btn{text-decoration:none;min-height:50px}
+.akrowf{display:flex;gap:8px}.akrowf .field{flex:1;min-width:0}.akmic{display:grid;place-items:center;width:52px;flex:none;border:1px solid var(--gold-dim);border-radius:4px;background:none;color:var(--gold);cursor:pointer}.akmic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.akmic.on{background:var(--gold);color:var(--gold-ink);animation:pulse 1s infinite}@keyframes pulse{50%{box-shadow:0 0 0 6px #7cff4f33}}
 .mamacard{border-color:var(--line2)}.mmdoc{border-color:var(--gold-dim)}.mmchips{display:flex;flex-wrap:wrap;gap:8px}.mmchip[aria-pressed=true]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}.mmstop ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}
 .askbar{display:flex;align-items:center;gap:14px;width:100%;cursor:pointer;color:inherit;font:inherit;text-align:left}.askbar b{display:block;font-size:16px;font-family:var(--font-d);letter-spacing:.04em;text-transform:uppercase}.askbar small{display:block;font-size:13px;color:var(--muted);margin-top:2px}.askbar svg{flex:none;width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round}.akic{display:grid;place-items:center;width:40px;height:40px;flex:none;border:1px solid var(--gold-dim);border-radius:50%}.akic svg{width:20px;height:20px}
 .akres{display:flex;flex-direction:column;gap:10px}.akitem{display:flex;flex-direction:column;gap:8px;align-items:flex-start;text-align:left;color:inherit;font:inherit;width:100%}.akitem b{font-size:15px}.akitem p{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}.akitem .pill{display:inline-flex;align-items:center;gap:6px}.akitem .pill svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
@@ -1201,7 +1220,7 @@ const REDUCED = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: red
 const navLang = (()=>{ const n=(navigator.language||"en").slice(0,2).toLowerCase(); return ["en","fr","es","pt","de"].includes(n) ? n : "en"; })();
 const st = {
   view:(store.get("bbt_user",null) ? "main" : "me"), mplan:store.get("bbt_mplan",null), mpDay:0, mpd:null, meBoard:store.get("bbt_meboard",true), earlyHide:store.get("bbt_earlyhide",false), instHide:store.get("bbt_insthide",false), prog:null, progOpen:null, lang:store.get("bbt_lang",navLang), calm:store.get("bbt_calm",false), test:store.get("bbt_test",false),
-  gym:new Set(store.get("bbt_gym",Object.keys(EQ))), machines:store.get("bbt_machines",[]), mama:store.get("bbt_mama",""), hc:store.get("bbt_hc",[]), draft:null, profile:store.get("bbt_profile",null), user:store.get("bbt_user",null), showRank:store.get("bbt_showrank",true), total:store.get("bbt_total",0), q:{}, qi:0, doneWeek:store.get("bbt_week",{k:"",d:[]}), w:null, sheet:false, toast:"", restEnd:0, restLen:90, plan:"year"
+  gym:new Set(store.get("bbt_gym",Object.keys(EQ))), machines:store.get("bbt_machines",[]), mama:store.get("bbt_mama",""), coach:store.get("bbt_coach",false), hc:store.get("bbt_hc",[]), draft:null, profile:store.get("bbt_profile",null), user:store.get("bbt_user",null), showRank:store.get("bbt_showrank",true), total:store.get("bbt_total",0), q:{}, qi:0, doneWeek:store.get("bbt_week",{k:"",d:[]}), w:null, sheet:false, toast:"", restEnd:0, restLen:90, plan:"year"
 };
 const t = k => T[st.lang][k];
 const L2 = o => o[st.lang] || o.en;
@@ -1343,7 +1362,7 @@ function instSheet(){
 }
 function topBar(){
   return `<header class="top"><div class="brand">${BIRD}<div><b>BLACK BIRD</b><small>TRAINING</small></div></div>
-  <div class="topr">${STANDALONE ? "" : `<button class="pill instp" data-act="install" aria-label="${t("instT")}">${I.dl}<span>${t("instShort")}</span></button>`}<button class="pill" data-act="lang" aria-label="Language">${st.lang.toUpperCase()}</button></div></header>`;
+  <div class="topr">${st.profile ? flameChip() : ""}${STANDALONE ? "" : `<button class="pill instp" data-act="install" aria-label="${t("instT")}">${I.dl}<span>${t("instShort")}</span></button>`}<button class="pill" data-act="lang" aria-label="Language">${st.lang.toUpperCase()}</button></div></header>`;
 }
 function tabs(){
   const b = (v,ic,lab) => `<button data-act="tab" data-v="${v}" ${st.view===v?'aria-current="page"':""}>${I[ic]}${lab}</button>`;
@@ -1589,7 +1608,7 @@ function breathStart(){
   st.breath = true; render(); let ph = 0, left = 120;
   const step = () => { const el = document.getElementById("brc"), lb = document.getElementById("brl"); if(!el || !st.breath) return;
     const P = [["mdIn",4,"in"],["mdHold",4,"hold"],["mdOut",6,"out"]][ph % 3]; el.style.transitionDuration = P[1] + "s"; el.className = "brc " + P[2]; lb.textContent = t(P[0]); ph++; left -= P[1];
-    brT = setTimeout(() => { if(left <= 0 && ph % 3 === 0){ breathStop(); toast(t("mdDone")); render(); } else step(); }, P[1]*1000); };
+    brT = setTimeout(() => { if(left <= 0 && ph % 3 === 0){ breathStop(); pgEvent("breath"); toast(t("mdDone")); render(); } else step(); }, P[1]*1000); };
   setTimeout(step, 60);
 }
 const MD_AUDIO = {en:[1,2,3,4,5,6], fr:[1,2,3,4,5,6]}; let mdAudio = null;
@@ -1660,7 +1679,7 @@ function askBar(){ return `<button class="card askbar" data-act="ask"><span clas
 function askSheet(){
   return `<div class="backdrop" data-act="akx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${t("akT")}"><div class="grab"></div>
     <p class="eyebrow gold"><span class="rune" aria-hidden="true">ᛗ</span> Muninn</p><h2 style="margin:0">${t("akT")}</h2>
-    <form id="akform" autocomplete="off"><input class="field" id="akq" type="search" enterkeyhint="search" maxlength="140" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" placeholder="${t("akPh")}" aria-label="${t("akPh")}" value="${esc(st.akQ||"")}" style="width:100%"></form>
+    <form id="akform" autocomplete="off" class="akrowf"><button type="button" class="akmic" data-act="akmic" aria-label="${tx("mic")}"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button><input class="field" id="akq" type="search" enterkeyhint="search" maxlength="140" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other" placeholder="${t("akPh")}" aria-label="${t("akPh")}" value="${esc(st.akQ||"")}" style="width:100%"></form>
     <div id="akres" class="akres" aria-live="polite">${akResults(st.akQ||"")}</div>
     <button class="btn btn-line" data-act="akx">${t("amClose")}</button></div>`;
 }
@@ -1766,6 +1785,164 @@ function hcSheet(){
     <div class="btnrow"><button class="btn btn-gold" data-act="start" data-id="${p.id}" style="min-height:46px;font-size:14px">${t("start")}: ${esc(L2(p))}</button></div>
     <button class="btn btn-line" data-act="hcx">${t("amClose")}</button></div>`;
 }
+/* ================= Progress, streaks, XP, badges ================= */
+const TX = {"en":{"prT":"Your progress","prSub":"Show up, earn XP, keep the flame alive.","fl":"Day streak","flSub":"Train, breathe or walk to keep it lit.","frz":"Streak freezes","frzSub":"Earned every 7 days. Saves your streak on a missed day.","lvl":"Level","xpTo":"{n} XP to level {l}","walk":"I walked 20 min","walkOk":"Walk logged","weighT":"Body stats","weighSub":"Saved on this phone only. Weigh in once a week, same time of day.","kg":"Weight (kg)","cm":"Height (cm)","goal":"Goal (kg)","save":"Save","since":"since start","toGoal":"to goal","noW":"Add your first weight to see your chart.","bdg":"Badges","bdgSub":"{n} of {m} earned","thm":"Card colours","thmSub":"Unlock new colours as you level up.","thmLock":"Level {l}","pho":"Progress photos","phoSub":"Private: saved on this phone only, never uploaded.","phoAdd":"Add photo","phoCmp":"Before / after","phoDel":"Delete","phoNone":"One photo a month, same light, same pose.","duel":"Weekly duels","duelSub":"Most sessions this week wins. New duel every Monday.","duelNone":"Add a gym partner to start dueling.","you":"You","won":"Duel won!","cele":"Nice work","celeLvl":"Level up!","celeBdg":"New badge","celeCont":"Continue","celeShare":"Share","xpGot":"+{n} XP","coach":"Voice coach","coachOn":"Voice coach on","coachOff":"Voice coach off","music":"Your music","musicSub":"Opens your app. Your music keeps playing while you train here.","startT":"Set your starting point","startS":"Add your weight and goal to track your progress.","startB":"Add my stats","mic":"Speak","micNo":"Voice isn't supported on this browser.","cGo":"Go","cRest":"Rest {n} seconds","c10":"10 seconds","cNext":"Next","cSet":"Set {n} of {m}","cDone":"Great work. Workout complete.","cHold":"Hold"},"fr":{"prT":"Ta progression","prSub":"Sois là, gagne de l'XP, garde la flamme allumée.","fl":"Jours de suite","flSub":"Entraîne-toi, respire ou marche pour la garder allumée.","frz":"Gels de série","frzSub":"Gagnés tous les 7 jours. Sauvent ta série un jour manqué.","lvl":"Niveau","xpTo":"{n} XP avant le niveau {l}","walk":"J'ai marché 20 min","walkOk":"Marche enregistrée","weighT":"Mesures","weighSub":"Enregistré sur ce téléphone uniquement. Pèse-toi une fois par semaine, à la même heure.","kg":"Poids (kg)","cm":"Taille (cm)","goal":"Objectif (kg)","save":"Enregistrer","since":"depuis le début","toGoal":"avant l'objectif","noW":"Ajoute ton premier poids pour voir ta courbe.","bdg":"Badges","bdgSub":"{n} sur {m} gagnés","thm":"Couleurs de carte","thmSub":"Débloque de nouvelles couleurs en montant de niveau.","thmLock":"Niveau {l}","pho":"Photos de progression","phoSub":"Privé : enregistrées sur ce téléphone uniquement, jamais envoyées.","phoAdd":"Ajouter une photo","phoCmp":"Avant / après","phoDel":"Supprimer","phoNone":"Une photo par mois, même lumière, même pose.","duel":"Duels de la semaine","duelSub":"Le plus de séances cette semaine gagne. Nouveau duel chaque lundi.","duelNone":"Ajoute un partenaire pour lancer des duels.","you":"Toi","won":"Duel gagné !","cele":"Bien joué","celeLvl":"Niveau supérieur !","celeBdg":"Nouveau badge","celeCont":"Continuer","celeShare":"Partager","xpGot":"+{n} XP","coach":"Coach vocal","coachOn":"Coach vocal activé","coachOff":"Coach vocal désactivé","music":"Ta musique","musicSub":"Ouvre ton appli. Ta musique continue pendant que tu t'entraînes ici.","startT":"Ton point de départ","startS":"Ajoute ton poids et ton objectif pour suivre ta progression.","startB":"Ajouter mes mesures","mic":"Parler","micNo":"La voix n'est pas disponible sur ce navigateur.","cGo":"C'est parti","cRest":"Repos {n} secondes","c10":"10 secondes","cNext":"Suivant","cSet":"Série {n} sur {m}","cDone":"Bravo. Séance terminée.","cHold":"Tiens"},"es":{"prT":"Tu progreso","fl":"Días seguidos","lvl":"Nivel","bdg":"Insignias","duel":"Duelos semanales","pho":"Fotos de progreso","weighT":"Medidas","thm":"Colores de tarjeta","save":"Guardar","celeCont":"Continuar","celeShare":"Compartir","coach":"Coach de voz","music":"Tu música","walk":"Caminé 20 min","you":"Tú","cele":"¡Bien hecho!","celeLvl":"¡Subes de nivel!","celeBdg":"Nueva insignia"},"pt":{"prT":"Seu progresso","fl":"Dias seguidos","lvl":"Nível","bdg":"Medalhas","duel":"Duelos da semana","pho":"Fotos de progresso","weighT":"Medidas","thm":"Cores do cartão","save":"Salvar","celeCont":"Continuar","celeShare":"Compartilhar","coach":"Coach de voz","music":"Sua música","walk":"Caminhei 20 min","you":"Você","cele":"Mandou bem!","celeLvl":"Subiu de nível!","celeBdg":"Nova medalha"},"de":{"prT":"Dein Fortschritt","fl":"Tage in Folge","lvl":"Level","bdg":"Abzeichen","duel":"Wochen-Duelle","pho":"Fortschrittsfotos","weighT":"Körperwerte","thm":"Kartenfarben","save":"Speichern","celeCont":"Weiter","celeShare":"Teilen","coach":"Sprachcoach","music":"Deine Musik","walk":"20 Min gegangen","you":"Du","cele":"Stark!","celeLvl":"Level up!","celeBdg":"Neues Abzeichen"}};
+const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
+const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
+const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
+const XPV = {workout:50, breath:15, walk:15, weigh:10, photo:10, duel:100};
+const dkey = d => { const x = d || new Date(); return x.getFullYear() + "-" + String(x.getMonth()+1).padStart(2,"0") + "-" + String(x.getDate()).padStart(2,"0"); };
+const addDays = (k, n) => { const [y,m,d] = k.split("-").map(Number); return dkey(new Date(y, m-1, d+n)); };
+function pg(){ if(!st.pg){ st.pg = Object.assign({xp:0, days:[], frozen:[], freezes:0, badges:{}, theme:"", weigh:[], h:"", goal:"", walks:0, breaths:0, duels:{}, lastW:"", frzAt:0}, store.get("bbt_prog", {})); } return st.pg; }
+function pgSave(){ store.set("bbt_prog", st.pg); }
+const lvlOf = xp => Math.floor(Math.sqrt(xp/50)) + 1;
+const xpFor = l => 50*(l-1)*(l-1);
+function streak(){
+  const p = pg(), on = new Set([...p.days, ...p.frozen]); let k = dkey(), n = 0;
+  if(!on.has(k)) k = addDays(k, -1);
+  while(on.has(k)){ n++; k = addDays(k, -1); }
+  return n;
+}
+function pgDaily(){
+  const p = pg(), today = dkey(), y = addDays(today, -1), y2 = addDays(today, -2), on = new Set([...p.days, ...p.frozen]);
+  if(!on.has(y) && on.has(y2) && p.freezes > 0 && !on.has(today)){ p.freezes--; p.frozen.push(y); pgSave(); st.frzUsed = true; }
+}
+function award(id){ const p = pg(); if(p.badges[id]) return; p.badges[id] = dkey(); p.xp += 25; (st.cele = st.cele || []).push({k:"bdg", id}); }
+function pgCheck(lvBefore){
+  const p = pg(), n = streak();
+  if(st.total >= 1) award("first"); if(st.total >= 10) award("w10"); if(st.total >= 50) award("w50"); if(st.total >= 100) award("w100");
+  if(n >= 7) award("s7"); if(n >= 30) award("s30"); if(n >= 100) award("s100");
+  if(p.breaths >= 5) award("mind"); if(p.walks >= 10) award("walker"); if(p.weigh.length >= 4) award("steady");
+  const lv = lvlOf(p.xp); if(lv >= 5) award("lvl5"); if(lv >= 10) award("lvl10");
+  const lv2 = lvlOf(p.xp); if(lvBefore != null && lv2 > lvBefore) (st.cele = st.cele || []).unshift({k:"lvl", l:lv2});
+  if(n > 0 && n % 7 === 0 && p.frzAt !== n && p.freezes < 2){ p.freezes++; p.frzAt = n; }
+  pgSave();
+}
+function pgEvent(kind, extra){
+  const p = pg(), lv = lvlOf(p.xp), today = dkey(), gap = p.lastW ? Math.round((new Date(today) - new Date(p.lastW))/864e5) : 0;
+  p.xp += XPV[kind] || 0; if(!p.days.includes(today)) p.days.push(today); p.days = p.days.slice(-400);
+  if(kind === "workout"){ const h = new Date().getHours(); if(h < 7) award("early"); if(h >= 21) award("night"); if(gap >= 14) award("comeback"); p.lastW = today;
+    if(extra && extra.fullWeek) award("week"); }
+  if(kind === "breath") p.breaths++; if(kind === "walk") p.walks++; if(kind === "photo") award("photo"); if(kind === "duel") award("duel");
+  st.lastXp = (XPV[kind] || 0); pgCheck(lv);
+}
+const FLAME = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.8 3.2 4.5 5.3 4.5 10a4.5 4.5 0 0 1-9 0c0-2 .9-3.4 2-4.6.2 1.6 1 2.6 2 3 0-3.2-1-5.6.5-8.4z"/></svg>`;
+function flameChip(){ const n = streak(); return `<button class="pill flamechip${n ? " on" : ""}" data-act="tab" data-v="prog" aria-label="${tx("fl")}: ${n}">${FLAME}<b>${n}</b></button>`; }
+function bName(b){ return L2(b[2]); }
+function themeCol(){ const th = THEMES.find(x => x[0] === pg().theme); return th && th[0] ? th[1] : ""; }
+function lvlBar(){ const p = pg(), l = lvlOf(p.xp), a = xpFor(l), b = xpFor(l+1), pc = Math.round(100*(p.xp-a)/(b-a));
+  return `<div class="lvbar"><div class="row" style="gap:10px"><b class="lvn">${tx("lvl")} ${l}</b><span class="muted grow" style="font-size:13px;text-align:right">${tx("xpTo").replace("{n}", b-p.xp).replace("{l}", l+1)}</span></div><div class="bar"><i style="width:${pc}%"></i></div></div>`; }
+function weightChart(){
+  const W = pg().weigh; if(W.length < 2) return "";
+  const xs = W.map(x => +new Date(x.d)), ys = W.map(x => x.kg), g = +pg().goal || null;
+  const all = g ? [...ys, g] : ys, mn = Math.min(...all) - 1, mx = Math.max(...all) + 1, x0 = Math.min(...xs), x1 = Math.max(...xs) || x0+1;
+  const X = v => 8 + 284*(v-x0)/((x1-x0)||1), Y = v => 8 + 104*(mx-v)/((mx-mn)||1);
+  const pts = W.map(x => `${X(+new Date(x.d)).toFixed(1)},${Y(x.kg).toFixed(1)}`).join(" ");
+  return `<svg class="wchart" viewBox="0 0 300 120" role="img" aria-label="${tx("weighT")}">${g ? `<line x1="8" x2="292" y1="${Y(g)}" y2="${Y(g)}" class="wgoal"/><text x="292" y="${Y(g)-4}" text-anchor="end" class="wlbl">${tx("goal").replace(/ \(kg\)/,"")} ${g}</text>` : ""}<polyline points="${pts}" class="wline"/>${W.map(x => `<circle cx="${X(+new Date(x.d))}" cy="${Y(x.kg)}" r="3" class="wdot"/>`).join("")}</svg>`;
+}
+function progView(){
+  const p = pg(), n = streak(), today = dkey(), on = new Set(p.days), fz = new Set(p.frozen);
+  const dots = Array.from({length:7}, (_,i) => { const k = addDays(today, i-6), d = new Date(k); return `<span class="fdot${on.has(k) ? " on" : fz.has(k) ? " fz" : ""}${k===today ? " today" : ""}"><i>${on.has(k) ? FLAME : fz.has(k) ? "❄" : ""}</i><small>${d.toLocaleDateString(LOC(),{weekday:"narrow"})}</small></span>`; }).join("");
+  const W = p.weigh, last = W[W.length-1], first = W[0];
+  const diff = last && first ? (last.kg - first.kg) : 0, toG = last && +p.goal ? (last.kg - +p.goal) : null;
+  const got = BADGES.filter(b => p.badges[b[0]]).length;
+  const lv = lvlOf(p.xp);
+  return `${topBar()}<main>
+    <div><p class="eyebrow gold">Black Bird Society</p><h1 style="margin-top:6px">${tx("prT")}</h1><p class="muted" style="margin-top:8px">${tx("prSub")}</p></div>
+    <div class="card flcard"><div class="row" style="gap:14px"><span class="bigflame${n ? " on" : ""}">${FLAME}</span><div class="grow"><b class="big">${n}</b><p class="muted" style="margin:0;font-size:14px">${tx("fl")}</p></div><div class="frz" title="${tx("frzSub")}"><b>❄ ${p.freezes}</b><small>${tx("frz")}</small></div></div>
+      <div class="fdots">${dots}</div><p class="small" style="margin:0;text-align:left">${tx("flSub")} ${tx("frzSub")}</p>
+      <div class="btnrow"><button class="btn btn-line" data-act="pgwalk" style="min-height:46px;font-size:14px"${on.has(today) && p.walkDay === today ? " disabled" : ""}>${tx("walk")}</button><button class="btn btn-line" data-act="tab" data-v="mind" style="min-height:46px;font-size:14px">${t("mdBreath")}</button></div></div>
+    <div class="card">${lvlBar()}</div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${tx("weighT")}</p><p class="small" style="margin:0;text-align:left">${tx("weighSub")}</p>
+      ${last ? `<div class="statgrid"><div class="card"><b class="big" style="font-size:24px">${fmt(last.kg)}</b><span class="muted" style="font-size:12px">kg</span></div><div class="card"><b class="big" style="font-size:24px">${diff > 0 ? "+" : ""}${fmt(Math.round(diff*10)/10)}</b><span class="muted" style="font-size:12px">${tx("since")}</span></div><div class="card"><b class="big" style="font-size:24px">${toG == null ? "–" : fmt(Math.abs(Math.round(toG*10)/10))}</b><span class="muted" style="font-size:12px">${tx("toGoal")}</span></div></div>` : `<p class="muted" style="margin:0;font-size:14px">${tx("noW")}</p>`}
+      ${weightChart()}
+      <form id="pgform" class="pgform" autocomplete="off"><label><small>${tx("kg")}</small><input class="field" id="pg-kg" type="number" inputmode="decimal" min="30" max="300" step="0.1" placeholder="${last ? last.kg : 75}" data-form-type="other"></label><label><small>${tx("cm")}</small><input class="field" id="pg-cm" type="number" inputmode="numeric" min="100" max="230" placeholder="175" value="${esc(p.h)}" data-form-type="other"></label><label><small>${tx("goal")}</small><input class="field" id="pg-goal" type="number" inputmode="decimal" min="30" max="300" step="0.1" placeholder="70" value="${esc(p.goal)}" data-form-type="other"></label><button class="btn btn-gold" type="submit">${tx("save")}</button></form></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${tx("duel")}</p><p class="small" style="margin:0;text-align:left">${tx("duelSub")}</p>${duelList()}</div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px"><div class="row"><p class="eyebrow gold grow">${tx("bdg")}</p><span class="muted" style="font-size:13px">${tx("bdgSub").replace("{n}", got).replace("{m}", BADGES.length)}</span></div>
+      <div class="bgrid">${BADGES.map(b => { const ok = p.badges[b[0]]; return `<button class="bdg${ok ? " on" : ""}" data-act="pgbdg" data-id="${b[0]}" aria-label="${esc(bName(b)[0])}"><span class="rune">${b[1]}</span><small>${esc(bName(b)[0])}</small></button>`; }).join("")}</div>
+      ${st.pgB ? (b => `<p class="bdesc"><b>${esc(bName(b)[0])}</b> · ${esc(bName(b)[1])}${p.badges[b[0]] ? ` · ${I.check.replace("<svg",'<svg style="width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:2.6;vertical-align:-2px"')}` : ""}</p>`)(BADGES.find(x => x[0]===st.pgB)) : ""}</div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${tx("thm")}</p><p class="small" style="margin:0;text-align:left">${tx("thmSub")}</p>
+      <div class="throw">${THEMES.map(th => { const ok = lv >= th[2]; return `<button class="thm${p.theme===th[0] ? " on" : ""}" data-act="pgthm" data-k="${th[0]}" ${ok ? "" : "disabled"} style="--c:${th[1]}"><i></i><small>${ok ? esc(L2(th[3])) : tx("thmLock").replace("{l}", th[2])}</small></button>`; }).join("")}</div></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${tx("pho")}</p><p class="small" style="margin:0;text-align:left">${tx("phoSub")}</p>${photoBlock()}
+      <label class="btn btn-line" for="pgpho" style="min-height:46px;font-size:14px">${I.cam} ${tx("phoAdd")}</label><input id="pgpho" type="file" accept="image/*" hidden></div>
+  </main>${tabs()}`;
+}
+function duelList(){
+  if(!(sb && st.user && st.user.cloud)) return `<p class="muted" style="margin:0;font-size:14px">${t("rwJoin")}</p>`;
+  const D = st.duels; if(D == null) return `<p class="muted" style="margin:0;font-size:14px">${t("searching")}</p>`;
+  if(!D.length) return `<p class="muted" style="margin:0;font-size:14px">${tx("duelNone")}</p><button class="btn btn-line" data-act="findopen2" style="min-height:46px;font-size:14px">+ ${t("findP")}</button>`;
+  return D.map(d => { const mx = Math.max(1, d.me_week, d.them_week);
+    return `<div class="duel"><div class="row" style="gap:8px"><b class="grow">${tx("you")} <span class="muted">vs</span> ${esc(d.name || "#"+d.member_no)}</b><span class="muted" style="font-size:13px">${d.me_week} – ${d.them_week}</span></div>
+      <div class="dbar"><i style="width:${100*d.me_week/mx}%"></i></div><div class="dbar them"><i style="width:${100*d.them_week/mx}%"></i></div></div>`; }).join("");
+}
+let phoDB = null;
+function phoOpen(){ return new Promise((res, rej) => { if(phoDB) return res(phoDB); try{ const r = indexedDB.open("bbt_photos", 1); r.onupgradeneeded = () => r.result.createObjectStore("p", {keyPath:"id"}); r.onsuccess = () => { phoDB = r.result; res(phoDB); }; r.onerror = () => rej(r.error); }catch(e){ rej(e); } }); }
+async function phoAll(){ try{ const db = await phoOpen(); return await new Promise(res => { const q = db.transaction("p").objectStore("p").getAll(); q.onsuccess = () => res((q.result||[]).sort((a,b) => a.id - b.id)); q.onerror = () => res([]); }); }catch(e){ return []; } }
+async function phoPut(o){ try{ const db = await phoOpen(); await new Promise(res => { const tr = db.transaction("p","readwrite"); tr.objectStore("p").put(o); tr.oncomplete = res; tr.onerror = res; }); }catch(e){} }
+async function phoDel(id){ try{ const db = await phoOpen(); await new Promise(res => { const tr = db.transaction("p","readwrite"); tr.objectStore("p").delete(id); tr.oncomplete = res; tr.onerror = res; }); }catch(e){} }
+function photoBlock(){
+  const L = st.photos; if(L == null){ phoAll().then(a => { st.photos = a; if(st.view === "prog") render(); }); return ""; }
+  if(!L.length) return `<p class="muted" style="margin:0;font-size:14px">${tx("phoNone")}</p>`;
+  const a = L[0], b = L[L.length-1], d = x => new Date(x.id).toLocaleDateString(LOC(),{day:"numeric",month:"short",year:"numeric"});
+  return `${L.length > 1 ? `<p class="eyebrow" style="margin:0">${tx("phoCmp")}</p><div class="cmp" style="--p:${st.cmpP||50}%"><img src="${b.img}" alt=""><img class="cmpa" src="${a.img}" alt=""><span class="cmpl">${d(a)}</span><span class="cmpr">${d(b)}</span><input type="range" id="cmpr" min="0" max="100" value="${st.cmpP||50}" aria-label="${tx("phoCmp")}"></div>` : ""}
+    <div class="phos">${L.map(x => `<div class="pho"><img src="${x.img}" alt=""><small>${d(x)}</small><button class="linkbtn" data-act="phodel" data-id="${x.id}" style="padding:2px 0">${tx("phoDel")}</button></div>`).join("")}</div>`;
+}
+function celeSheet(){
+  const c = (st.cele||[])[0]; if(!c) return "";
+  const b = c.k === "bdg" ? BADGES.find(x => x[0]===c.id) : null;
+  const conf = Array.from({length:18}, (_,i) => `<i style="--x:${(i*53)%100}%;--d:${(i%6)*0.12}s;--r:${(i*37)%360}deg"></i>`).join("");
+  return `<div class="cele" role="dialog" aria-modal="true"><div class="conf" aria-hidden="true">${conf}</div><div class="celebox">
+    <p class="eyebrow gold">${c.k === "lvl" ? tx("celeLvl") : tx("celeBdg")}</p>
+    <div class="celerune rune">${c.k === "lvl" ? c.l : b[1]}</div>
+    <h2 style="margin:0">${c.k === "lvl" ? tx("lvl") + " " + c.l : esc(bName(b)[0])}</h2>
+    <p class="muted" style="margin:0">${c.k === "lvl" ? (THEMES.find(x => x[2]===c.l) ? tx("thm") + ": " + esc(L2(THEMES.find(x => x[2]===c.l)[3])) : tx("cele")) : esc(bName(b)[1]) + " · +25 XP"}</p>
+    ${lvlBar()}
+    <button class="btn btn-gold" data-act="celex">${tx("celeCont")}</button></div></div>`;
+}
+function startCard(){
+  if(pg().weigh.length || st.pgSkip) return "";
+  return `<div class="card" style="display:flex;flex-direction:column;gap:8px;border-color:var(--gold-dim)"><p class="eyebrow gold">${tx("startT")}</p><p class="muted" style="margin:0;font-size:14px">${tx("startS")}</p><button class="btn btn-gold" data-act="tab" data-v="prog" style="min-height:46px;font-size:14px">${tx("startB")} ${I.arrow}</button></div>`;
+}
+function progCard(){
+  const n = streak(), p = pg();
+  return `<button class="card progcard" data-act="tab" data-v="prog"><span class="bigflame sm${n ? " on" : ""}">${FLAME}</span><span class="grow" style="min-width:0;text-align:left"><b>${n} · ${tx("fl")}</b>${lvlBar()}</span></button>`;
+}
+/* voice coach */
+const coach = {i:-1, done:-1, rest:0, said:{}};
+function say(txt){ if(!st.coach || !("speechSynthesis" in window)) return; try{ const u = new SpeechSynthesisUtterance(txt); u.lang = {en:"en-GB",fr:"fr-FR",es:"es-ES",pt:"pt-BR",de:"de-DE"}[st.lang] || "en-GB"; u.rate = 1; speechSynthesis.speak(u); }catch(e){} }
+setInterval(() => {
+  if(!st.coach || st.view !== "workout" || !st.w) return;
+  const w = st.w, it = w.list[w.i]; if(!it) return;
+  if(coach.i !== w.i){ coach.i = w.i; coach.done = it.done; coach.said = {}; say(`${L2(EX[it.ex])}. ${it.sets} × ${it.reps}${EX[it.ex].tm ? " s" : ""}.`); return; }
+  if(st.holdEnd > Date.now() && !coach.said["h"+it.done]){ coach.said["h"+it.done] = 1; say(tx("cHold")); }
+  if(st.restEnd > Date.now()){ const left = Math.ceil((st.restEnd - Date.now())/1000), key = "r"+it.done;
+    if(!coach.said[key]){ coach.said[key] = 1; say(tx("cRest").replace("{n}", left)); }
+    if(left === 10 && !coach.said[key+"10"]){ coach.said[key+"10"] = 1; say(tx("c10")); }
+    if(left <= 3 && left >= 1 && !coach.said[key+"c"+left]){ coach.said[key+"c"+left] = 1; say(String(left)); }
+  } else if(coach.said["r"+(it.done)] && !coach.said["g"+it.done] && it.done < it.sets){ coach.said["g"+it.done] = 1; say(tx("cGo") + ". " + tx("cSet").replace("{n}", it.done+1).replace("{m}", it.sets)); }
+}, 250);
+function musicSheet(){
+  return `<div class="backdrop" data-act="musx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("music")}"><div class="grab"></div>
+    <h2 style="margin:0">${tx("music")}</h2><p class="muted" style="margin:0;font-size:14px">${tx("musicSub")}</p>
+    <div class="musrow"><a class="btn btn-line" href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify</a><a class="btn btn-line" href="https://music.apple.com/" target="_blank" rel="noopener">Apple Music</a><a class="btn btn-line" href="https://music.youtube.com/" target="_blank" rel="noopener">YouTube Music</a>${PLAYLIST ? `<a class="btn btn-gold" href="${PLAYLIST}" target="_blank" rel="noopener">Black Bird playlist</a>` : ""}</div>
+    <button class="btn btn-line" data-act="musx">${t("amClose")}</button></div>`;
+}
+async function loadDuels(){
+  if(!(sb && st.user && st.user.cloud)){ st.duels = []; return; }
+  try{ const { data } = await sb.rpc("partner_duel"); st.duels = data || [];
+    const p = pg(); (st.duels||[]).forEach(d => { const k = d.wk + ":" + d.member_no; if(p.duels[k] == null && d.me_last > d.them_last){ p.duels[k] = 1; pgEvent("duel"); } else if(p.duels[k] == null) p.duels[k] = 0; }); pgSave();
+  }catch(e){ st.duels = []; }
+  if(st.view === "prog") render();
+}
+function akMic(){
+  const R = window.SpeechRecognition || window.webkitSpeechRecognition; if(!R){ toast(tx("micNo")); return; }
+  try{ const r = new R(); r.lang = {en:"en-US",fr:"fr-FR",es:"es-ES",pt:"pt-BR",de:"de-DE"}[st.lang] || "en-US"; r.interimResults = true; r.maxAlternatives = 1;
+    const b = document.querySelector(".akmic"); if(b) b.classList.add("on");
+    r.onresult = ev => { const txt = [...ev.results].map(x => x[0].transcript).join(" "); st.akQ = txt; const f = document.getElementById("akq"); if(f) f.value = txt; const res = document.getElementById("akres"); if(res) res.innerHTML = akResults(txt); };
+    r.onend = () => { const b2 = document.querySelector(".akmic"); if(b2) b2.classList.remove("on"); if(st.akQ) akMissLog(st.akQ); };
+    r.onerror = () => { const b2 = document.querySelector(".akmic"); if(b2) b2.classList.remove("on"); };
+    r.start(); }catch(e){ toast(tx("micNo")); }
+}
 function mindCard(){
   return `<button class="card mindcard" data-act="tab" data-v="mind"><span class="mindrune rune">ᛉ</span><span class="grow" style="min-width:0;text-align:left"><b>${t("mdTile")}</b><small>${t("mdTileSub")}</small></span>${I.arrow}</button>`;
 }
@@ -1866,6 +2043,8 @@ function mainView(){
       <div class="grow" style="min-width:0"><p class="eyebrow gold">${t("todayL")}</p><h3>${L2(first)}</h3><p class="muted" style="font-size:13px">${first.items.length} ${t("exs")} · ~${minsOf(first)} ${t("min")}</p></div>
       <button class="pill gopill" data-act="${unlocked(first)?"start":"peek"}" data-id="${first.id}" data-day="${nextIdx}">${unlocked(first)?t("start"):t("locked")}</button>
     </div>
+    ${progCard()}
+    ${startCard()}
     ${askBar()}
     ${mindCard()}
     ${mamaCard()}
@@ -1947,7 +2126,7 @@ function workout(){
     : `<p class="eyebrow">${t("weight")}</p><p class="big">${fmt(item.w)}<small> kg${ex.ph?" "+t("perHand"):""}</small></p>
        <div class="wctl"><button data-act="wminus" aria-label="−">−</button><button data-act="wplus" aria-label="+">+</button></div>`;
   return `<header class="wk-top"><button class="xbtn" data-act="quit" aria-label="${t("end")}">${I.x}</button><div class="segs" aria-hidden="true">${segs}</div>
-    <span class="count">${w.i+1}/${w.list.length}</span></header>
+    <span class="count">${w.i+1}/${w.list.length}</span><button class="wkic${st.coach ? " on" : ""}" data-act="coach" aria-label="${tx("coach")}" aria-pressed="${!!st.coach}"><svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>${st.coach ? '<path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>' : '<path d="M16 9.5l5 5M21 9.5l-5 5"/>'}</svg></button><button class="wkic" data-act="mus" aria-label="${tx("music")}"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></button></header>
   <main>
     <div style="display:flex;flex-direction:column;gap:10px"><h1>${L2(ex)}</h1><div class="chips extra">${chips(ex)}</div></div>
     <div class="stage" id="fighost" data-ex="${ex.id}">${figureSVG(ex, REDUCED?1:0)}</div>
@@ -2137,6 +2316,7 @@ function done(){
     </div>
     ${w.rankUp?`<div class="card" style="border-color:var(--gold)"><p class="eyebrow gold">${t("rankUp")}</p><h2><i class="rune">${RUNES[rankOf(st.total)]}</i> ${RN(rankOf(st.total))}</h2></div>`:""}
     <p class="fun gold">${fun}</p>
+    <button class="card progcard" data-act="tab" data-v="prog"><span class="bigflame sm on">${FLAME}</span><span class="grow" style="min-width:0;text-align:left"><b>${tx("xpGot").replace("{n}", st.lastXp || 50)} · ${streak()} ${tx("fl").toLowerCase()}</b>${lvlBar()}</span></button>
     ${!(st.premium || st.test) && [3,7,15,30].includes(st.total) ? `<div class="card nudge" style="display:flex;flex-direction:column;gap:10px;border-color:var(--gold)"><p class="eyebrow gold">${t("nudgeT").replace("{n}", st.total)}</p><p class="muted" style="font-size:14px">${t("nudgeS")}</p><button class="btn btn-gold" data-act="locked">${t("nudgeBtn")} ${I.arrow}</button></div>` : ""}
     ${sb && st.user && st.user.cloud && !st.myRv && [5,10,25].includes(st.total) ? `<div class="card" style="display:flex;flex-direction:column;gap:10px;border-color:var(--gold)"><p class="eyebrow gold">${t("rvAskT")}</p><p class="muted" style="font-size:14px">${t("rvAskS")}</p><button class="btn btn-gold" data-act="rvgo">${t("rvAskBtn")}</button></div>` : ""}
     <button class="btn btn-gold" data-act="share" data-k="work">${I.share} ${t("shareWork")}</button>
@@ -2280,7 +2460,8 @@ function profileHead(u){
 function memberCard(u){
   const r = rankOf(st.total), no = String(u.no||1).padStart(4,"0");
   const since = new Date(u.since).toLocaleDateString(LOC(),{month:"short",year:"numeric"});
-  return `<div class="mcard${r>=3 ? " mgold" : ""}${r>=4 ? " elder" : ""}"><div class="mc-top">${BIRD.replace("<svg",'<svg class="mc-logo"')}<div><small>THE BLACK BIRD SOCIETY</small><b>${t("memberNo").toUpperCase()} #${no}</b></div><label class="mc-av" for="avfile" aria-label="${t("changePhoto")}">${u.avatar ? `<img src="${esc(u.avatar)}" alt="">` : `<span>${esc(((u.name||"?").trim().charAt(0)||"?").toUpperCase())}</span>`}<i>${I.cam}</i></label></div>
+  const thc = themeCol();
+  return `<div class="mcard${r>=3 ? " mgold" : ""}${r>=4 ? " elder" : ""}"${thc ? ` style="--gold:${thc};--gold-dim:${thc}66"` : ""}><div class="mc-top">${BIRD.replace("<svg",'<svg class="mc-logo"')}<div><small>THE BLACK BIRD SOCIETY</small><b>${t("memberNo").toUpperCase()} #${no}</b></div><label class="mc-av" for="avfile" aria-label="${t("changePhoto")}">${u.avatar ? `<img src="${esc(u.avatar)}" alt="">` : `<span>${esc(((u.name||"?").trim().charAt(0)||"?").toUpperCase())}</span>`}<i>${I.cam}</i></label></div>
     <div class="mc-runes rune" aria-hidden="true">ᚠᚢᚱᚲᚷᚹᚾᛁᛃᛇᛒᛖᛗᛚᛜᛞ</div><div><div class="mc-name">${esc(u.name)}${u.last ? " "+esc(u.last) : ""}</div>${u.username?`<div class="mc-user">@${u.username}</div>`:""}</div>
     <div class="mc-foot">${st.showRank?`<span class="mc-rank"><i class="rune">${RUNES[r]}</i> ${RN(r).toUpperCase()}</span>`:`<span></span>`}<span class="muted">${t("member")} ${since}</span></div></div>`;
 }
@@ -2427,11 +2608,14 @@ function render(){
   else if(st.view==="mind") h = mind() + (st.mdArt!=null ? mdArtSheet() : "");
   else if(st.view==="mama") h = mama() + (st.mmArt!=null ? mmArtSheet() : "");
   else if(st.view==="health") h = health() + (st.hcOpen ? hcSheet() : "");
+  else if(st.view==="prog") h = progView();
   else if(st.view==="meals") h = meals() + (st.meal!=null ? mealSheet() : "") + (st.mpd ? mpSheet() : "");
   else if(st.view==="me") h = me() + (st.codeOpen ? codeSheet() : "") + (st.runesOpen ? runeSheet() : "") + (st.progOpen!=null ? progSheet() : "") + (st.findOpen ? findSheet() : "") + (st.amOpen ? memberSheet() : "") + (st.guideOpen ? guideSheet() : "");
   else if(st.view==="build" && st.build) h = builder() + (st.pick ? pickSheet() : "");
   else { st.view = "main"; h = mainView(); }
   if(st.mg) h += mgSheet(); else if(st.akOpen) h += askSheet();
+  if(st.musOpen) h += musicSheet();
+  if(st.cele && st.cele.length && st.view !== "workout") h += celeSheet();
   if(st.instOpen) h += instSheet();
   if(st.preview) h += previewSheet();
   if(st.toast) h += `<div class="toast" role="status">${st.toast}</div>`;
@@ -2500,7 +2684,7 @@ app.addEventListener("click", e => {
   const el = e.target.closest("[data-act]"); if(!el) return;
   const act = el.dataset.act, w = st.w;
   switch(act){
-    case "tab": if(st.speaking!=null) speakStop(); breathStop(); st.mdArt = null; st.mmArt = null; st.hcOpen = null; st.meal = null; st.art = null; st.peek = null; st.progOpen = null; st.findOpen = false; stopRest(); st.view = el.dataset.v; st.sheet = false; keepAwake(false); break;
+    case "tab": if(el.dataset.v === "prog"){ st.duels = null; loadDuels(); } st.musOpen = false; if(st.speaking!=null) speakStop(); breathStop(); st.mdArt = null; st.mmArt = null; st.hcOpen = null; st.meal = null; st.art = null; st.peek = null; st.progOpen = null; st.findOpen = false; stopRest(); st.view = el.dataset.v; st.sheet = false; keepAwake(false); break;
     case "lang": st.lang = LANGS[(LANGS.findIndex(l=>l[0]===st.lang)+1)%LANGS.length][0]; store.set("bbt_lang", st.lang); break;
     case "calm": st.calm = !st.calm; store.set("bbt_calm", st.calm); break;
     case "test": st.test = !st.test; store.set("bbt_test", st.test); break;
@@ -2583,6 +2767,16 @@ app.addEventListener("click", e => {
     case "akmdel": { const id = +el.dataset.id; st.faqMiss = (st.faqMiss||[]).filter(x => x.id !== id); sb.rpc("faq_miss_del", {p_id:id}).then(() => {}, () => {}); break; }
     case "akdel": { const id = +el.dataset.id; sb.rpc("faq_del", {p_id:id}).then(({ data }) => { if(data !== "ok"){ toast(t("netErr")); return; } st.faq = (st.faq||[]).filter(x => x.id !== id); render(); }).catch(() => toast(t("netErr"))); return; }
     case "mmset": st.mama = el.dataset.k || ""; store.set("bbt_mama", st.mama); toast(st.mama ? t("mmOn") + " · " + mmStageName(st.mama) : t("mmMe") + ": " + t("mmOff")); break;
+    case "pgwalk": { const p = pg(); if(p.walkDay === dkey()) break; p.walkDay = dkey(); pgEvent("walk"); toast(tx("walkOk") + " · " + tx("xpGot").replace("{n}", XPV.walk)); break; }
+    case "pgbdg": st.pgB = st.pgB === el.dataset.id ? null : el.dataset.id; break;
+    case "pgthm": pg().theme = el.dataset.k; pgSave(); break;
+    case "celex": (st.cele||[]).shift(); break;
+    case "coach": st.coach = !st.coach; store.set("bbt_coach", st.coach); if(!st.coach){ try{ speechSynthesis.cancel(); }catch(e){} } else { coach.i = -1; } toast(st.coach ? tx("coachOn") : tx("coachOff")); break;
+    case "mus": st.musOpen = true; break;
+    case "musx": st.musOpen = false; break;
+    case "phodel": { const id = +el.dataset.id; phoDel(id).then(() => phoAll()).then(a => { st.photos = a; render(); }); return; }
+    case "findopen2": st.view = "me"; if(st.user){ st.findOpen = true; st.pres = null; st.pq = ""; } break;
+    case "akmic": akMic(); return;
     case "mmart": st.mmArt = +el.dataset.i; break;
     case "ingsw": { const k = +el.dataset.i; st.ingOpen = st.ingOpen === k ? null : k; break; }
     case "hcset": { const k = el.dataset.k, a = new Set(st.hc||[]); a.has(k) ? a.delete(k) : a.add(k); st.hc = [...a]; store.set("bbt_hc", st.hc); break; }
@@ -2674,6 +2868,8 @@ app.addEventListener("click", e => {
       st.view = "done"; keepAwake(false); const before = rankOf(st.total); st.total++; store.set("bbt_total", st.total); w.rankUp = rankOf(st.total) > before;
       { let kg=0, sets=0; w.list.forEach(it=>{ const ex=EX[it.ex]; sets+=it.done; if(ex.f!=null) kg+=it.done*it.reps*it.w*(ex.ph?2:1); }); cloud.workout({program_id:w.pid, sets_done:sets, kg_lifted:Math.round(kg), swaps:w.swaps}); }
       if(w.day >= 0){ const wd = weekDone().slice(); if(!wd.includes(w.day)) wd.push(w.day); st.doneWeek = {k:weekKey(), d:wd}; store.set("bbt_week", st.doneWeek); }
+      { const pl = plan(); pgEvent("workout", {fullWeek: !!(pl && weekDone().length >= pl.length)}); }
+      if(st.coach) say(tx("cDone"));
     } break;
     case "busy": st.sheet = true; break;
     case "close": st.sheet = false; break;
@@ -2703,10 +2899,14 @@ app.addEventListener("change", e => {
   r.readAsDataURL(e.target.files[0]);
 });
 app.addEventListener("input", e => { if(e.target.id==="bname" && st.build) st.build.name = e.target.value;
+  if(e.target.id==="cmpr"){ st.cmpP = +e.target.value; const c = e.target.closest(".cmp"); if(c) c.style.setProperty("--p", st.cmpP + "%"); return; }
   if(e.target.id==="akq"){ st.akQ = e.target.value; const r = document.getElementById("akres"); if(r) r.innerHTML = akResults(st.akQ); clearTimeout(akTimer); akTimer = setTimeout(() => akMissLog(st.akQ), 2500); }
   if(e.target.id && e.target.id.startsWith("fq-")){ st.fqDraft = {...(st.fqDraft||{}), [e.target.id.slice(3)]: e.target.value}; }
   if(e.target.id==="psearch"){ const q = e.target.value; clearTimeout(pTimer); pTimer = setTimeout(() => runSearch(q), 350); } });
 app.addEventListener("change", e => {
+  if(e.target.id === "pgpho" && e.target.files && e.target.files[0]){
+    const r2 = new FileReader(); r2.onload = () => { const im = new Image(); im.onload = async () => { const M = 900, sc = Math.min(1, M/Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.round(im.width*sc); c.height = Math.round(im.height*sc); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+      await phoPut({id: Date.now(), img: c.toDataURL("image/jpeg", .82)}); st.photos = await phoAll(); if(st.photos.length === 1 || !pg().badges.photo) pgEvent("photo"); render(); }; im.src = r2.result; }; r2.readAsDataURL(e.target.files[0]); return; }
   if(e.target.id === "fq-g"){ st.fqDraft = {...(st.fqDraft||{}), g: e.target.value}; return; }
   if(e.target.id === "progfile" && e.target.files && e.target.files[0]){
     const file = e.target.files[0], r2 = new FileReader();
@@ -2748,6 +2948,11 @@ app.addEventListener("submit", e => {
     sb.rpc("review_reply", {p_id:id, p_reply:txt}).then(({ data, error }) => { if(error || data!=="ok"){ toast(t("netErr")); return; }
       st.rvAdmin = (st.rvAdmin||[]).map(x => x.id===id ? {...x, reply: txt || null} : x); st.rpOpen = null; toast(t("rpOk")); cloud.loadReviews(); render(); }).catch(() => toast(t("netErr")));
     return; }
+  if(e.target.id === "pgform"){ e.preventDefault();
+    const p = pg(), kg = parseFloat((document.getElementById("pg-kg")||{}).value), cm = (document.getElementById("pg-cm")||{}).value, gl = (document.getElementById("pg-goal")||{}).value;
+    p.h = cm || p.h; p.goal = gl || p.goal;
+    if(kg >= 30 && kg <= 300){ const k = dkey(), ex = p.weigh.find(x => x.d === k); if(ex) ex.kg = kg; else { p.weigh.push({d:k, kg}); p.weigh.sort((a,b) => a.d < b.d ? -1 : 1); pgEvent("weigh"); } }
+    pgSave(); toast(tx("save") + " ✓"); render(); return; }
   if(e.target.id === "akform"){ e.preventDefault(); const f = document.getElementById("akq"); if(f) f.blur(); return; }
   if(e.target.id === "faqform"){ e.preventDefault();
     const v = id => (document.getElementById(id)||{}).value || "", q = v("fq-q").trim(), a = v("fq-a").trim(), d = st.fqDraft||{};
@@ -2844,7 +3049,7 @@ render();
 cloud.load();
 if(sb) sb.auth.onAuthStateChange((ev) => { if(ev==="SIGNED_IN"){ st.otp = null; setTimeout(() => cloud.load(), 0); } });
 window.addEventListener("online", () => cloud.flushPending());
-cloud.loadReviews(); cloud.loadFaq();
+cloud.loadReviews(); cloud.loadFaq(); try{ pgDaily(); }catch(e){}
 if("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("/sw.js").catch(() => {});
 })();
 </script>
