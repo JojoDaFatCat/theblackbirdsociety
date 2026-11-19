@@ -3456,6 +3456,7 @@ app.addEventListener("click", e => {
       if(k === "partner_req" || k === "partner_ok"){ st.view = "me"; st.findOpen = true; st.pres = null; st.pq = ""; }
       else if(k === "photo" || k === "team_join"){ st.view = "prog"; st.duels = null; loadDuels(); st.shared = null; loadShared(); loadTeams(); }
       else if(k.startsWith("sess")){ st.view = "me"; loadSess(); }
+      else if(k === "faq_new"){ st.view = "me"; st.meSheet = "faq"; }
       else if(k === "faq_ans"){ const n0 = (st.notifs||[]).find(x => x.kind === "faq_ans"); st.akQ = n0 && n0.data ? n0.data.q || "" : ""; st.akOpen = true; }
       else if(k.startsWith("ref")){ st.view = "me"; st.scrollGrp = "premcard"; loadPrem(); } else if(k.startsWith("review")){ st.view = "me"; }
       break; }
