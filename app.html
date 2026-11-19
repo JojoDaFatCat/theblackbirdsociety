@@ -2060,6 +2060,36 @@ function akMic(){
     r.onerror = () => { const b2 = document.querySelector(".akmic"); if(b2) b2.classList.remove("on"); };
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
+/* ================= back button = go back inside the app ================= */
+const NAVK = ["view","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview"];
+const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
+const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
+let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
+function navTrack(){
+  if(navRestoring) return;
+  const snap = navSnap(), key = navKey(snap), m = app.querySelector("main");
+  if(navCur === null){ navCur = {key, snap, y:0}; try{ history.replaceState({bb:0}, ""); }catch(e){} return; }
+  if(key === navCur.key){ navCur.y = m ? m.scrollTop : 0; return; }
+  if(st.view === "quiz") { navCur = {key, snap, y:0}; return; }
+  if(Object.values(navCur.snap).includes("load")){ navCur = {key, snap, y:0}; return; }
+  const top = navStack[navStack.length - 1];
+  if(top && top.key === key){ navStack.pop(); navCur = top; navIgnore++; try{ history.back(); }catch(e){} return; }
+  navStack.push(navCur); if(navStack.length > 60) navStack.shift();
+  navCur = {key, snap, y:0};
+  try{ history.pushState({bb:navStack.length}, ""); }catch(e){}
+}
+document.addEventListener("scroll", e => { if(navCur && e.target && e.target.tagName === "MAIN") navCur.y = e.target.scrollTop; }, true);
+window.addEventListener("popstate", () => {
+  if(navIgnore){ navIgnore--; return; }
+  // never lose a workout in progress: back only closes its sheet
+  if(st.view === "work" && st.w){ if(st.sheet){ st.sheet = null; navCur = {key:navKey(navSnap()), snap:navSnap(), y:0}; render(); } try{ history.pushState({bb:navStack.length}, ""); }catch(e){} return; }
+  const prev = navStack.pop(); if(!prev) return;
+  NAVK.forEach(k => { st[k] = prev.snap.hasOwnProperty(k) ? prev.snap[k] : (k === "progOpen" || k === "art" || k === "meal" || k === "mdArt" || k === "mmArt" ? null : false); });
+  if((prev.snap.view === "work" && !st.w) || prev.snap.view === "done") st.view = "main";
+  if(st.speaking != null) try{ speakStop(); }catch(e){}
+  navRestoring = true; render(); navRestoring = false;
+  navCur = prev; const m = app.querySelector("main"); if(m && prev.y) m.scrollTop = prev.y;
+});
 /* ================= notifications ================= */
 const BELL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>`;
 function bellChip(){ const n = (st.notifs||[]).filter(x => !x.read).length; return `<button class="pill bellchip" data-act="nopen" aria-label="${tx("nT")}${n ? " ("+n+")" : ""}">${BELL}${n ? `<i>${n > 9 ? "9+" : n}</i>` : ""}</button>`; }
@@ -2780,6 +2810,7 @@ function render(){
   if(document.getElementById("fighost") && !raf && !REDUCED) raf = requestAnimationFrame(loop);
   if(st.scrollGrp){ const g = document.getElementById("grp_"+st.scrollGrp) || document.getElementById(st.scrollGrp); st.scrollGrp = null; if(g) setTimeout(() => g.scrollIntoView({block:"start",behavior:"smooth"}), 30); }
   updateRing();
+  navTrack();
 }
 function loop(now){
   const host = document.getElementById("fighost");
