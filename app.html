@@ -1592,7 +1592,7 @@ function breathStart(){
     brT = setTimeout(() => { if(left <= 0 && ph % 3 === 0){ breathStop(); toast(t("mdDone")); render(); } else step(); }, P[1]*1000); };
   setTimeout(step, 60);
 }
-const MD_AUDIO = {en:[1,2,3,4,5,6]}; let mdAudio = null;
+const MD_AUDIO = {en:[1,2,3,4,5,6], fr:[1,2,3,4,5,6]}; let mdAudio = null;
 function speakStop(){ try{ if(mdAudio){ mdAudio.pause(); mdAudio = null; } }catch(e){} try{ if("speechSynthesis" in window) speechSynthesis.cancel(); }catch(e){} st.speaking = null; }
 function speak(i){
   const L = mindL(), txt = L.talks[i][2];
