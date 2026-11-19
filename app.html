@@ -415,6 +415,29 @@ select.field{appearance:auto}
 .mc-rank{white-space:nowrap;flex:none;font-family:var(--font-d);font-weight:700;letter-spacing:.12em;padding:4px 10px;border:1px solid var(--gold);color:var(--gold);border-radius:2px;box-shadow:0 0 12px rgba(124,255,79,.3)}
 .bar{height:8px;background:var(--surface2);border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--gold);box-shadow:0 0 10px rgba(124,255,79,.6)}
+.hall{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:14px;border-color:var(--gold-dim);background:radial-gradient(120% 80% at 0% 0%,#7cff4f1f,transparent 60%),var(--card)}
+.hall-bg{position:absolute;right:-18px;top:-36px;font-size:190px;line-height:1;color:var(--gold);opacity:.07;pointer-events:none}
+.hall-top{display:flex;align-items:center;gap:16px;position:relative}
+.hring{width:92px;height:92px;flex:none;filter:drop-shadow(0 0 10px #7cff4f55)}.hr0{fill:none;stroke:var(--line2);stroke-width:7}.hr1{fill:none;stroke:var(--gold);stroke-width:7;stroke-linecap:round}.hrr{fill:var(--gold);font-size:38px;text-anchor:middle;dominant-baseline:central}
+.hall-rank{margin:2px 0 0;font-family:var(--font-d);text-transform:uppercase;letter-spacing:.06em;color:var(--gold);text-shadow:0 0 18px #7cff4f66}
+.hall-path{display:flex;align-items:flex-start;position:relative}.hall-path:before{content:"";position:absolute;left:10%;right:10%;top:15px;height:2px;background:var(--line2)}
+.hall-path span{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;min-width:0}
+.hall-path i{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line2);background:var(--bg);color:var(--muted);font-style:normal;font-size:16px}
+.hall-path small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;text-align:center;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap}
+.hall-path .past i{border-color:var(--gold-dim);color:var(--gold)}.hall-path .cur i{border-color:var(--gold);color:#000;background:var(--gold);box-shadow:0 0 16px #7cff4f99}.hall-path .cur small{color:var(--gold)}
+.hall-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.hall-stats div{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:1px solid var(--line2);border-radius:4px;background:#00000040;min-width:0}
+.hall-stats b{font-family:var(--font-d);font-size:22px;color:var(--fg);font-variant-numeric:tabular-nums}.hall-stats small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;text-align:center}
+.hall-cnt{font-family:var(--font-d);font-size:20px;color:var(--gold)}.hall-cnt span{font-size:14px;color:var(--muted)}
+.pwall{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}
+.pw{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px 8px;border:1px dashed var(--line2);border-radius:4px;color:var(--muted);opacity:.5;min-width:0}
+.pw .rune{font-size:20px}.pw small{font-size:10.5px;line-height:1.2;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pw.on{opacity:1;border:1px solid var(--gold-dim);color:var(--fg);background:linear-gradient(180deg,#7cff4f1a,transparent)}.pw.on .rune{color:var(--gold);text-shadow:0 0 12px #7cff4fcc}
+.pw em{position:absolute;top:4px;right:5px;font-style:normal;font-size:10px;font-weight:700;color:var(--gold)}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,auto);grid-auto-columns:1fr;gap:3px;width:100%}
+.heat .hm{width:auto;height:16px}
+.hm{display:block;width:13px;height:13px;border-radius:2px;background:var(--line2);opacity:.6}.hm.on{background:var(--gold);opacity:1;box-shadow:0 0 6px #7cff4f88}.hm.now{outline:1px solid var(--fg);outline-offset:1px}
+.heatkey{display:flex;align-items:center;gap:5px;justify-content:flex-end}.heatkey small{font-size:11px;color:var(--muted)}
+@media (max-width:380px){.hall-stats b{font-size:18px}}
 .ranks{display:flex;gap:6px}
 .ranks span{flex:1;text-align:center;font-family:var(--font-d);font-size:13px;padding:4px 0;border:1px solid var(--line2);border-radius:2px;color:var(--muted)}
 .ranks span.on{border-color:var(--gold-dim);color:var(--gold)}
@@ -2082,6 +2105,7 @@ Object.keys({"en":{"msT":"Why Black Bird costs less","msH":"Health shouldn't be 
 { const X = {"en": {"socEy": "Join us", "socT": "Follow the Society", "socS": "Daily motivation, new workouts, giveaways and members' wins."}, "fr": {"socEy": "Rejoins-nous", "socT": "Suis la Society", "socS": "Motivation au quotidien, nouvelles séances, concours et victoires des membres."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {"en": {"siT": "Share & invite", "siInvT": "Invite a friend", "siLeft": "{n} of 5 left", "siInvS": "Your personal link. Your friend joins, you BOTH get a 7-day Premium voucher.", "siInvSU": "Your personal link, no limit. Every friend who joins gets a 7-day Premium voucher, and so do you.", "siInvFull": "Your 5 rewards are used. Friends can still join with your link, without the voucher.", "siJoin": "Create your free account to get your invite link.", "siCardT": "Share my member card", "siCardS": "Show off your card, rank and streak. It has a QR code and your invite link, so friends join in one scan."}, "fr": {"siT": "Partager & inviter", "siInvT": "Inviter un ami", "siLeft": "{n} sur 5 restants", "siInvS": "Ton lien perso. Ton ami rejoint, vous gagnez TOUS LES DEUX un bon de 7 jours de Premium.", "siInvSU": "Ton lien perso, sans limite. Chaque ami qui rejoint reçoit un bon de 7 jours de Premium, et toi aussi.", "siInvFull": "Tes 5 récompenses sont utilisées. Tes amis peuvent toujours rejoindre avec ton lien, sans le bon.", "siJoin": "Crée ton compte gratuit pour avoir ton lien d'invitation.", "siCardT": "Partager ma carte de membre", "siCardS": "Montre ta carte, ton rang et ta série. Elle a un QR code et ton lien d'invitation : tes amis rejoignent en un scan."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {"en": {"cardJoin": "Scan to join me", "cardFree": "Free to start · every body welcome"}, "fr": {"cardJoin": "Scanne pour me rejoindre", "cardFree": "Gratuit pour commencer · pour tous"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {"en": {"hlT": "Training record", "hlSub": "Everything you've done in the app.", "hlWk": "Workouts", "hlSets": "Sets", "hlKg": "kg lifted", "hlDays": "Days active", "hlProg": "Programs conquered", "hlHeat": "Last 12 weeks", "hlNext": "{n} more to {r}", "hlMax": "Top rank reached", "hlEmpty": "Finish a program and it lights up here. Try to light them all.", "hlLess": "Less", "hlMore": "More", "hlRank": "Rank", "hlFav": "Most trained", "hlTimes": "×{n}", "hlAll": "See all {n} programs"}, "fr": {"hlT": "Carnet d'entraînement", "hlSub": "Tout ce que tu as fait dans l'appli.", "hlWk": "Séances", "hlSets": "Séries", "hlKg": "kg soulevés", "hlDays": "Jours actifs", "hlProg": "Programmes conquis", "hlHeat": "12 dernières semaines", "hlNext": "Encore {n} pour {r}", "hlMax": "Rang maximum atteint", "hlEmpty": "Termine un programme et il s'allume ici. Essaie de tous les allumer.", "hlLess": "Moins", "hlMore": "Plus", "hlRank": "Rang", "hlFav": "Le plus fait", "hlTimes": "×{n}", "hlAll": "Voir les {n} programmes"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2180,6 +2204,7 @@ function progView(){
   const lv = lvlOf(p.xp);
   return `${topBar()}<main>
     <div><p class="eyebrow gold">Black Bird Society</p><h1 style="margin-top:6px">${tx("prT")}</h1><p class="muted" style="margin-top:8px">${tx("prSub")}</p></div>
+    ${st.user ? hall() : ""}
     <div class="card flcard"><div class="row" style="gap:14px"><span class="bigflame${n ? " on" : ""}">${FLAME}</span><div class="grow"><b class="big">${n}</b><p class="muted" style="margin:0;font-size:14px">${tx("fl")}</p></div><div class="frz" title="${tx("frzSub")}"><b>❄ ${p.freezes}</b><small>${tx("frz")}</small></div></div>
       <div class="fdots">${dots}</div><p class="small" style="margin:0;text-align:left">${tx("flSub")} ${tx("frzSub")}</p>
       <div class="btnrow"><button class="btn btn-line" data-act="pgwalk" style="min-height:46px;font-size:14px"${on.has(today) && p.walkDay === today ? " disabled" : ""}>${tx("walk")}</button><button class="btn btn-line" data-act="tab" data-v="mind" style="min-height:46px;font-size:14px">${t("mdBreath")}</button></div></div>
@@ -3361,6 +3386,47 @@ function memberCard(u){
     <div class="mc-runes rune" aria-hidden="true">ᚠᚢᚱᚲᚷᚹᚾᛁᛃᛇᛒᛖᛗᛚᛜᛞ</div><div><div class="mc-name">${esc(u.name)}${u.last ? " "+esc(u.last) : ""}</div>${u.username?`<div class="mc-user">@${u.username}</div>`:""}</div>
     <div class="mc-foot">${st.showRank?`<span class="mc-rank"><i class="rune">${RUNES[r]}</i> ${RN(r).toUpperCase()}</span>`:`<span></span>`}<span class="muted">${t("member")} ${since}</span></div></div>`;
 }
+
+/* training record / hall */
+const GRUNE = {home:"ᚺ", wild:"ᚹ", silver:"ᛟ", health:"ᛚ", mama:"ᛗ", adapt:"ᚨ"};
+function pdLocal(){ if(!st.pdone) st.pdone = store.get("bbt_pdone", {}); return st.pdone; }
+function pdAdd(pid, sets, kg){ const D = pdLocal(), o = D[pid] || {n:0, s:0, kg:0}; o.n++; o.s += sets||0; o.kg += kg||0; o.t = Date.now(); D[pid] = o; store.set("bbt_pdone", D); st.wlog = undefined; }
+async function loadWlog(){ if(!(sb && st.user && st.user.cloud)) return;
+  try{ const { data } = await sb.from("workouts").select("program_id,sets_done,kg_lifted,created_at").order("created_at",{ascending:false}).limit(2000);
+    const C = {}; (data||[]).forEach(r => { const o = C[r.program_id] = C[r.program_id] || {n:0, s:0, kg:0, t:0}; o.n++; o.s += r.sets_done||0; o.kg += r.kg_lifted||0; o.t = Math.max(o.t, Date.parse(r.created_at)||0); });
+    st.wlog = C; if(st.view === "me" || st.view === "prog") render(); }catch(e){} }
+function pdAll(){ const L = pdLocal(), C = st.wlog || {}, R = {};
+  new Set([...Object.keys(L), ...Object.keys(C)]).forEach(k => { const a = L[k] || {}, b = C[k] || {}; R[k] = {n:Math.max(a.n||0, b.n||0), s:Math.max(a.s||0, b.s||0), kg:Math.max(a.kg||0, b.kg||0)}; });
+  return R; }
+function kfmt(n){ return n >= 100000 ? Math.round(n/1000) + "k" : n >= 10000 ? (Math.round(n/100)/10).toLocaleString(LOC()) + "k" : Math.round(n).toLocaleString(LOC()); }
+function hall(){
+  if(st.wlog === undefined){ st.wlog = null; loadWlog(); }
+  const D = pdAll(), p = pg(), r = rankOf(st.total), next = RANKS[r+1];
+  const sets = Object.values(D).reduce((a,o) => a + o.s, 0), kg = Object.values(D).reduce((a,o) => a + o.kg, 0);
+  const days = new Set(p.days).size;
+  const pct = next ? Math.max(0, Math.min(1, (st.total-RANKS[r][0])/(next[0]-RANKS[r][0]))) : 1;
+  const C = 2*Math.PI*44;
+  const progs = PROGRAMS.filter(x => !x.hide), done = progs.filter(x => D[x.id] && D[x.id].n);
+  const fav = Object.entries(D).filter(([k]) => getP(k)).sort((a,b) => b[1].n - a[1].n)[0];
+  const today = dkey(), on = new Set(p.days), start = addDays(today, -(7*12 - 1) - new Date().getDay());
+  const cells = [];
+  for(let i=0;i<7*12+new Date().getDay()+1;i++){ const k = addDays(start, i); cells.push(`<i class="hm${on.has(k) ? " on" : ""}${k===today ? " now" : ""}" title="${k}"></i>`); }
+  const tile = x => { const o = D[x.id], ok = o && o.n; const nm = L2(x).replace(/^[^·]*·\s*/, "");
+    return `<div class="pw${ok ? " on" : ""}"><span class="rune">${GRUNE[x.grp] || "ᛏ"}</span><small>${esc(nm)}</small>${ok ? `<em>${tx("hlTimes").replace("{n}", o.n)}</em>` : ""}</div>`; };
+  return `<section class="card hall"><div class="hall-bg rune" aria-hidden="true">${RUNES[r]}</div>
+    <div class="hall-top"><svg class="hring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="hr0"/>${pct > 0 ? "" : "<!--"}<circle cx="50" cy="50" r="44" class="hr1" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 50 50)"/>${pct > 0 ? "" : "-->"}<text x="50" y="50" class="hrr rune">${RUNES[r]}</text></svg>
+      <div class="grow" style="min-width:0"><p class="eyebrow gold">${tx("hlT")}</p><h2 class="hall-rank">${RN(r)}</h2><p class="muted" style="margin:2px 0 0;font-size:13px">${next ? tx("hlNext").replace("{n}", next[0]-st.total).replace("{r}", RN(r+1)) : tx("hlMax")}</p></div></div>
+    <div class="hall-path" aria-label="${tx("hlRank")}">${RANKS.map((x,k) => `<span class="${k<r ? "past" : k===r ? "cur" : ""}"><i class="rune">${RUNES[k]}</i><small>${RN(k)}</small></span>`).join("")}</div>
+    <div class="hall-stats"><div><b>${fmt(st.total)}</b><small>${tx("hlWk")}</small></div><div><b>${kfmt(sets)}</b><small>${tx("hlSets")}</small></div><div><b>${kfmt(kg)}</b><small>${tx("hlKg")}</small></div><div><b>${fmt(days)}</b><small>${tx("hlDays")}</small></div></div>
+    <div class="row" style="gap:10px"><p class="eyebrow gold grow" style="margin:0">${tx("hlProg")}</p><b class="hall-cnt">${done.length}<span>/${progs.length}</span></b></div>
+    <div class="bar"><i style="width:${Math.round(100*done.length/(progs.length||1))}%"></i></div>
+    ${fav ? `<p class="small" style="margin:0;text-align:left">${tx("hlFav")}: <b style="color:var(--fg)">${esc(getP(fav[0]).name || L2(getP(fav[0])))}</b> · ${tx("hlTimes").replace("{n}", fav[1].n)}</p>` : `<p class="small" style="margin:0;text-align:left">${tx("hlEmpty")}</p>`}
+    ${(L => `<div class="pwall">${L.slice(0, st.hallAll ? L.length : Math.max(9, Math.ceil(done.length/3)*3)).map(tile).join("")}</div>${L.length > 9 && !st.hallAll ? `<button class="linkbtn" data-act="hallall" style="align-self:flex-start">${tx("hlAll").replace("{n}", L.length)}</button>` : ""}`)(progs.slice().sort((a,b) => ((D[b.id]||{}).n||0) - ((D[a.id]||{}).n||0)))}
+    <p class="eyebrow" style="margin:4px 0 0">${tx("hlHeat")}</p>
+    <div class="heat">${cells.join("")}</div>
+    <div class="heatkey"><small>${tx("hlLess")}</small><i class="hm"></i><i class="hm on"></i><small>${tx("hlMore")}</small></div>
+  </section>`;
+}
 function rankBlock(){
   const r = rankOf(st.total), next = RANKS[r+1];
   if(!next) return `<div class="card"><p class="eyebrow">${t("rank")}</p><h2 class="gold">${RN(r)}</h2><p class="muted">${t("maxRank")}</p></div>`;
@@ -3415,7 +3481,7 @@ function me(){
     <!--F:prog-->${progBlock()}<!--/F-->
     <!--F:part-->${partnersBlock()}
     ${sessBlock()}<!--/F-->
-    <!--F:rank-->${st.meBoard ? rankBlock() : ""}<!--/F-->
+    <!--F:rank-->${hall()}<!--/F-->
     ${tribe(dayIdx()+5)}
     ${isPro ? "" : `    <form id="inviteform" class="card" novalidate autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other" style="display:flex;flex-direction:column;gap:10px">
       <p class="eyebrow gold">${t("inviteTitle")}</p>
@@ -3635,7 +3701,7 @@ app.addEventListener("click", e => {
     case "hgfin": { const S = st.hgs || {}, M = moves(); const sets = Object.values(S).reduce((a,b) => a + b, 0);
       if(!sets){ st.hgs = null; break; }
       let kg = 0; M.forEach(m => { kg += (S[m.id]||0) * (m.reps||0) * (m.kg||0); });
-      st.total++; store.set("bbt_total", st.total); cloud.workout({program_id:"my_moves", sets_done:sets, kg_lifted:Math.round(kg), swaps:0});
+      st.total++; store.set("bbt_total", st.total); cloud.workout({program_id:"my_moves", sets_done:sets, kg_lifted:Math.round(kg), swaps:0}); pdAdd("my_moves", sets, Math.round(kg));
       pgEvent("workout", {}); st.hgs = null; toast(tx("hgDone")); break; }
     case "gymtoggle": { const k = el.dataset.eq; st.gym.has(k) ? st.gym.delete(k) : st.gym.add(k); store.set("bbt_gym",[...st.gym]); break; }
     case "qpick": { const k = el.dataset.k; st.q[k] = k==="days" ? +el.dataset.v : el.dataset.v; st.qi++; break; }
@@ -3901,12 +3967,13 @@ app.addEventListener("click", e => {
     case "meal": st.meal = +el.dataset.i; break;
     case "closemeal": st.ingOpen = null; st.meal = null; break;
     case "copymail": try{ navigator.clipboard.writeText(SUPPORT).then(() => toast(t("emailCopied"))).catch(() => toast(SUPPORT)); }catch(err){ toast(SUPPORT); } break;
+    case "hallall": st.hallAll = true; break;
     case "editprof": st.meSheet = "set"; break;
     case "soonplay": toast(t("hubPlaySoon")); break;
     case "hubbuild": if(st.custom.length >= maxCustom()){ st.view = "pro"; break; } st.build = {id:null, name:"", items:[]}; st.pick = false; st.view = "build"; break;
     case "next": stopRest(); if(w.i < w.list.length-1){ w.i++; figStart = performance.now(); } else {
       st.view = "done"; keepAwake(false); const before = rankOf(st.total); st.total++; store.set("bbt_total", st.total); w.rankUp = rankOf(st.total) > before;
-      { let kg=0, sets=0; w.list.forEach(it=>{ const ex=EX[it.ex]; sets+=it.done; if(ex.f!=null) kg+=it.done*it.reps*it.w*(ex.ph?2:1); }); cloud.workout({program_id:w.pid, sets_done:sets, kg_lifted:Math.round(kg), swaps:w.swaps}); }
+      { let kg=0, sets=0; w.list.forEach(it=>{ const ex=EX[it.ex]; sets+=it.done; if(ex.f!=null) kg+=it.done*it.reps*it.w*(ex.ph?2:1); }); cloud.workout({program_id:w.pid, sets_done:sets, kg_lifted:Math.round(kg), swaps:w.swaps}); pdAdd(w.pid, sets, Math.round(kg)); }
       if(w.day >= 0){ const wd = weekDone().slice(); if(!wd.includes(w.day)) wd.push(w.day); st.doneWeek = {k:weekKey(), d:wd}; store.set("bbt_week", st.doneWeek); }
       { const pl = plan(); pgEvent("workout", {fullWeek: !!(pl && weekDone().length >= pl.length)}); }
       if(st.coach) say(tx("cDone"));
