@@ -240,6 +240,7 @@ textarea.field{min-height:96px;padding:12px 16px;line-height:1.45;resize:vertica
 .winput{min-width:2.6ch;max-width:100%;background:transparent;border:0;border-bottom:2px dashed var(--gold-dim);color:inherit;font:inherit;padding:0;-moz-appearance:textfield;appearance:textfield}.winput::-webkit-inner-spin-button,.winput::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.winput:focus{outline:none;border-bottom-color:var(--gold)}
 .fold{border:1px solid var(--line2);border-radius:14px;background:var(--card,transparent);overflow:hidden}.fold.on{border-color:var(--gold-dim)}.foldh{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:12px 16px;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}.foldh b{display:block;font-size:16px;letter-spacing:.02em}.foldh small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.fchev{color:var(--gold);font-size:22px;line-height:1;transition:transform .2s}.fold.on .fchev{transform:rotate(90deg)}.foldin{display:flex;flex-direction:column;gap:10px;padding:0 12px 12px}
 .wpen{margin-left:6px;font-size:.45em;color:var(--gold);vertical-align:middle;cursor:pointer}.whint{margin:2px 0 0;font-size:12px;line-height:1.35;color:var(--gold-dim)}
+.meprocard{width:100%;display:flex;align-items:center;gap:12px;color:inherit;font:inherit;cursor:pointer}.meprocard .eyebrow svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;vertical-align:-2px;margin-right:6px}
 .mamacard{border-color:var(--line2)}.mmdoc{border-color:var(--gold-dim)}.mmchips{display:flex;flex-wrap:wrap;gap:8px}.mmchip[aria-pressed=true]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}.mmstop ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}
 .askbar{display:flex;align-items:center;gap:14px;width:100%;cursor:pointer;color:inherit;font:inherit;text-align:left}.askbar b{display:block;font-size:16px;font-family:var(--font-d);letter-spacing:.04em;text-transform:uppercase}.askbar small{display:block;font-size:13px;color:var(--muted);margin-top:2px}.askbar svg{flex:none;width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round}.akic{display:grid;place-items:center;width:40px;height:40px;flex:none;border:1px solid var(--gold-dim);border-radius:50%}.akic svg{width:20px;height:20px}
 .akres{display:flex;flex-direction:column;gap:10px}.akitem{display:flex;flex-direction:column;gap:8px;align-items:flex-start;text-align:left;color:inherit;font:inherit;width:100%}.akitem b{font-size:15px}.akitem p{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}.akitem .pill{display:inline-flex;align-items:center;gap:6px}.akitem .pill svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
@@ -1382,7 +1383,7 @@ function topBar(){
 }
 function tabs(){
   const b = (v,ic,lab) => `<button data-act="tab" data-v="${v}" ${st.view===v?'aria-current="page"':""}>${I[ic]}${lab}</button>`;
-  return `<nav class="tabs">${b("main","hub",t("mainTab"))}${b("home","train",t("train"))}${b("gym","gym",t("gym"))}${b("pro","pro",t("pro"))}${b("me","me",t("me"))}</nav>`;
+  return `<nav class="tabs">${b("main","hub",t("mainTab"))}${b("home","train",t("train"))}${b("gym","gym",t("gym"))}<button data-act="ask" ${st.akOpen?'aria-current="page"':""}>${I.search}${tx("srchTab")}</button>${b("me","me",t("me"))}</nav>`;
 }
 function minsOf(p){ if(p.mins) return p.mins; const sets=p.items.reduce((a,x)=>a+x[1],0); return Math.round(sets*2.5/5)*5; }
 function greet(){ const h=new Date().getHours(); return h<12?t("morning"):h<18?t("afternoon"):t("evening"); }
@@ -1753,7 +1754,6 @@ function mama(){
     <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${t("mmRules")}</p><ul class="feat">${L.rules.map(x => `<li>${I.check}<span>${esc(x)}</span></li>`).join("")}</ul></div>
     <div class="card sos mmstop"><p class="eyebrow">${t("mmStop")}:</p><ul>${L.stop.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
     <div class="card" style="display:flex;flex-direction:column;gap:4px"><p class="eyebrow gold">${t("mmArts")}</p>${L.arts.map((x,i) => `<button class="row mdart" data-act="mmart" data-i="${i}"><span class="grow" style="min-width:0;text-align:left"><b>${esc(x[0])}</b><small class="muted">${x[1]}</small></span>${I.arrow}</button>`).join("")}</div>
-    ${askBar()}
     <p class="small" style="text-align:left">Source: ACOG, Physical Activity and Exercise During Pregnancy and the Postpartum Period.</p>
   </main>${tabs()}`;
 }
@@ -1785,7 +1785,6 @@ function health(){
     <div style="display:flex;flex-direction:column;gap:8px">${HC.map(c => `<button class="card row mdart hcrow" data-act="hcopen" data-k="${c.id}"><span class="grow" style="min-width:0;text-align:left"><b>${esc(hcL(c).n)}</b><small class="muted">${esc(hcL(c).intro)}</small></span>${I.arrow}</button>`).join("")}</div>
     <p class="eyebrow">${t("hcSess")}</p>${sess("hc_gentle")}${sess("hc_home")}${sess("hc_easy")}
     <p class="small" style="text-align:left">${t("hcHeart")}</p>
-    ${askBar()}
     <p class="small" style="text-align:left">Sources: ADA Standards of Care, Crohn's & Colitis UK, American Heart Association.</p>
   </main>${tabs()}`;
 }
@@ -1808,6 +1807,7 @@ Object.keys({"en":{"nT":"Notifications","nNone":"Nothing yet. Rewards, partner r
 Object.keys({"en": {"avDel": "Remove photo", "avSure": "Tap again to remove", "avGone": "Photo removed", "progMoved": "Progress photos now live on your Progress page, with before/after and sharing.", "progGo": "Open Progress"}, "fr": {"avDel": "Retirer la photo", "avSure": "Touche encore pour retirer", "avGone": "Photo retirée", "progMoved": "Les photos de progression sont maintenant sur ta page Progression, avec avant/après et partage.", "progGo": "Ouvrir la progression"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en": {"avDel": "Remove photo", "avSure": "Tap again to remove", "avGone": "Photo removed", "progMoved": "Progress photos now live on your Progress page, with before/after and sharing.", "progGo": "Open Progress"}, "fr": {"avDel": "Retirer la photo", "avSure": "Touche encore pour retirer", "avGone": "Photo retirée", "progMoved": "Les photos de progression sont maintenant sur ta page Progression, avec avant/après et partage.", "progGo": "Ouvrir la progression"}}[l]));
 Object.keys({"en": {"mpJoined": "Member since", "mpLvl": "Level", "mpStreak": "Day streak", "mpWeek": "This week", "mpTotal": "Workouts", "mpBadges": "Badges", "mpPhotos": "Photos shared with you", "mpNoPhotos": "No photos shared yet.", "mpNone": "Profile not available."}, "fr": {"mpJoined": "Membre depuis", "mpLvl": "Niveau", "mpStreak": "Jours de suite", "mpWeek": "Cette semaine", "mpTotal": "Séances", "mpBadges": "Badges", "mpPhotos": "Photos partagées avec toi", "mpNoPhotos": "Aucune photo partagée pour l'instant.", "mpNone": "Profil indisponible."}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en": {"mpJoined": "Member since", "mpLvl": "Level", "mpStreak": "Day streak", "mpWeek": "This week", "mpTotal": "Workouts", "mpBadges": "Badges", "mpPhotos": "Photos shared with you", "mpNoPhotos": "No photos shared yet.", "mpNone": "Profile not available."}, "fr": {"mpJoined": "Membre depuis", "mpLvl": "Niveau", "mpStreak": "Jours de suite", "mpWeek": "Cette semaine", "mpTotal": "Séances", "mpBadges": "Badges", "mpPhotos": "Photos partagées avec toi", "mpNoPhotos": "Aucune photo partagée pour l'instant.", "mpNone": "Profil indisponible."}}[l]));
 Object.keys({"en":{"nSess":"sessions","wTap":"✎ Tap to type"},"fr":{"nSess":"séances","wTap":"✎ Touche pour écrire"},"es":{"nSess":"sesiones","wTap":"✎ Toca para escribir"},"pt":{"nSess":"sessões","wTap":"✎ Toca para escrever"},"de":{"nSess":"Einheiten","wTap":"✎ Antippen zum Tippen"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en":{"nSess":"sessions","wTap":"✎ Tap to type"},"fr":{"nSess":"séances","wTap":"✎ Touche pour écrire"},"es":{"nSess":"sesiones","wTap":"✎ Toca para escribir"},"pt":{"nSess":"sessões","wTap":"✎ Toca para escrever"},"de":{"nSess":"Einheiten","wTap":"✎ Antippen zum Tippen"}}[l]));
+Object.keys({"en":{"srchTab":"Search","meProT":"Go Premium","meProOn":"You're Premium"},"fr":{"srchTab":"Chercher","meProT":"Passer Premium","meProOn":"Tu es Premium"},"es":{"srchTab":"Buscar","meProT":"Hazte Premium","meProOn":"Eres Premium"},"pt":{"srchTab":"Procurar","meProT":"Ser Premium","meProOn":"És Premium"},"de":{"srchTab":"Suche","meProT":"Premium holen","meProOn":"Du bist Premium"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en":{"srchTab":"Search","meProT":"Go Premium","meProOn":"You're Premium"},"fr":{"srchTab":"Chercher","meProT":"Passer Premium","meProOn":"Tu es Premium"},"es":{"srchTab":"Buscar","meProT":"Hazte Premium","meProOn":"Eres Premium"},"pt":{"srchTab":"Procurar","meProT":"Ser Premium","meProOn":"És Premium"},"de":{"srchTab":"Suche","meProT":"Premium holen","meProOn":"Du bist Premium"}}[l]));
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -1971,7 +1971,6 @@ function silver(){
     <p class="eyebrow">${tx("silSess")}</p>${sess("sil_bal")}${sess("sil_chair")}${sess("sil_mob")}
     <div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${tx("silBal")}</p><ul class="feat">${L.bal.map(x => `<li>${I.check}<span>${esc(x)}</span></li>`).join("")}</ul></div>
     <div class="card sos mmstop"><p class="eyebrow">${tx("silStop")}:</p><ul>${L.stop.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
-    ${askBar()}
     <p class="small" style="text-align:left">Source: WHO guidelines on physical activity (adults 65+).</p>
   </main>${tabs()}`;
 }
@@ -2190,7 +2189,6 @@ function mainView(){
     </div>
     ${progCard()}
     ${startCard()}
-    ${askBar()}
     ${mindCard()}
     ${mamaCard()}
     ${healthCard()}
@@ -2479,7 +2477,6 @@ function gym(){
   const cells = keys.map(k => `<button class="eq" data-act="gymtoggle" data-eq="${k}" aria-pressed="${st.gym.has(k)}"><span class="box">${st.gym.has(k)?"✓":""}</span>${eqName(k)}</button>`).join("");
   return `${topBar()}<main>
     <div><h1>${t("gymTitle")}</h1><p class="muted" style="margin-top:8px">${t("gymHint")}</p></div>
-    ${askBar()}
     <p class="eyebrow">${st.gym.size} ${t("of")} ${keys.length}</p>
     <div class="eqgrid">${cells}</div>
     <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px"><p class="eyebrow gold">${t("yourMachines")}</p><p class="muted" style="font-size:14px">${t("machineHint")}</p></div>
@@ -2656,13 +2653,13 @@ function me(){
       </form>`}
       ${st.otp?"":`<button class="linkbtn" data-act="tab" data-v="main">${t("tryFirst")}</button>`}
       ${guideBtn()}
-      ${askBar()}
       ${sb?"":`<p class="small">${t("protoNote")}</p>`}
     </main>${tabs()}`;
   }
   const u = st.user, wd = weekDone().length, isPro = st.test || st.premium;
   return `${topBar()}<main>
     ${profileHead(u)}
+    <button class="card promo meprocard" data-act="tab" data-v="pro"><span class="grow" style="text-align:left"><p class="eyebrow gold">${I.pro}Premium</p><h3>${isPro ? tx("meProOn") : tx("meProT")}</h3>${isPro ? "" : `<p class="muted" style="font-size:14px;margin-top:4px">${t("proSub")}</p>`}</span><span class="chev" aria-hidden="true">›</span></button>
     ${adminStats()}
     <input id="avfile" type="file" accept="image/*" hidden>
     ${progBlock()}
@@ -2706,7 +2703,6 @@ function me(){
     ${reviewCard()}
     ${inviteCard()}
     ${guideBtn()}
-    ${askBar()}
     ${helpCard()}
     <button class="btn btn-line" data-act="signout">${t("signout")}</button>
   </main>${tabs()}`;
