@@ -133,6 +133,16 @@ body.calm .extra{display:none!important}
 .tile .ti svg{width:20px;height:20px;fill:none;stroke:var(--gold);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tile b{font-family:var(--font-d);font-size:16px;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
 .tile .muted{font-size:13px;line-height:1.3}
+.tile .ti.rn{font-family:serif;color:var(--gold);font-size:19px;line-height:1;text-shadow:0 0 8px rgba(124,255,79,.5)}
+.motive{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;gap:12px;width:100%;padding:18px;cursor:pointer;color:inherit;font:inherit;text-align:left;border-color:var(--gold);box-shadow:0 0 0 1px rgba(124,255,79,.25),0 0 28px rgba(124,255,79,.18);background:radial-gradient(120% 140% at 0% 0%,rgba(124,255,79,.16),transparent 60%),var(--card)}
+.motive .mvtop{display:flex;align-items:center;gap:14px}
+.motive .mvtop b{display:block;font-family:var(--font-d);font-size:22px;text-transform:uppercase;letter-spacing:.04em;line-height:1.1;margin-top:2px}
+.motive .mvtop .eyebrow{display:block;margin:0}
+.motive .mvtop svg{flex:none;width:22px;height:22px;stroke:var(--gold)}
+.motive .mvsub{font-size:14px;line-height:1.45;color:var(--muted)}
+.motive .mvchips{display:flex;flex-wrap:wrap;gap:8px}
+.motive .mvchips span{font-size:13px;font-weight:600;padding:6px 12px;border:1px solid var(--gold-dim);border-radius:999px;white-space:nowrap}
+.motive .mvglow{position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(124,255,79,.22),transparent 70%);pointer-events:none}
 .mfil{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mfil .pill{min-height:44px;text-align:center}
 .mfil .pill[aria-pressed="true"]{color:var(--gold-ink);background:var(--gold);border-color:var(--gold)}.mflt .pill[aria-pressed="true"],.hgchips .pill[aria-pressed="true"]{color:var(--gold-ink);background:var(--gold);border-color:var(--gold)}
@@ -258,7 +268,11 @@ a.btn{text-decoration:none}a.btn.btn-line{color:var(--fg)}a.btn.btn-gold{color:v
 .ssrow{border-top:1px solid var(--line2);padding-top:10px}.ssrow b{display:block;font-size:15px}.ssrow small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.ssbtns{margin-top:8px;flex-wrap:wrap;justify-content:flex-start}.ssbtns .pill{min-height:38px}
 .lkbtn{position:absolute;right:10px;bottom:10px;z-index:2;border:1px solid #ffffff40;background:#000a;color:#fff;border-radius:999px;padding:6px 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(4px)}.ph-motto{font-family:var(--disp,inherit);color:var(--gold);font-size:14px;font-weight:700;margin-top:6px}.ph-bio{margin:4px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}.lkprev{position:relative;height:120px;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;border:1px solid var(--line2)}.lkprev svg{position:absolute;right:-20px;top:-10px;width:140px;height:140px;opacity:.25}.lkprev b{position:relative;font-size:18px}.lkprev i{position:relative;color:var(--gold);font-style:normal;font-size:13px;font-weight:700}.cvgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cvopt{position:relative;height:64px;border-radius:10px;border:2px solid transparent;cursor:pointer;display:flex;align-items:flex-end;padding:6px;color:#fff;font:inherit;font-size:11px;font-weight:700;text-shadow:0 1px 3px #000;overflow:hidden}.cvopt[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 0 2px #7cff4f33}.cvph{background:var(--surface);border:2px dashed var(--line2);grid-column:span 2;justify-content:center;align-items:center}.mpcover{position:relative;height:96px;border-radius:12px;overflow:hidden;display:flex;align-items:flex-end;padding:10px;margin-bottom:-4px}.mpcover svg{position:absolute;right:-20px;top:-14px;width:130px;height:130px;opacity:.25}.mpcover i{position:relative;color:var(--gold);font-style:normal;font-weight:700;font-size:14px;text-shadow:0 1px 4px #000}
 .mscard{display:flex;flex-direction:column;gap:10px;border-color:var(--gold-dim)}.mscard h3{margin:0}
-.libcard{display:flex;flex-direction:column;gap:10px}.libgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.libbtn{display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:none;color:var(--fg);font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer;line-height:1.25}.libic{flex:none;width:28px;text-align:center;font-size:20px;color:var(--gold)}
+.libcard{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:18px;border-color:var(--gold-dim);background:linear-gradient(160deg,rgba(124,255,79,.07),transparent 55%),var(--card)}
+.libbird{position:absolute;right:-30px;top:-24px;width:150px;height:150px;opacity:.13;pointer-events:none}.libbird svg{width:100%;height:100%}
+.libhead{display:flex;align-items:center;gap:12px;position:relative}.libhead h3{margin:2px 0 0;font-family:var(--font-d);font-size:20px;text-transform:uppercase;letter-spacing:.04em}
+.libmark{flex:none;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:50%;color:var(--gold);font-size:22px;box-shadow:0 0 14px rgba(124,255,79,.3)}.libgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative}.libbtn{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:104px;min-width:0;padding:12px;border:1px solid var(--line2);border-radius:12px;background:rgba(0,0,0,.25);color:var(--fg);font:inherit;text-align:left;cursor:pointer;line-height:1.25;transition:border-color .2s}.libbtn:hover,.libbtn:focus-visible{border-color:var(--gold-dim)}
+.libtx b{display:block;font-family:var(--font-d);font-size:15px;text-transform:uppercase;letter-spacing:.03em;line-height:1.15}.libtx small{display:block;margin-top:3px;font-size:12px;color:var(--muted);line-height:1.3}.libic{flex:none;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--gold-dim);border-radius:50%;font-size:17px;color:var(--gold);box-shadow:0 0 10px rgba(124,255,79,.15)}.libic.rune{text-shadow:0 0 8px rgba(124,255,79,.6)}
 .mamacard{border-color:var(--line2)}.mmdoc{border-color:var(--gold-dim)}.mmchips{display:flex;flex-wrap:wrap;gap:8px}.mmchip[aria-pressed=true]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}.mmstop ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.45}
 .askbar{display:flex;align-items:center;gap:14px;width:100%;cursor:pointer;color:inherit;font:inherit;text-align:left}.askbar b{display:block;font-size:16px;font-family:var(--font-d);letter-spacing:.04em;text-transform:uppercase}.askbar small{display:block;font-size:13px;color:var(--muted);margin-top:2px}.askbar svg{flex:none;width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round}.akic{display:grid;place-items:center;width:40px;height:40px;flex:none;border:1px solid var(--gold-dim);border-radius:50%}.akic svg{width:20px;height:20px}
 .akres{display:flex;flex-direction:column;gap:10px}.akitem{display:flex;flex-direction:column;gap:8px;align-items:flex-start;text-align:left;color:inherit;font:inherit;width:100%}.akitem b{font-size:15px}.akitem p{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}.akitem .pill{display:inline-flex;align-items:center;gap:6px}.akitem .pill svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
@@ -1459,22 +1473,38 @@ const HI = {
   music:`<svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>`
 };
 function hub(){
-  const tile = (attrs, ic, title, sub) => `<button class="card tile" ${attrs}><span class="ti">${ic}</span><b>${t(title)}</b><span class="muted">${sub}</span></button>`;
+  const tile = (attrs, ic, title, sub, raw) => `<button class="card tile" ${attrs}><span class="ti${raw?" rn":""}">${ic}</span><b>${raw?title:t(title)}</b><span class="muted">${sub}</span></button>`;
   const ab = getP("abs"), sp = getP("stretch"), info = p => `${p.items.length} ${t("exs")} · ~${minsOf(p)} ${t("min")}`;
-  const play = PLAYLIST
-    ? `<a class="card tile" href="${PLAYLIST}" target="_blank" rel="noopener"><span class="ti">${HI.music}</span><b>${t("hubPlay")}</b><span class="muted">Spotify</span></a>`
-    : tile(`data-act="soonplay"`, HI.music, "hubPlay", t("hubPlaySoon"));
-  return `<section class="hubwrap"><p class="eyebrow">${t("explore")}</p><div class="hub">
+  const BOOK = `<svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M8 7h8M8 11h6"/></svg>`;
+  return `<section class="hubwrap" id="explore"><p class="eyebrow">${t("explore")}</p><div class="hub">
+    ${tile(`data-act="tab" data-v="meals"`, HI.meals, "hubMeals", t("hubMealsSub"))}
+    ${tile(`data-act="gogrp" data-v="home"`, HI.homew, "hubHome", t("hubHomeSub"))}
     ${tile(`data-act="start" data-id="abs"`, HI.abs, "hubAbs", info(ab))}
     ${tile(`data-act="start" data-id="stretch"`, HI.stretch, "hubStretch", info(sp))}
-    ${tile(`data-act="gogrp" data-v="home"`, HI.homew, "hubHome", t("hubHomeSub"))}
-    ${tile(`data-act="gogrp" data-v="adapt"`, HI.adapt, "hubAdapt", t("hubAdaptSub"))}
-    ${tile(`data-act="tab" data-v="meals"`, HI.meals, "hubMeals", t("hubMealsSub"))}
-    <button class="card tile" data-act="tab" data-v="supp"><span class="ti" style="font-size:22px;line-height:1">💊</span><b>${tx("hubSupp")}</b><span class="muted">${tx("hubSuppSub")}</span></button>
-    ${tile(`data-act="hubbuild"`, HI.build, "hubBuild", t("hubBuildSub"))}
     ${tile(`data-act="tab" data-v="gym"`, I.swap, "hubSwap", t("hubSwapSub"))}
+    ${tile(`data-act="hubbuild"`, HI.build, "hubBuild", t("hubBuildSub"))}
     ${tile(`data-act="tab" data-v="me"`, HI.partners, "partners", t("partnersSub"))}
+    <button class="card tile" data-act="tab" data-v="arts"><span class="ti">${BOOK}</span><b>${tx("hubArts")}</b><span class="muted">${tx("hubArtsSub").replace("{n}", ARTS.length)}</span></button>
+    <button class="card tile" data-act="tab" data-v="supp"><span class="ti" style="font-size:20px;line-height:1">💊</span><b>${tx("hubSupp")}</b><span class="muted">${tx("hubSuppSub")}</span></button>
+    ${tile(`data-act="tab" data-v="mama"`, "ᛒ", t("mmTile"), st.mama ? t("mmOn") : t("mmTileSub"), 1)}
+    ${tile(`data-act="tab" data-v="health"`, "ᚢ", t("hcTile"), t("hcTileSub"), 1)}
+    ${tile(`data-act="tab" data-v="silver"`, "ᛟ", tx("silTile"), tx("silTileSub"), 1)}
+    ${tile(`data-act="gogrp" data-v="adapt"`, HI.adapt, "hubAdapt", t("hubAdaptSub"))}
+    ${tile(`data-act="ask"`, I.search, tx("hubAsk"), tx("hubAskSub"), 1)}
   </div></section>`;
+}
+/* Strong mind, front and centre on Home (20 Nov 2026) */
+function motiveCard(){
+  return `<button class="card motive" data-act="tab" data-v="mind"><span class="mvglow" aria-hidden="true"></span>
+    <span class="mvtop"><span class="mindrune rune">ᛉ</span><span class="grow" style="min-width:0;text-align:left"><span class="eyebrow gold">${tx("mvEy")}</span><b>${t("mdTile")}</b></span>${I.arrow}</span>
+    <span class="mvsub">${tx("mvS")}</span>
+    <span class="mvchips"><span>🎧 ${tx("mvTalk")}</span><span>🌬 ${tx("mvBreath")}</span><span>📖 ${tx("mvRead")}</span></span></button>`;
+}
+function artsView(){
+  return `${topBar()}<main>
+    <div><p class="eyebrow gold">Black Bird Society</p><h1 style="margin-top:6px">${t("arts")}</h1><p class="muted" style="margin-top:8px">${tx("artsSub")}</p></div>
+    ${ARTS.map((a,k) => { const x = a[st.lang] || a.en; return `<button class="card artrow" data-act="art" data-i="${k}"><span class="grow"><b>${x[0]}</b><span class="muted">${t("readMin").replace("{n}", a.min)}</span></span><span class="chev" aria-hidden="true">›</span></button>`; }).join("")}
+  </main>${tabs()}`;
 }
 const MEALS = [
  {ty:"b",g:["muscle","fat","strength","fit"],k:400,p:30,en:["Greek yogurt power bowl","250 g Greek yogurt, 40 g oats, a handful of berries, 1 tsp honey"],fr:["Bol yaourt grec énergie","250 g de yaourt grec, 40 g de flocons d'avoine, une poignée de fruits rouges, 1 c. à café de miel"],es:["Bol de yogur griego","250 g de yogur griego, 40 g de avena, un puñado de frutos rojos, 1 cdta de miel"],pt:["Tigela de iogurte grego","250 g de iogurte grego, 40 g de aveia, um punhado de frutas vermelhas, 1 colher de chá de mel"],de:["Griechischer-Joghurt-Bowl","250 g griechischer Joghurt, 40 g Haferflocken, eine Handvoll Beeren, 1 TL Honig"]},
@@ -1915,6 +1945,8 @@ Object.keys({"en":{"lkT":"Make your profile yours","lkCover":"Cover","lkPhoto":"
 Object.keys({"en":{"libT":"The Society library","libSub":"Everything about the app, our Code, the runes and the ravens.","libGuide":"Everything in Black Bird","libCode":"The Code","libRunes":"Rune library","libStory":"Huginn & Muninn"},"fr":{"libT":"La bibliothèque de la Society","libSub":"Tout sur l'appli, notre Code, les runes et les corbeaux.","libGuide":"Tout sur Black Bird","libCode":"Le Code","libRunes":"Bibliothèque des runes","libStory":"Huginn & Muninn"},"es":{"libT":"La biblioteca de la Society","libGuide":"Todo sobre Black Bird","libCode":"El Código","libRunes":"Biblioteca de runas"},"pt":{"libT":"A biblioteca da Society","libGuide":"Tudo sobre a Black Bird","libCode":"O Código","libRunes":"Biblioteca de runas"},"de":{"libT":"Die Society-Bibliothek","libGuide":"Alles über Black Bird","libCode":"Der Kodex","libRunes":"Runen-Bibliothek"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en":{"libT":"The Society library","libSub":"Everything about the app, our Code, the runes and the ravens.","libGuide":"Everything in Black Bird","libCode":"The Code","libRunes":"Rune library","libStory":"Huginn & Muninn"},"fr":{"libT":"La bibliothèque de la Society","libSub":"Tout sur l'appli, notre Code, les runes et les corbeaux.","libGuide":"Tout sur Black Bird","libCode":"Le Code","libRunes":"Bibliothèque des runes","libStory":"Huginn & Muninn"},"es":{"libT":"La biblioteca de la Society","libGuide":"Todo sobre Black Bird","libCode":"El Código","libRunes":"Biblioteca de runas"},"pt":{"libT":"A biblioteca da Society","libGuide":"Tudo sobre a Black Bird","libCode":"O Código","libRunes":"Biblioteca de runas"},"de":{"libT":"Die Society-Bibliothek","libGuide":"Alles über Black Bird","libCode":"Der Kodex","libRunes":"Runen-Bibliothek"}}[l]));
 Object.keys({"en":{"acct":"Account"},"fr":{"acct":"Compte"},"es":{"acct":"Cuenta"},"pt":{"acct":"Conta"},"de":{"acct":"Konto"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en":{"acct":"Account"},"fr":{"acct":"Compte"},"es":{"acct":"Cuenta"},"pt":{"acct":"Conta"},"de":{"acct":"Konto"}}[l]));
 Object.keys({"en":{"msT":"Why Black Bird costs less","msH":"Health shouldn't be a luxury.","msP":["Big fitness apps often charge around $100 a year. Black Bird is free to start, and Premium is $49.99 a year.","We're not here to squeeze money out of you. We're here to help everyone train, eat well and feel better, whatever their budget.","Workouts, meals, a strong mind, partners and support, all in one place. Because a healthy life should be for everybody."],"msSign":"The Black Bird Society"},"fr":{"msT":"Pourquoi Black Bird coûte moins cher","msH":"La santé ne devrait pas être un luxe.","msP":["Les grandes applis fitness coûtent souvent autour de 100 $ par an. Black Bird est gratuit pour commencer, et Premium coûte 49,99 $ par an.","On n'est pas là pour te prendre ton argent. On est là pour aider chacun à s'entraîner, bien manger et se sentir mieux, quel que soit son budget.","Séances, repas, mental fort, partenaires et soutien, tout au même endroit. Parce qu'une vie saine devrait être pour tout le monde."],"msSign":"The Black Bird Society"}}).forEach(l => Object.assign(TX[l] = TX[l] || {}, {"en":{"msT":"Why Black Bird costs less","msH":"Health shouldn't be a luxury.","msP":["Big fitness apps often charge around $100 a year. Black Bird is free to start, and Premium is $49.99 a year.","We're not here to squeeze money out of you. We're here to help everyone train, eat well and feel better, whatever their budget.","Workouts, meals, a strong mind, partners and support, all in one place. Because a healthy life should be for everybody."],"msSign":"The Black Bird Society"},"fr":{"msT":"Pourquoi Black Bird coûte moins cher","msH":"La santé ne devrait pas être un luxe.","msP":["Les grandes applis fitness coûtent souvent autour de 100 $ par an. Black Bird est gratuit pour commencer, et Premium coûte 49,99 $ par an.","On n'est pas là pour te prendre ton argent. On est là pour aider chacun à s'entraîner, bien manger et se sentir mieux, quel que soit son budget.","Séances, repas, mental fort, partenaires et soutien, tout au même endroit. Parce qu'une vie saine devrait être pour tout le monde."],"msSign":"The Black Bird Society"}}[l]));
+{ const X = {"en": {"mvEy": "Motivation", "mvS": "Pep talks, a 2-minute breathing reset and short reads for low days. Tap when the tank is empty.", "mvTalk": "Talks", "mvBreath": "Breathe", "mvRead": "Read", "hubArts": "Articles", "hubArtsSub": "{n} short reads: training, food, recovery", "hubAsk": "Ask anything", "hubAskSub": "Search the whole app", "artsSub": "Short, practical reads. Pick one, learn one thing."}, "fr": {"mvEy": "Motivation", "mvS": "Discours motivants, reset respiration de 2 minutes et lectures courtes pour les jours sans. Touche quand le réservoir est vide.", "mvTalk": "Discours", "mvBreath": "Respirer", "mvRead": "Lire", "hubArts": "Articles", "hubArtsSub": "{n} lectures courtes : entraînement, alimentation, récup", "hubAsk": "Demande tout", "hubAskSub": "Cherche dans toute l'appli", "artsSub": "Des lectures courtes et pratiques. Choisis-en une, apprends une chose."}, "es": {"mvEy": "Motivación", "mvS": "Charlas motivadoras, un reset de respiración de 2 minutos y lecturas cortas para los días bajos.", "mvTalk": "Charlas", "mvBreath": "Respirar", "mvRead": "Leer", "hubArts": "Artículos", "hubArtsSub": "{n} lecturas cortas: entreno, comida, recuperación", "hubAsk": "Pregunta lo que sea", "hubAskSub": "Busca en toda la app", "artsSub": "Lecturas cortas y prácticas."}, "pt": {"mvEy": "Motivação", "mvS": "Conversas motivadoras, um reset de respiração de 2 minutos e leituras curtas para os dias difíceis.", "mvTalk": "Conversas", "mvBreath": "Respirar", "mvRead": "Ler", "hubArts": "Artigos", "hubArtsSub": "{n} leituras curtas: treino, comida, recuperação", "hubAsk": "Pergunte tudo", "hubAskSub": "Pesquise no app inteiro", "artsSub": "Leituras curtas e práticas."}, "de": {"mvEy": "Motivation", "mvS": "Motivationsreden, ein 2-Minuten-Atem-Reset und kurze Texte für schwere Tage.", "mvTalk": "Reden", "mvBreath": "Atmen", "mvRead": "Lesen", "hubArts": "Artikel", "hubArtsSub": "{n} kurze Texte: Training, Essen, Erholung", "hubAsk": "Frag alles", "hubAskSub": "Durchsuche die ganze App", "artsSub": "Kurze, praktische Texte."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {"en": {"startLater": "You can add them any time in Progress.", "startHid": "Hidden. Add your stats any time in Progress.", "libEy": "Read & learn", "libGuideS": "Every feature, explained", "libCodeS": "How we train and live", "libRunesS": "Meanings & training lessons", "libStoryS": "Why the ravens"}, "fr": {"startLater": "Tu peux les ajouter quand tu veux dans Progrès.", "startHid": "Masqué. Ajoute tes mesures quand tu veux dans Progrès.", "libEy": "Lire & apprendre", "libGuideS": "Chaque fonction expliquée", "libCodeS": "Comment on s'entraîne et on vit", "libRunesS": "Sens et leçons d'entraînement", "libStoryS": "Pourquoi les corbeaux"}, "es": {"startLater": "Puedes añadirlos cuando quieras en Progreso.", "startHid": "Oculto. Añade tus datos cuando quieras en Progreso.", "libEy": "Leer y aprender", "libGuideS": "Cada función, explicada", "libCodeS": "Cómo entrenamos y vivimos", "libRunesS": "Significados y lecciones", "libStoryS": "Por qué los cuervos"}, "pt": {"startLater": "Você pode adicionar quando quiser em Progresso.", "startHid": "Oculto. Adicione seus dados quando quiser em Progresso.", "libEy": "Ler e aprender", "libGuideS": "Cada função, explicada", "libCodeS": "Como treinamos e vivemos", "libRunesS": "Significados e lições", "libStoryS": "Por que os corvos"}, "de": {"startLater": "Du kannst sie jederzeit unter Fortschritt eintragen.", "startHid": "Ausgeblendet. Trag deine Werte jederzeit unter Fortschritt ein.", "libEy": "Lesen & lernen", "libGuideS": "Jede Funktion erklärt", "libCodeS": "Wie wir trainieren und leben", "libRunesS": "Bedeutungen & Lektionen", "libStoryS": "Warum die Raben"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2128,8 +2160,8 @@ function celeSheet(){
     <button class="btn btn-gold" data-act="celex">${tx("celeCont")}</button></div></div>`}`;
 }
 function startCard(){
-  if(pg().weigh.length || st.pgSkip) return "";
-  return `<div class="card" style="display:flex;flex-direction:column;gap:8px;border-color:var(--gold-dim)"><p class="eyebrow gold">${tx("startT")}</p><p class="muted" style="margin:0;font-size:14px">${tx("startS")}</p><button class="btn btn-gold" data-act="tab" data-v="prog" style="min-height:46px;font-size:14px">${tx("startB")} ${I.arrow}</button></div>`;
+  if(pg().weigh.length || st.pgSkip || store.get("bbt_pgskip", false)) return "";
+  return `<div class="card" style="display:flex;flex-direction:column;gap:8px;border-color:var(--gold-dim)"><p class="eyebrow gold">${tx("startT")}</p><p class="muted" style="margin:0;font-size:14px">${tx("startS")}</p><div class="row" style="gap:8px"><button class="btn btn-gold grow" data-act="tab" data-v="prog" style="min-height:46px;font-size:14px">${tx("startB")} ${I.arrow}</button><button class="btn btn-line" data-act="pgskip" style="min-height:46px;font-size:14px;width:auto;padding:0 18px">${t("later")}</button></div><p class="muted" style="margin:0;font-size:12px">${tx("startLater")}</p></div>`;
 }
 function progCard(){
   const n = streak(), p = pg();
@@ -2598,9 +2630,11 @@ function mdArtSheet(){
     <button class="btn btn-line" data-act="mdartx">${t("amClose")}</button></div>`;
 }
 function libCard(){
-  const b = (act, ic, k, rune) => `<button class="libbtn" data-act="${act}"><span class="${rune ? "rune " : ""}libic" aria-hidden="true">${ic}</span><span>${tx(k)}</span></button>`;
-  return `<div class="card libcard"><p class="eyebrow gold"><span class="rune" aria-hidden="true">ᛟ</span> ${tx("libT")}</p><p class="muted" style="margin:0;font-size:14px">${tx("libSub")}</p>
-    <div class="libgrid">${b("guide","📖","libGuide")}${b("code","ᛏ","libCode",1)}${b("runes","ᚠ","libRunes",1)}${b("story","ᚺᛗ","libStory",1)}</div></div>`;
+  const b = (act, ic, k, sub, rune) => `<button class="libbtn" data-act="${act}"><span class="libic${rune ? " rune" : ""}" aria-hidden="true">${ic}</span><span class="libtx"><b>${tx(k)}</b><small>${tx(sub)}</small></span></button>`;
+  return `<div class="card libcard"><span class="libbird" aria-hidden="true">${BIRD}</span>
+    <div class="libhead"><span class="rune libmark" aria-hidden="true">ᛟ</span><div class="grow" style="min-width:0"><p class="eyebrow gold" style="margin:0">${tx("libEy")}</p><h3>${tx("libT")}</h3></div></div>
+    <p class="muted" style="margin:0;font-size:14px;position:relative">${tx("libSub")}</p>
+    <div class="libgrid">${b("guide","📖","libGuide","libGuideS")}${b("code","ᛏ","libCode","libCodeS",1)}${b("runes","ᚠ","libRunes","libRunesS",1)}${b("story","ᚺ","libStory","libStoryS",1)}</div></div>`;
 }
 function guideBtn(){ return `<button class="card guidebtn" data-act="guide"><span class="grow" style="text-align:left"><b>${t("gdBtn")}</b><small>${t("gdSub")}</small></span>${I.arrow}</button>`; }
 function guideSheet(){
@@ -2679,20 +2713,15 @@ function mainView(){
       <div class="grow" style="min-width:0"><p class="eyebrow gold">${t("todayL")}</p><h3>${L2(first)}</h3><p class="muted" style="font-size:13px">${first.items.length} ${t("exs")} · ~${minsOf(first)} ${t("min")}</p></div>
       <button class="pill gopill" data-act="${unlocked(first)?"start":"peek"}" data-id="${first.id}" data-day="${nextIdx}">${unlocked(first)?t("start"):t("locked")}</button>
     </div>
-    ${libCard()}
-    ${progCard()}
-    ${startCard()}
-    ${mindCard()}
-    ${mamaCard()}
-    ${healthCard()}
-    ${silverCard()}
+    ${motiveCard()}
     ${hub()}
+    ${startCard()}
+    ${progCard()}
+    ${libCard()}
     ${reviewsBlock()}
     ${(st.premium || st.test) ? "" : `<div class="card promo"><div class="grow"><p class="eyebrow gold">Premium</p><h3>${t("proTitle")}</h3><p class="muted" style="font-size:14px;margin-top:4px">${t("proSub")}</p></div><button class="pill gopill" data-act="tab" data-v="pro">${t("upgrade")}</button></div>`}
     <div class="card shopcard"><div class="grow"><p class="eyebrow gold">${t("hubPlaySoon")}</p><h3>${t("shopTitle")}</h3><p class="muted" style="font-size:14px;margin-top:4px">${t("shopSub")}</p></div>${BIRD.replace("<svg",'<svg class="shopbird"')}</div>
     ${tribe(dayIdx())}
-    <p class="eyebrow">${t("arts")}</p>
-    ${ARTS.map((a,k) => { const x = a[st.lang] || a.en; return `<button class="card artrow" data-act="art" data-i="${k}"><span class="grow"><b>${x[0]}</b><span class="muted">${t("readMin").replace("{n}", a.min)}</span></span><span class="chev" aria-hidden="true">›</span></button>`; }).join("")}
     ${pl ? `<button class="btn btn-line" data-act="tab" data-v="home" style="min-height:52px;font-size:16px">${t("seeWeek")} ${I.arrow}</button>` : ""}
   </main>${tabs()}`;
 }
@@ -3258,6 +3287,7 @@ function render(){
   else if(st.view==="health") h = health() + (st.hcOpen ? hcSheet() : "");
   else if(st.view==="prog") h = progView() + (st.team ? teamSheet() : "");
   else if(st.view==="silver") h = silver();
+  else if(st.view==="arts") h = artsView() + (st.art!=null ? artSheet() : "");
   else if(st.view==="supp") h = suppView() + (st.supp ? suppSheet() : "");
   else if(st.view==="meals") h = meals() + (st.mym ? mmSheet() : "") + (st.meal!=null ? mealSheet() : "") + (st.mpd ? mpSheet() : "");
   else if(st.view==="me") h = meTiles(me()) + (st.codeOpen ? codeSheet() : "") + (st.runesOpen ? runeSheet() : "") + (st.progOpen!=null ? progSheet() : "") + (st.findOpen ? findSheet() : "") + (st.amOpen ? memberSheet() : "") + (st.guideOpen ? guideSheet() : "");
@@ -3501,6 +3531,7 @@ app.addEventListener("click", e => {
     case "hcx": st.hcOpen = null; break;
     case "mmartx": st.mmArt = null; break;
     case "guide": st.guideOpen = true; break;
+    case "pgskip": st.pgSkip = true; store.set("bbt_pgskip", true); toast(tx("startHid")); break;
     case "guidex": st.guideOpen = false; break;
     case "amx": st.amOpen = null; st.amData = null; break;
     case "adref": cloud.myReview().then(render); break;

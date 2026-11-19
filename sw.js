@@ -1,5 +1,5 @@
 /* Black Bird Training offline support: the app shell is cached so workouts run without a signal. */
-const CACHE = "bbt-v37";
+const CACHE = "bbt-v38";
 const SHELL = ["/app", "/icon-192.png", "/icon-512.png", "/maskable-512.png", "/apple-touch-icon.png", "/favicon.ico", "/manifest.json"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
