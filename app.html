@@ -210,6 +210,7 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 .early{display:flex;align-items:flex-start;gap:10px;padding:12px 12px 12px 14px;border:1px dashed var(--gold-dim);border-radius:3px;background:rgba(124,255,79,.05);font-size:13px;line-height:1.45;color:var(--muted)}
 .fsday{display:flex;flex-direction:column;align-items:center;line-height:1}.fsday span{font:700 13px var(--font-d);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}.fsday b{font:700 64px var(--font-d);color:var(--gold);text-shadow:0 0 24px rgba(124,255,79,.45)}
 .fshelp{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;text-decoration:none;color:inherit}.fshelp b{display:block;font-size:15px}.fshelp small{color:var(--muted);font-size:12px}.fshelp em{font-style:normal;font:700 16px var(--font-d);color:var(--gold);white-space:nowrap}
+.fsgbar{height:8px;border-radius:4px;background:rgba(124,255,79,.12);overflow:hidden}.fsgbar i{display:block;height:100%;background:var(--gold);box-shadow:0 0 12px rgba(124,255,79,.6)}
 .fssteps{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
 .fsb{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;background:none;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer}.fsb.on{border-color:var(--gold-dim);background:rgba(124,255,79,.06)}
 .fsbox{flex:none;width:20px;height:20px;border:1.5px solid var(--gold-dim);border-radius:4px;display:grid;place-items:center}.fsb.on .fsbox{background:var(--gold);border-color:var(--gold)}.fsbox svg{width:14px;height:14px;stroke:var(--gold-ink);fill:none;stroke-width:3}
@@ -3060,10 +3061,11 @@ function ssCalLinks(x){
 /* ===== Fresh Start (21 Nov 2026): a calm corner to get back on track. Private: day counter + basics stay on the phone only ===== */
 function fsData(){ const d = store.get("bbt_fs", null) || {}; d.days = d.days || []; d.b = d.b || []; return d; }
 function fsSave(d){ store.set("bbt_fs", d); }
-function fsGift(){
-  if(!(sb && st.user && st.user.cloud)){ toast(tx("fsGiftLogin")); return; }
-  sb.rpc("fs_gift").then(({ data }) => { if(data === "ok"){ toast(tx("fsGiftOk")); try{ loadPrem(); }catch(e){} st.fsGot = true; }
-    else if(data === "already"){ st.fsGot = true; toast(tx("fsGiftAlready")); } else toast(tx("fbFail")); render(); }).catch(() => toast(tx("fbFail")));
+function fsSrv(fn, then){
+  if(!(sb && st.user && st.user.cloud)) return;
+  sb.rpc(fn).then(({ data }) => { if(!data) return; st.fsS = data;
+    if(data.new_gift){ st.fsBoom = true; try{ loadPrem(); }catch(e){} }
+    render(); if(then) then(); }).catch(() => {});
 }
 function fsSheet(){
   const d = fsData(), today = todayISO(), chk = I.check;
@@ -3073,7 +3075,9 @@ function fsSheet(){
   const counter = d.start ? `<div class="fsday"><span>${tx("fsDayL")}</span><b>${n}</b></div><p style="margin:0;font-size:14px;line-height:1.5;text-align:center">${tx(n >= 30 ? "fsMsg30" : n >= 7 ? "fsMsg7" : "fsMsg1")}</p>
       ${inToday ? `<p class="small" style="margin:0;text-align:center">✓ ${tx("fsInToday")}</p>` : `<button class="btn btn-gold" data-act="fscheck" style="min-height:48px">${tx("fsCheck")}</button>`}
       <button class="instlink" data-act="fsreset" style="align-self:center;font-size:13px">${st.fsResetArm ? tx("fsResetSure") : tx("fsReset")}</button>`
-    : `<p style="margin:0;font-size:14px;line-height:1.5">${tx("fsStartP")}</p><button class="btn btn-gold" data-act="fsstart" style="min-height:48px">${tx("fsStart")}</button>`;
+    : `<p style="margin:0;font-size:14px;line-height:1.5">${tx("fsStartP")}</p>
+      <button class="fsb${st.fsAgree ? " on" : ""}" data-act="fsagree" aria-pressed="${!!st.fsAgree}"><span class="fsbox">${st.fsAgree ? chk : ""}</span><span>${tx(st.user && st.user.cloud ? "fsAgree" : "fsAgreeLocal")}</span></button>
+      <button class="btn btn-gold" data-act="fsstart" style="min-height:48px">${tx("fsStart")}</button>`;
   return `<div class="backdrop" data-act="fsx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("fsT")}"><div class="grab"></div>
     <div class="row"><h2 class="grow" style="margin:0">${tx("fsT")}</h2><button class="xbtn" data-act="fsx" aria-label="${t("close")}">${I.x}</button></div>
     <p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("fsSub")}</p>
@@ -3096,8 +3100,10 @@ function fsSheet(){
       <button class="row fslink" data-act="fsmeals"><span class="grow" style="min-width:0;text-align:left"><b>${tx("fsMeals")}</b><small class="muted">${tx("fsMealsS")}</small></span>${I.arrow}</button>
       <button class="row fslink" data-act="fsmind"><span class="grow" style="min-width:0;text-align:left"><b>${t("mdTile")}</b><small class="muted">${tx("fsMindS")}</small></span>${I.arrow}</button>
       <button class="row fslink" data-act="gogrp" data-v="home"><span class="grow" style="min-width:0;text-align:left"><b>${t("hubHome")}</b><small class="muted">${tx("fsHomeS")}</small></span>${I.arrow}</button></div>
-    <div class="crsfeat"><span class="crsnew" style="align-self:flex-start;font-size:11px;padding:3px 7px;margin:0">${tx("fsGiftTag")}</span><h3>${tx("fsGiftT")}</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("fsGiftP")}</p>
-      ${st.fsGot ? `<p class="small" style="margin:0;text-align:center">✓ ${tx("fsGiftDone")}</p>` : `<button class="btn btn-gold" data-act="fsgift" style="min-height:48px">${tx("fsGiftBtn")}</button>`}
+    <div class="crsfeat">${(() => { const S = st.fsS || {}, gd = Math.min(7, +S.days || 0), logged = st.user && st.user.cloud;
+      if(S.gifted) return `<span class="crsnew" style="align-self:flex-start;font-size:11px;padding:3px 7px;margin:0">${tx("fsGiftTag")}</span><h3>${tx(st.fsBoom ? "fsBoomT" : "fsGotT")}</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("fsGotP")}</p>`;
+      return `<span class="crsnew" style="align-self:flex-start;font-size:11px;padding:3px 7px;margin:0">🎁 ${tx("fsSurprise")}</span><h3>${tx("fsGiftT")}</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx(logged ? "fsGiftP" : "fsGiftLogin")}</p>
+        ${logged ? `<div class="fsgbar" aria-label="${gd}/7"><i style="width:${Math.round(gd/7*100)}%"></i></div><p class="small" style="margin:0;text-align:left">${gd}/7 ${tx("fsGiftDays")}${S.today ? " · ✓ " + tx("fsInTodayS") : ""}</p>` : ""}`; })()}
       <p class="small" style="margin:0;text-align:left">${tx("fsSoon")}</p></div>
     <p class="small" style="margin:0;text-align:left;line-height:1.5">${tx("fsDisc")}</p>
   </div>`;
@@ -3107,23 +3113,23 @@ en:{fsT:"Fresh Start",fsTile:"Get back on track, one day at a time",fsSub:"A cal
 fsDayT:"Your fresh start",fsStartP:"Ready? Start your counter. Every day you check in counts.",fsStart:"Start my Day 1",fsDayL:"Day",fsDay1T:"Day 1. Proud of you for starting.",
 fsMsg1:"Every day counts. You're doing it.",fsMsg7:"A week and more. Your body and mind are already thanking you.",fsMsg30:"A month and more. Look how far you've come.",
 fsCheck:"I'm still on track today ✓",fsInToday:"Checked in today. See you tomorrow.",fsChecked:"Checked in. One more day, well done.",fsReset:"I slipped. Restart my counter",fsResetSure:"Tap again to restart. Day 1 again is still a win.",fsRestarted:"Day 1 again. Slipping is part of it, starting again is what counts.",
-fsPrivate:"Private: your counter and check-ins stay on this phone only.",
+fsPrivate:"Private: nobody else can see your counter. Only the number of check-in days is saved, to unlock your gift.",
 fsHelpT:"Need help now?",fsHelpP:"Talking to someone helps. These lines are free and anonymous. If you're in danger, call emergency services.",fsSosNote:"New Caledonia · free listening line",fsEmerg:"Emergency",fsEmergNote:"New Caledonia · SAMU · police · fire",fsFrance:"France",fsAisNote:"Free and anonymous · 8am to 2am",fs3114:"Suicide prevention",fs3114Note:"Free · 24/7",fsElse:"Somewhere else? Find a free helpline near you →",
 fsResetT:"Hard moment? 10-minute reset",fsResetP:"Cravings and dark thoughts come in waves. Ride this one out:",fsR1:"Breathe slowly for 2 minutes",fsR2:"Walk outside for 5 minutes, even around the block",fsR3:"Drink a big glass of water",fsR4:"Message someone you trust",fsBreathe:"Breathe with me",fsStretch:"Gentle stretch",
 fsBasicsT:"Today's basics",fsBasicsP:"Small wins build a new life. Tick what you did today:",fsB_move:"Moved for 10 minutes",fsB_water:"Drank 6 glasses of water",fsB_meal:"Ate one real meal",fsB_talk:"Talked to someone",fsB_sleep:"In bed on time",fsToday:"today",fsAll:"perfect day",
 fsMoreT:"Tools that help",fsMeals:"Cheap, easy meals",fsMealsS:"For low energy and a small budget",fsMindS:"Talks and breathing for hard days",fsHomeS:"Short workouts, no gear",
-fsGiftTag:"Gift",fsGiftT:"1 month of Premium, on us",fsGiftP:"Starting again takes courage. To support you, every Fresh Start member gets 30 days of Premium for free. No card needed.",fsGiftBtn:"Get my free month",fsGiftDone:"Your free month is in Me → Premium. Start it when you're ready.",fsGiftOk:"Your free month is ready in Me → Premium 🖤",fsGiftAlready:"You already have your Fresh Start month.",fsGiftLogin:"Log in to get your free month.",
+fsGiftTag:"Gift",fsSurprise:"Surprise",fsGiftT:"A surprise is waiting for you",fsGiftP:"Check in on 7 different days and unlock a surprise gift from the Society. Keep going, it's worth it.",fsGiftDays:"days",fsInTodayS:"today done",fsGiftLogin:"Log in and start your counter: a surprise gift is waiting for members who keep going.",fsBoomT:"🎉 7 days! Your gift is unlocked",fsGotT:"Gift unlocked 🖤",fsGotP:"Check your email: your surprise is there. You'll also find it in Me → Premium.",fsAgree:"I commit to my fresh start. My daily check-ins are saved to my account (private, only to unlock gifts).",fsAgreeLocal:"I commit to my fresh start.",fsAgreeNeed:"Tick the box to commit first.",
 fsSoon:"Coming soon in Premium: an 8-week Fresh Start program.",fsDisc:"Black Bird Training supports you but does not replace a doctor, a therapist or a support group. If you are stopping alcohol or drugs, talk to a doctor first: stopping suddenly can be dangerous."},
 fr:{fsT:"Nouveau Départ",fsTile:"Reprendre sa vie en main, un jour à la fois",fsSub:"Un espace calme et privé pour celles et ceux qui se relèvent d'une période difficile : alcool, drogue, coup dur ou simplement la vie. Sans jugement. Un petit pas par jour.",
 fsDayT:"Ton nouveau départ",fsStartP:"Prêt ? Lance ton compteur. Chaque jour où tu valides compte.",fsStart:"Commencer mon Jour 1",fsDayL:"Jour",fsDay1T:"Jour 1. Fier de toi d'avoir commencé.",
 fsMsg1:"Chaque jour compte. Tu le fais.",fsMsg7:"Une semaine et plus. Ton corps et ta tête te remercient déjà.",fsMsg30:"Un mois et plus. Regarde le chemin parcouru.",
 fsCheck:"Je tiens bon aujourd'hui ✓",fsInToday:"Validé aujourd'hui. À demain.",fsChecked:"Validé. Un jour de plus, bravo.",fsReset:"J'ai craqué. Recommencer mon compteur",fsResetSure:"Touche encore pour recommencer. Un nouveau Jour 1, c'est déjà une victoire.",fsRestarted:"Jour 1 à nouveau. Craquer fait partie du chemin, recommencer est ce qui compte.",
-fsPrivate:"Privé : ton compteur et tes validations restent uniquement sur ce téléphone.",
+fsPrivate:"Privé : personne d'autre ne voit ton compteur. Seul le nombre de jours validés est enregistré, pour débloquer ton cadeau.",
 fsHelpT:"Besoin d'aide maintenant ?",fsHelpP:"En parler aide. Ces lignes sont gratuites et anonymes. En cas de danger, appelle les secours.",fsSosNote:"Nouvelle-Calédonie · écoute gratuite",fsEmerg:"Urgences",fsEmergNote:"Nouvelle-Calédonie · SAMU · police · pompiers",fsFrance:"France",fsAisNote:"Gratuit et anonyme · 8h à 2h",fs3114:"Prévention du suicide",fs3114Note:"Gratuit · 24h/24",fsElse:"Ailleurs ? Trouve une ligne d'écoute gratuite près de chez toi →",
 fsResetT:"Moment difficile ? Reset de 10 minutes",fsResetP:"Les envies et les idées noires viennent par vagues. Laisse passer celle-ci :",fsR1:"Respire lentement pendant 2 minutes",fsR2:"Marche dehors 5 minutes, même juste le tour du pâté",fsR3:"Bois un grand verre d'eau",fsR4:"Envoie un message à quelqu'un de confiance",fsBreathe:"Respire avec moi",fsStretch:"Étirements doux",
 fsBasicsT:"Les bases du jour",fsBasicsP:"Les petites victoires construisent une nouvelle vie. Coche ce que tu as fait aujourd'hui :",fsB_move:"J'ai bougé 10 minutes",fsB_water:"J'ai bu 6 verres d'eau",fsB_meal:"J'ai mangé un vrai repas",fsB_talk:"J'ai parlé à quelqu'un",fsB_sleep:"Couché à l'heure",fsToday:"aujourd'hui",fsAll:"journée parfaite",
 fsMoreT:"Des outils qui aident",fsMeals:"Repas faciles et pas chers",fsMealsS:"Pour peu d'énergie et un petit budget",fsMindS:"Discours et respiration pour les jours durs",fsHomeS:"Séances courtes, sans matériel",
-fsGiftTag:"Cadeau",fsGiftT:"1 mois de Premium offert",fsGiftP:"Recommencer demande du courage. Pour te soutenir, chaque membre Nouveau Départ reçoit 30 jours de Premium gratuits. Sans carte bancaire.",fsGiftBtn:"Recevoir mon mois offert",fsGiftDone:"Ton mois offert est dans Moi → Premium. Lance-le quand tu veux.",fsGiftOk:"Ton mois offert est prêt dans Moi → Premium 🖤",fsGiftAlready:"Tu as déjà ton mois Nouveau Départ.",fsGiftLogin:"Connecte-toi pour recevoir ton mois offert.",
+fsGiftTag:"Cadeau",fsSurprise:"Surprise",fsGiftT:"Une surprise t'attend",fsGiftP:"Valide 7 jours différents et débloque un cadeau surprise de la Society. Continue, ça vaut le coup.",fsGiftDays:"jours",fsInTodayS:"aujourd'hui validé",fsGiftLogin:"Connecte-toi et lance ton compteur : un cadeau surprise attend ceux qui tiennent bon.",fsBoomT:"🎉 7 jours ! Ton cadeau est débloqué",fsGotT:"Cadeau débloqué 🖤",fsGotP:"Regarde tes e-mails : ta surprise t'y attend. Tu la retrouves aussi dans Moi → Premium.",fsAgree:"Je m'engage dans mon nouveau départ. Mes validations du jour sont enregistrées sur mon compte (privé, seulement pour débloquer des cadeaux).",fsAgreeLocal:"Je m'engage dans mon nouveau départ.",fsAgreeNeed:"Coche la case pour t'engager d'abord.",
 fsSoon:"Bientôt dans Premium : un programme Nouveau Départ de 8 semaines.",fsDisc:"Black Bird Training t'accompagne mais ne remplace pas un médecin, un thérapeute ou un groupe de soutien. Si tu arrêtes l'alcool ou une drogue, parles-en d'abord à un médecin : un arrêt brutal peut être dangereux."}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Society Courses (21 Nov 2026): paid extras, waitlist + vote for the next course ===== */
@@ -4507,13 +4513,13 @@ app.addEventListener("click", e => {
     case "fbx": st.fbOpen = false; break;
     case "crs": e.preventDefault(); st.crsOpen = true; loadCrs(); break;
     case "crsx": st.crsOpen = false; break;
-    case "fs": e.preventDefault(); st.fsOpen = true; break;
+    case "fs": e.preventDefault(); st.fsOpen = true; fsSrv("fs_state"); break;
     case "fsx": st.fsOpen = false; breathStop(); break;
-    case "fsstart": { const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsDay1T")); break; }
-    case "fscheck": { const d = fsData(); if(!d.days.includes(todayISO())) d.days.push(todayISO()); fsSave(d); toast(tx("fsChecked")); break; }
+    case "fsstart": { if(!st.fsAgree){ toast(tx("fsAgreeNeed")); break; } const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsDay1T")); fsSrv("fs_pledge", () => fsSrv("fs_checkin")); break; }
+    case "fsagree": st.fsAgree = !st.fsAgree; break;
+    case "fscheck": { const d = fsData(); if(!d.days.includes(todayISO())) d.days.push(todayISO()); fsSave(d); toast(tx("fsChecked")); fsSrv(st.fsS && st.fsS.pledged ? "fs_checkin" : "fs_pledge", () => fsSrv("fs_checkin")); break; }
     case "fsreset": if(!st.fsResetArm){ st.fsResetArm = true; break; } st.fsResetArm = false; { const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsRestarted")); } break;
     case "fsb": { const d = fsData(), k = el.dataset.k; if(d.bd !== todayISO()){ d.bd = todayISO(); d.b = []; } d.b = d.b.includes(k) ? d.b.filter(x => x !== k) : d.b.concat(k); fsSave(d); break; }
-    case "fsgift": fsGift(); return;
     case "fsmeals": st.fsOpen = false; st.mflt = "cheap"; st.view = "meals"; break;
     case "fsmind": st.fsOpen = false; st.view = "mind"; break;
     case "crshide": st.crsHide = true; store.set("bbt_crshide", Date.now() + 14*86400000); break;
@@ -5002,7 +5008,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v78";
+const APP_V = "bbt-v79";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
