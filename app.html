@@ -458,7 +458,10 @@ button.meal{width:100%;text-align:left;align-items:stretch}
 .rl-note{font-size:12px;color:var(--muted);border-left:2px solid var(--line2);padding-left:8px;margin-top:6px}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mimg{position:relative}.mimg img{display:block;width:100%}.mstar{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2,#2a3327);background:rgba(5,6,5,.75);color:var(--fg,#eef5ea);font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center}.mstar.on{color:var(--gold-ink,#050605);background:var(--gold);border-color:var(--gold)}
-.mtabs{margin-top:4px}
+.mchips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.mchips::-webkit-scrollbar{display:none}
+.mchip{flex:none;min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--line2,#2a3327);background:none;color:var(--muted);font:inherit;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer}.mchip[aria-selected="true"]{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}.mchip.add{border-style:dashed;color:var(--gold)}
+.mpick{display:flex;flex-direction:column;gap:6px}
+.mfwrap{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px}.mfsel{flex:1;min-width:0;background:var(--surface,#0c0f0b);color:var(--fg,#eef5ea);border:1px solid var(--line2,#2a3327);border-radius:3px;padding:4px 6px;font:inherit;font-size:12px}
 .mcell{border:1px solid var(--line);background:var(--surface);border-radius:3px;overflow:hidden;min-width:0}
 .mcell img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
 label.btn{cursor:pointer}
@@ -1449,7 +1452,7 @@ const REDUCED = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: red
 const navLang = (()=>{ const n=(navigator.language||"en").slice(0,2).toLowerCase(); return ["en","fr","es","pt","de"].includes(n) ? n : "en"; })();
 const st = {
   view:(store.get("bbt_user",null) ? "main" : "me"), mplan:store.get("bbt_mplan",null), groc:store.get("bbt_groc",{items:[]}), gtab:store.get("bbt_gtab","gym"), mpDay:0, mpd:null, meBoard:store.get("bbt_meboard",true), earlyHide:store.get("bbt_earlyhide",false), instHide:store.get("bbt_insthide",false), prog:null, progOpen:null, lang:store.get("bbt_lang",navLang), calm:store.get("bbt_calm",false), test:store.get("bbt_test",false),
-  gym:new Set(store.get("bbt_gym",Object.keys(EQ))), machines:store.get("bbt_machines",[]), mama:store.get("bbt_mama",""), coach:store.get("bbt_coach",false), hc:store.get("bbt_hc",[]), draft:null, profile:store.get("bbt_profile",null), user:store.get("bbt_user",null), showRank:store.get("bbt_showrank",true), total:store.get("bbt_total",0), q:{}, qi:0, doneWeek:store.get("bbt_week",{k:"",d:[]}), w:null, sheet:false, toast:"", restEnd:0, restLen:90, plan:"year"
+  gym:new Set(store.get("bbt_gym",Object.keys(EQ))), machines:store.get("bbt_machines",[]), mfolders:store.get("bbt_mfolders",[]), mama:store.get("bbt_mama",""), coach:store.get("bbt_coach",false), hc:store.get("bbt_hc",[]), draft:null, profile:store.get("bbt_profile",null), user:store.get("bbt_user",null), showRank:store.get("bbt_showrank",true), total:store.get("bbt_total",0), q:{}, qi:0, doneWeek:store.get("bbt_week",{k:"",d:[]}), w:null, sheet:false, toast:"", restEnd:0, restLen:90, plan:"year"
 };
 const t = k => T[st.lang][k];
 const L2 = o => o[st.lang] || o.en;
@@ -3061,8 +3064,8 @@ function ssCalLinks(x){
   const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Black Bird Training//EN","BEGIN:VEVENT","UID:bbt-sess-" + x.id + "@theblackbirdsociety.com","DTSTAMP:" + z(new Date()),"DTSTART:" + z(st0),"DTEND:" + z(en),"SUMMARY:" + esc2(title),"DESCRIPTION:" + esc2(desc),"URL:https://theblackbirdsociety.com","BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:" + esc2(title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   return {g, o, ics:"data:text/calendar;charset=utf-8," + encodeURIComponent(ics)};
 }
-{ const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites"},
-fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris"}};
+{ const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done"},
+fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Fresh Start (21 Nov 2026): a calm corner to get back on track. Private: day counter + basics stay on the phone only ===== */
 function fsData(){ const d = store.get("bbt_fs", null) || {}; d.days = d.days || []; d.b = d.b || []; return d; }
@@ -3878,10 +3881,23 @@ function gym(){
     <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px"><p class="eyebrow gold">${t("yourMachines")}</p><p class="muted" style="font-size:14px">${t("machineHint")}</p></div>
     <div class="btnrow"><label class="btn btn-gold" for="snap" style="font-size:14px"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> ${tx("snapCam")}</label><label class="btn btn-line" for="snap2" style="font-size:14px"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5.5-5 4 3.5 2.5-2 4 3.5"/></svg> ${tx("snapUp")}</label></div>
     <input id="snap" type="file" accept="image/*" capture="environment" hidden><input id="snap2" type="file" accept="image/*" hidden>
-    ${st.machines.length ? `<div class="gseg mtabs" role="tablist"><button role="tab" data-act="mtab" data-v="all" aria-selected="${st.mtab !== "fav"}">${tx("mAll")} · ${st.machines.length}</button><button role="tab" data-act="mtab" data-v="fav" aria-selected="${st.mtab === "fav"}">★ ${tx("mFav")} · ${st.machines.filter(m => m.fav).length}</button></div>` : ""}
+    ${st.machines.length ? mFolderBar() : ""}
     ${st.mtab === "fav" && !st.machines.some(m => m.fav) ? `<p class="muted" style="font-size:14px;margin:0">${tx("mFavNone")}</p>` : ""}
-    <div class="mgrid">${st.machines.map((m,k)=> st.mtab === "fav" && !m.fav ? "" : `<div class="mcell"><div class="mimg"><img src="${m.img}" alt=""><button class="mstar${m.fav ? " on" : ""}" data-act="mfav" data-i="${k}" aria-pressed="${!!m.fav}" aria-label="${tx("mFav")}">${m.fav ? "★" : "☆"}</button></div><div style="padding:10px;display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${m.name.replace(/</g,"&lt;")}</b><span class="muted" style="font-size:12px">${eqName(m.type)}</span>${MG[m.type] ? `<button class="linkbtn" style="align-self:flex-start;padding:4px 0;color:var(--gold)" data-act="mgopen" data-id="${m.type}">${t("mgHow")}</button>` : ""}<button class="linkbtn" style="align-self:flex-start;padding:4px 0" data-act="delmachine" data-i="${k}">${t("removeMachine")}</button></div></div>`).join("")}</div>
+    ${mInFolder() && !st.machines.some(m => m.f === st.mtab) ? `<p class="muted" style="font-size:14px;margin:0">${tx("mFolderEmpty")}</p>` : ""}
+    <div class="mgrid">${st.machines.map((m,k)=> !mShow(m) ? "" : `<div class="mcell"><div class="mimg"><img src="${m.img}" alt=""><button class="mstar${m.fav ? " on" : ""}" data-act="mfav" data-i="${k}" aria-pressed="${!!m.fav}" aria-label="${tx("mFav")}">${m.fav ? "★" : "☆"}</button></div><div style="padding:10px;display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${m.name.replace(/</g,"&lt;")}</b><span class="muted" style="font-size:12px">${eqName(m.type)}</span>${st.mfolders.length ? `<label class="mfwrap"><span aria-hidden="true">📁</span><select class="mfsel" data-i="${k}" aria-label="${tx("mFolder")}"><option value="">${tx("mNoFolder")}</option>${st.mfolders.map(f => `<option value="${f.id}"${m.f === f.id ? " selected" : ""}>${esc(f.name)}</option>`).join("")}</select></label>` : ""}${MG[m.type] ? `<button class="linkbtn" style="align-self:flex-start;padding:4px 0;color:var(--gold)" data-act="mgopen" data-id="${m.type}">${t("mgHow")}</button>` : ""}<button class="linkbtn" style="align-self:flex-start;padding:4px 0" data-act="delmachine" data-i="${k}">${t("removeMachine")}</button></div></div>`).join("")}</div>
   </main>${tabs()}`;
+}
+function mInFolder(){ return st.mtab && st.mtab !== "all" && st.mtab !== "fav" && st.mfolders.some(f => f.id === st.mtab); }
+function mShow(m){ if(st.mtab === "fav") return !!m.fav; if(mInFolder()) return m.f === st.mtab; return true; }
+function mFolderBar(){
+  const sel = v => (st.mtab || "all") === v || (v === "all" && st.mtab && st.mtab !== "fav" && !mInFolder());
+  const chip = (v, label) => `<button role="tab" class="mchip" data-act="mtab" data-v="${v}" aria-selected="${sel(v)}">${label}</button>`;
+  const cur = mInFolder() ? st.mfolders.find(f => f.id === st.mtab) : null;
+  return `<div class="mchips" role="tablist">${chip("all", tx("mAll") + " · " + st.machines.length)}${chip("fav", "★ " + tx("mFav") + " · " + st.machines.filter(m => m.fav).length)}${st.mfolders.map(f => chip(f.id, "📁 " + esc(f.name) + " · " + st.machines.filter(m => m.f === f.id).length)).join("")}<button class="mchip add" data-act="mfnew">+ ${tx("mNewFolder")}</button></div>
+    ${st.mfNew ? `<form id="mfform" class="row" style="gap:8px"><input class="field grow" id="mf-fname" maxlength="24" placeholder="${tx("mFolderPh")}" value="${cur && st.mfNew === "rename" ? esc(cur.name) : ""}" style="min-height:44px"><button class="pill gopill" type="submit">${tx(st.mfNew === "rename" ? "mSave" : "mCreate")}</button><button class="pill" type="button" data-act="mfcancel">${t("close")}</button></form>` : ""}
+    ${cur && !st.mfNew ? `<button class="btn btn-line" data-act="mfadd" style="min-height:44px;font-size:14px">${st.mfAdd ? "✓ " + tx("mDone") : "+ " + tx("mAddTo").replace("{f}", esc(cur.name))}</button>
+      ${st.mfAdd ? `<div class="mpick">${st.machines.map((m,k) => `<button class="fsb${m.f === cur.id ? " on" : ""}" data-act="mfput" data-i="${k}" aria-pressed="${m.f === cur.id}"><span class="fsbox">${m.f === cur.id ? I.check : ""}</span><span>${esc(m.name)}</span></button>`).join("")}</div>` : ""}
+      <div class="row" style="gap:14px"><button class="instlink" data-act="mfren" style="font-size:13px">${tx("mRename")}</button><button class="instlink" data-act="mfdel" style="font-size:13px">${st.mfDelArm ? tx("mDelSure") : tx("mDelFolder")}</button></div>` : ""}`;
 }
 function machineSheet(){
   const d = st.draft;
@@ -4411,7 +4427,13 @@ app.addEventListener("click", e => {
     case "runes": st.codeOpen = false; st.runesOpen = true; break;
     case "closerunes": st.runesOpen = false; break;
     case "closemachine": st.draft = null; break;
-    case "mtab": st.mtab = el.dataset.v; break;
+    case "mtab": st.mtab = el.dataset.v; st.mfNew = null; st.mfDelArm = false; st.mfAdd = false; break;
+    case "mfnew": st.mfNew = "new"; setTimeout(() => { const i = document.getElementById("mf-fname"); if(i) i.focus(); }, 50); break;
+    case "mfren": st.mfNew = "rename"; break;
+    case "mfadd": st.mfAdd = !st.mfAdd; break;
+    case "mfput": { const m = st.machines[+el.dataset.i]; if(m){ if(m.f === st.mtab) delete m.f; else m.f = st.mtab; store.set("bbt_machines", st.machines); } break; }
+    case "mfcancel": st.mfNew = null; break;
+    case "mfdel": if(!st.mfDelArm){ st.mfDelArm = true; break; } st.mfDelArm = false; { const id = st.mtab; st.mfolders = st.mfolders.filter(f => f.id !== id); st.machines.forEach(m => { if(m.f === id) delete m.f; }); store.set("bbt_mfolders", st.mfolders); store.set("bbt_machines", st.machines); st.mtab = "all"; toast(tx("mDeleted")); } break;
     case "mfav": { const m = st.machines[+el.dataset.i]; if(m){ m.fav = !m.fav; store.set("bbt_machines", st.machines); toast(tx(m.fav ? "mFavOn" : "mFavOff")); } break; }
     case "delmachine": st.machines.splice(+el.dataset.i,1); store.set("bbt_machines", st.machines); break;
     case "signout": store.set(AV_KEY, null); st.shareFile = null; st.user = null; st.premium = false; st.board = null; store.set("bbt_user", null); if(sb) sb.auth.signOut().catch(()=>{}); break;
@@ -4797,6 +4819,7 @@ app.addEventListener("click", e => {
   render();
 });
 app.addEventListener("change", e => {
+  if(e.target.classList && e.target.classList.contains("mfsel")){ const m = st.machines[+e.target.dataset.i]; if(m){ if(e.target.value) m.f = e.target.value; else delete m.f; store.set("bbt_machines", st.machines); toast(tx("mMoved")); render(); } return; }
   if((e.target.id !== "snap" && e.target.id !== "snap2") || !e.target.files || !e.target.files[0]) return;
   const r = new FileReader();
   r.onload = () => { const im = new Image(); im.onload = () => {
@@ -4880,6 +4903,9 @@ app.addEventListener("change", e => {
   r.readAsDataURL(e.target.files[0]);
 });
 app.addEventListener("submit", e => {
+  if(e.target.id === "mfform"){ e.preventDefault(); const v = ((document.getElementById("mf-fname")||{}).value || "").trim().slice(0,24); if(!v){ toast(tx("mFolderPh")); return; }
+    if(st.mfNew === "rename"){ const f = st.mfolders.find(x => x.id === st.mtab); if(f) f.name = v; } else { const id = "f" + Date.now().toString(36); st.mfolders.push({id, name: v}); st.mtab = id; }
+    store.set("bbt_mfolders", st.mfolders); if(st.mfNew !== "rename") st.mfAdd = true; st.mfNew = null; toast(tx("mFolderOk")); render(); return; }
   if(e.target.classList && e.target.classList.contains("rpform")){ e.preventDefault();
     const id = +e.target.dataset.id, txt = e.target.querySelector("textarea").value.trim();
     sb.rpc("review_reply", {p_id:id, p_reply:txt}).then(({ data, error }) => { if(error || data!=="ok"){ toast(t("netErr")); return; }
@@ -5023,7 +5049,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v81";
+const APP_V = "bbt-v82";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
