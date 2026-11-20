@@ -457,6 +457,8 @@ button.meal{width:100%;text-align:left;align-items:stretch}
 .rl-g{flex:none;width:46px;height:46px;display:grid;place-items:center;font-size:26px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:3px;text-shadow:0 0 10px rgba(124,255,79,.6)}
 .rl-note{font-size:12px;color:var(--muted);border-left:2px solid var(--line2);padding-left:8px;margin-top:6px}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mimg{position:relative}.mimg img{display:block;width:100%}.mstar{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2,#2a3327);background:rgba(5,6,5,.75);color:var(--fg,#eef5ea);font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center}.mstar.on{color:var(--gold-ink,#050605);background:var(--gold);border-color:var(--gold)}
+.mtabs{margin-top:4px}
 .mcell{border:1px solid var(--line);background:var(--surface);border-radius:3px;overflow:hidden;min-width:0}
 .mcell img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
 label.btn{cursor:pointer}
@@ -3059,6 +3061,9 @@ function ssCalLinks(x){
   const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Black Bird Training//EN","BEGIN:VEVENT","UID:bbt-sess-" + x.id + "@theblackbirdsociety.com","DTSTAMP:" + z(new Date()),"DTSTART:" + z(st0),"DTEND:" + z(en),"SUMMARY:" + esc2(title),"DESCRIPTION:" + esc2(desc),"URL:https://theblackbirdsociety.com","BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:" + esc2(title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   return {g, o, ics:"data:text/calendar;charset=utf-8," + encodeURIComponent(ics)};
 }
+{ const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites"},
+fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris"}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Fresh Start (21 Nov 2026): a calm corner to get back on track. Private: day counter + basics stay on the phone only ===== */
 function fsData(){ const d = store.get("bbt_fs", null) || {}; d.days = d.days || []; d.b = d.b || []; return d; }
 function fsSave(d){ store.set("bbt_fs", d); }
@@ -3871,9 +3876,11 @@ function gym(){
     <p class="eyebrow">${st.gym.size} ${t("of")} ${keys.length}</p>
     <div class="eqgrid">${cells}</div>
     <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px"><p class="eyebrow gold">${t("yourMachines")}</p><p class="muted" style="font-size:14px">${t("machineHint")}</p></div>
-    <label class="btn btn-gold" for="snap"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> ${t("addMachine")}</label>
-    <input id="snap" type="file" accept="image/*" capture="environment" hidden>
-    <div class="mgrid">${st.machines.map((m,k)=>`<div class="mcell"><img src="${m.img}" alt=""><div style="padding:10px;display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${m.name.replace(/</g,"&lt;")}</b><span class="muted" style="font-size:12px">${eqName(m.type)}</span>${MG[m.type] ? `<button class="linkbtn" style="align-self:flex-start;padding:4px 0;color:var(--gold)" data-act="mgopen" data-id="${m.type}">${t("mgHow")}</button>` : ""}<button class="linkbtn" style="align-self:flex-start;padding:4px 0" data-act="delmachine" data-i="${k}">${t("removeMachine")}</button></div></div>`).join("")}</div>
+    <div class="btnrow"><label class="btn btn-gold" for="snap" style="font-size:14px"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> ${tx("snapCam")}</label><label class="btn btn-line" for="snap2" style="font-size:14px"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5.5-5 4 3.5 2.5-2 4 3.5"/></svg> ${tx("snapUp")}</label></div>
+    <input id="snap" type="file" accept="image/*" capture="environment" hidden><input id="snap2" type="file" accept="image/*" hidden>
+    ${st.machines.length ? `<div class="gseg mtabs" role="tablist"><button role="tab" data-act="mtab" data-v="all" aria-selected="${st.mtab !== "fav"}">${tx("mAll")} · ${st.machines.length}</button><button role="tab" data-act="mtab" data-v="fav" aria-selected="${st.mtab === "fav"}">★ ${tx("mFav")} · ${st.machines.filter(m => m.fav).length}</button></div>` : ""}
+    ${st.mtab === "fav" && !st.machines.some(m => m.fav) ? `<p class="muted" style="font-size:14px;margin:0">${tx("mFavNone")}</p>` : ""}
+    <div class="mgrid">${st.machines.map((m,k)=> st.mtab === "fav" && !m.fav ? "" : `<div class="mcell"><div class="mimg"><img src="${m.img}" alt=""><button class="mstar${m.fav ? " on" : ""}" data-act="mfav" data-i="${k}" aria-pressed="${!!m.fav}" aria-label="${tx("mFav")}">${m.fav ? "★" : "☆"}</button></div><div style="padding:10px;display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${m.name.replace(/</g,"&lt;")}</b><span class="muted" style="font-size:12px">${eqName(m.type)}</span>${MG[m.type] ? `<button class="linkbtn" style="align-self:flex-start;padding:4px 0;color:var(--gold)" data-act="mgopen" data-id="${m.type}">${t("mgHow")}</button>` : ""}<button class="linkbtn" style="align-self:flex-start;padding:4px 0" data-act="delmachine" data-i="${k}">${t("removeMachine")}</button></div></div>`).join("")}</div>
   </main>${tabs()}`;
 }
 function machineSheet(){
@@ -4404,6 +4411,8 @@ app.addEventListener("click", e => {
     case "runes": st.codeOpen = false; st.runesOpen = true; break;
     case "closerunes": st.runesOpen = false; break;
     case "closemachine": st.draft = null; break;
+    case "mtab": st.mtab = el.dataset.v; break;
+    case "mfav": { const m = st.machines[+el.dataset.i]; if(m){ m.fav = !m.fav; store.set("bbt_machines", st.machines); toast(tx(m.fav ? "mFavOn" : "mFavOff")); } break; }
     case "delmachine": st.machines.splice(+el.dataset.i,1); store.set("bbt_machines", st.machines); break;
     case "signout": store.set(AV_KEY, null); st.shareFile = null; st.user = null; st.premium = false; st.board = null; store.set("bbt_user", null); if(sb) sb.auth.signOut().catch(()=>{}); break;
     case "otpback": st.otp = null; break;
@@ -4788,7 +4797,7 @@ app.addEventListener("click", e => {
   render();
 });
 app.addEventListener("change", e => {
-  if(e.target.id !== "snap" || !e.target.files || !e.target.files[0]) return;
+  if((e.target.id !== "snap" && e.target.id !== "snap2") || !e.target.files || !e.target.files[0]) return;
   const r = new FileReader();
   r.onload = () => { const im = new Image(); im.onload = () => {
       const sc = Math.min(1, 360/Math.max(im.width, im.height)), c = document.createElement("canvas");
@@ -5014,7 +5023,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v80";
+const APP_V = "bbt-v81";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
