@@ -705,7 +705,7 @@ const cloud = {
   async loadReviews(){ if(!sb) return; try{ const { data } = await sb.rpc("public_reviews"); st.reviews = data || []; if(st.view==="main") render(); }catch(e){} },
   async myReview(){ if(!sb) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(!session) return;
       const { data } = await sb.from("reviews").select("rating,body,status").eq("user_id", session.user.id).maybeSingle(); st.myRv = data || null;
-      if(st.user && st.user.no === 1){ const { data:a } = await sb.rpc("admin_reviews"); st.rvAdmin = a || []; const { data:s2 } = await sb.rpc("admin_stats"); st.adStats = s2 || null; const { data:fm } = await sb.rpc("admin_faq_misses"); st.faqMiss = fm || []; try{ const { data:mr } = await sb.rpc("admin_msg_reports"); st.msgReps = mr || []; }catch(e){} } }catch(e){} },
+      if(st.user && st.user.no === 1){ const { data:a } = await sb.rpc("admin_reviews"); st.rvAdmin = a || []; const { data:s2 } = await sb.rpc("admin_stats"); st.adStats = s2 || null; const { data:fm } = await sb.rpc("admin_faq_misses"); st.faqMiss = fm || []; try{ const { data:mr } = await sb.rpc("admin_msg_reports"); st.msgReps = mr || []; }catch(e){} try{ const { data:fb } = await sb.rpc("admin_feedback"); st.fbAdm = fb || []; }catch(e){} } }catch(e){} },
   async save(fields){ if(!sb || !st.user || !st.user.cloud) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(session) await sb.from("profiles").update(fields).eq("id", session.user.id); }catch(e){} },
   async workout(row){ if(!st.user || !st.user.cloud) return;
     const queue = () => { const q = store.get("bbt_pendw", []); q.push(row); store.set("bbt_pendw", q.slice(-50)); };
@@ -2291,6 +2291,12 @@ es:{pushT:"Notificaciones en el móvil",pushGo:"Activar notificaciones",pushWhy:
 pt:{pushT:"Notificações no celular",pushGo:"Ativar notificações",pushWhy:"Receba um aviso de mensagens, pedidos de parceiro e recompensas. Você escolhe o que recebe.",pushOnT:"Notificações ativadas",pushOnS:"Neste celular. Desligue o que não quiser:",pushOff:"Desativar",pushNo:"Este navegador não mostra notificações. Abra o app no Chrome (Android) ou adicione à tela inicial (iPhone).",pushIos:"No iPhone: toque em Compartilhar → «Adicionar à Tela de Início», abra o app por lá e ative as notificações.",pushLogin:"Entre na sua conta para receber notificações.",pushDenied:"As notificações estão bloqueadas para este site. Permita nos ajustes do celular e tente de novo.",pushFail:"Não foi possível ativar. Tente de novo em instantes.",pushTest:"Notificações ativadas. Até o treino 🖤",pcMsg:"Mensagens",pcPart:"Parceiros e sessões",pcRew:"Recompensas e avaliações",pcMun:"Respostas do Muninn",pcAdm:"Alertas do dono"},
 de:{pushT:"Handy-Benachrichtigungen",pushGo:"Benachrichtigungen einschalten",pushWhy:"Bekomm einen Hinweis bei Nachrichten, Partneranfragen und Belohnungen. Du wählst, was du bekommst.",pushOnT:"Benachrichtigungen sind an",pushOnS:"Auf diesem Handy. Schalte aus, was du nicht willst:",pushOff:"Ausschalten",pushNo:"Dieser Browser kann keine Benachrichtigungen zeigen. Öffne die App in Chrome (Android) oder füge sie zum Home-Bildschirm hinzu (iPhone).",pushIos:"Auf dem iPhone: Teilen → „Zum Home-Bildschirm“, App dort öffnen und Benachrichtigungen einschalten.",pushLogin:"Melde dich an, um Benachrichtigungen zu bekommen.",pushDenied:"Benachrichtigungen sind für diese Seite blockiert. Erlaube sie in den Handy-Einstellungen und versuch es erneut.",pushFail:"Konnte nicht eingeschaltet werden. Versuch es gleich noch mal.",pushTest:"Benachrichtigungen sind an. Wir sehen uns beim Training 🖤",pcMsg:"Nachrichten",pcPart:"Partner & Einheiten",pcRew:"Belohnungen & Bewertungen",pcMun:"Antworten von Muninn",pcAdm:"Inhaber-Hinweise"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{beepT:"Countdown beeps",beepS:"3-2-1 beeps at the end of holds, rests, warm-up and stretches, so you can keep your eyes off the phone."}, fr:{beepT:"Bips de décompte",beepS:"Bips 3-2-1 à la fin des gainages, des repos, de l'échauffement et des étirements, pour ne pas garder les yeux sur le téléphone."}, es:{beepT:"Pitidos de cuenta atrás",beepS:"Pitidos 3-2-1 al final de isométricos, descansos, calentamiento y estiramientos, para no mirar el móvil."}, pt:{beepT:"Bipes de contagem",beepS:"Bipes 3-2-1 no fim das pranchas, descansos, aquecimento e alongamentos, para não precisar olhar o celular."}, de:{beepT:"Countdown-Töne",beepS:"3-2-1-Töne am Ende von Halteübungen, Pausen, Aufwärmen und Dehnen, damit du nicht aufs Handy schauen musst."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {
+en:{pushOn1:"Turn on",fbT:"Send feedback",fbSub:"Ideas, bugs, things you love or hate. It goes straight to the team and we read everything.",fbPh:"Write your feedback here…",fbSend:"Send",fbLogin:"Log in to send feedback from the app, or email us below.",fbMail:"Prefer email?",fbThanks:"Thank you! Your feedback was sent 🖤",fbShort:"Write a few words first.",fbLimit:"That's a lot of feedback today, thank you! Try again tomorrow.",fbFail:"Couldn't send. Try again or email us.",fbAdmT:"Feedback",fbMsgs:"messages",fbNone:"No feedback yet.",n_adm_fb:"📝 New feedback from {name}: {q}",n_adm_premium:"💳 New Premium member: {name}."},
+fr:{pushOn1:"Activer",fbT:"Envoyer un avis",fbSub:"Idées, bugs, ce que tu aimes ou pas. Ça arrive directement à l'équipe et on lit tout.",fbPh:"Écris ton retour ici…",fbSend:"Envoyer",fbLogin:"Connecte-toi pour envoyer un retour depuis l'appli, ou écris-nous par e-mail ci-dessous.",fbMail:"Tu préfères l'e-mail ?",fbThanks:"Merci ! Ton retour est envoyé 🖤",fbShort:"Écris quelques mots d'abord.",fbLimit:"Beaucoup de retours aujourd'hui, merci ! Réessaie demain.",fbFail:"Envoi impossible. Réessaie ou écris-nous par e-mail.",fbAdmT:"Retours",fbMsgs:"messages",fbNone:"Pas encore de retour.",n_adm_fb:"📝 Nouveau retour de {name} : {q}",n_adm_premium:"💳 Nouveau membre Premium : {name}."},
+es:{pushOn1:"Activar",fbT:"Enviar opinión",fbSub:"Ideas, errores, lo que te gusta o no. Llega directo al equipo y lo leemos todo.",fbPh:"Escribe tu opinión aquí…",fbSend:"Enviar",fbLogin:"Inicia sesión para enviar tu opinión desde la app, o escríbenos por e-mail.",fbMail:"¿Prefieres e-mail?",fbThanks:"¡Gracias! Tu opinión se ha enviado 🖤",fbShort:"Escribe unas palabras primero.",fbLimit:"¡Muchas opiniones hoy, gracias! Prueba mañana.",fbFail:"No se pudo enviar. Inténtalo de nuevo o escríbenos.",fbAdmT:"Opiniones",fbMsgs:"mensajes",fbNone:"Aún no hay opiniones."},
+pt:{pushOn1:"Ativar",fbT:"Enviar feedback",fbSub:"Ideias, erros, o que você ama ou não. Vai direto para a equipe e lemos tudo.",fbPh:"Escreva seu feedback aqui…",fbSend:"Enviar",fbLogin:"Entre na conta para enviar pelo app, ou mande um e-mail abaixo.",fbMail:"Prefere e-mail?",fbThanks:"Obrigado! Seu feedback foi enviado 🖤",fbShort:"Escreva algumas palavras primeiro.",fbLimit:"Muito feedback hoje, obrigado! Tente amanhã.",fbFail:"Não foi possível enviar. Tente de novo ou mande um e-mail.",fbAdmT:"Feedback",fbMsgs:"mensagens",fbNone:"Nenhum feedback ainda."},
+de:{pushOn1:"Einschalten",fbT:"Feedback senden",fbSub:"Ideen, Fehler, was du liebst oder nicht. Es geht direkt ans Team und wir lesen alles.",fbPh:"Schreib dein Feedback hier…",fbSend:"Senden",fbLogin:"Melde dich an, um Feedback aus der App zu senden, oder schreib uns eine E-Mail.",fbMail:"Lieber per E-Mail?",fbThanks:"Danke! Dein Feedback wurde gesendet 🖤",fbShort:"Schreib erst ein paar Worte.",fbLimit:"Viel Feedback heute, danke! Versuch es morgen.",fbFail:"Senden fehlgeschlagen. Versuch es nochmal oder schreib uns.",fbAdmT:"Feedback",fbMsgs:"Nachrichten",fbNone:"Noch kein Feedback."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2620,7 +2626,7 @@ function akMic(){
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
 /* ================= back button = go back inside the app ================= */
-const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre"];
+const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen"];
 const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
 const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
 let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
@@ -2760,8 +2766,9 @@ function hgSessSheet(){
 }
 /* ================= Me page: tiles that open a window ================= */
 const MEIC = {"part": "<circle cx=\"8\" cy=\"8\" r=\"3\"/><circle cx=\"16\" cy=\"8\" r=\"3\"/><path d=\"M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M10.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5\"/>", "prog": "<path d=\"M3 20h18\"/><path d=\"M5 16l4.5-5 3.5 3 6-7\"/><path d=\"M15 7h4v4\"/>", "inv": "<rect x=\"3\" y=\"5.5\" width=\"18\" height=\"13\" rx=\"2\"/><path d=\"M3.5 7l8.5 6 8.5-6\"/>", "rate": "<path d=\"M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/><path d=\"M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9\"/>", "adm": "<path d=\"M3 20h18\"/><rect x=\"5\" y=\"11\" width=\"3\" height=\"6\" rx=\".5\"/><rect x=\"10.5\" y=\"7\" width=\"3\" height=\"10\" rx=\".5\"/><rect x=\"16\" y=\"4\" width=\"3\" height=\"13\" rx=\".5\"/>", "rank": "<path d=\"M7 4h10v5a5 5 0 01-10 0z\"/><path d=\"M7 6H4v1.5A3.5 3.5 0 007.3 11M17 6h3v1.5a3.5 3.5 0 01-3.3 3.5\"/><path d=\"M12 14v3M8.5 20h7M9.5 20l.5-3h4l.5 3\"/>", "chal": "<path d=\"M5 19L19 5M15 5h4v4\"/><path d=\"M19 19L5 5M5 9V5h4\"/><path d=\"M7 14l3 3M17 14l-3 3\"/>", "card": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"8.5\" cy=\"11\" r=\"2.2\"/><path d=\"M5.5 16c.5-1.7 1.6-2.5 3-2.5s2.5.8 3 2.5M14 10h4M14 13.5h3\"/>", "rew": "<rect x=\"3.5\" y=\"9\" width=\"17\" height=\"11\" rx=\"1.5\"/><path d=\"M2.5 9h19v-3h-19zM12 6v14\"/><path d=\"M12 6c-1-2.5-4.5-3-4.5-.8S10 6 12 6zM12 6c1-2.5 4.5-3 4.5-.8S14 6 12 6z\"/>", "set": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/>", "msg": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M8 9.5h8M8 12.5h5\"/>", "rep": "<path d=\"M5 21V4\"/><path d=\"M5 4h12l-2 4 2 4H5\"/>", "faq": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M10 8.6a2 2 0 113 1.7c-.6.4-1 .8-1 1.5M12 13.6v.1\"/>", "rv": "<path d=\"M4 4h16v12H9l-5 4z\"/><path d=\"M12 6.8l1.1 2.2 2.4.4-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.4z\"/>"};
+MEIC.fb = MEIC.fb || `<path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/>`;
 const meIc = k => MEIC[k] ? `<svg viewBox="0 0 24 24" aria-hidden="true">${MEIC[k]}</svg>` : "";
-const ME_TILES = {msg:["💬","chT"], rep:["⚑","chReps"], part:["🤝","meTPart"], prog:["📈","meTProg"], inv:["📨","meTInv"], rate:["🌟","meTRate"], help:["🛟","meTHelp"], adm:["📊","meTAdm"], rank:["🏆","hlT"], chal:["⚔️","meTChal"], card:["🪪","meTCard"], rew:["🎁","meTRew"], set:["⚙️","meTSet"], faq:["💬","meTFaq"], rv:["⭐","meTRv"]};
+const ME_TILES = {msg:["💬","chT"], rep:["⚑","chReps"], fb:["📝","fbAdmT"], part:["🤝","meTPart"], prog:["📈","meTProg"], inv:["📨","meTInv"], rate:["🌟","meTRate"], help:["🛟","meTHelp"], adm:["📊","meTAdm"], rank:["🏆","hlT"], chal:["⚔️","meTChal"], card:["🪪","meTCard"], rew:["🎁","meTRew"], set:["⚙️","meTSet"], faq:["💬","meTFaq"], rv:["⭐","meTRv"]};
 function meTiles(html){
   const parts = {}, order = [];
   html = html.replace(/<!--F:(\w+)-->([\s\S]*?)<!--\/F-->/g, (m, k, c) => { if(!c.replace(/<span id="settings"[^>]*><\/span>/, "").trim()) return ""; parts[k] = c; order.push(k); return ""; });
@@ -2772,6 +2779,7 @@ function meTiles(html){
     if(k === "adm" && a) return `${a.total} ${tx("meMem")} · +${a.today} ${tx("meToday")}`;
     if(k === "faq") return `${(st.faqMiss||[]).length} ${tx("meQs")}`;
     if(k === "msg") return st.unread ? `<span class="gold">${tx("chUnread").replace("{n}", st.unread)}</span>` : (st.inbox||[]).length ? tx("chConv").replace("{n}", st.inbox.length) : tx("chTile");
+    if(k === "fb") return `${(st.fbAdm||[]).length} ${tx("fbMsgs")}`;
     if(k === "rep") return `${(st.msgReps||[]).filter(r => !r.handled).length} ${tx("mePend")}`;
     if(k === "rv") return `${(st.rvAdmin||[]).filter(x => x.status === "pending").length} ${tx("mePend")}`;
     return ""; };
@@ -3077,7 +3085,7 @@ function pushBlock(){
   else if(IOS_WEB) head = `<p class="note" style="margin:0">${tx("pushIos")}</p>`;
   else if(!(st.user && st.user.cloud)) head = `<p class="small" style="margin:0;text-align:left">${tx("pushLogin")}</p>`;
   else if(P.on) head = `<div class="row" style="gap:10px"><span class="pushok">🔔</span><div class="grow"><b style="font-size:14px">${tx("pushOnT")}</b><p class="small" style="margin:2px 0 0;text-align:left">${tx("pushOnS")}</p></div><button class="pill" data-act="pushoff">${tx("pushOff")}</button></div>`;
-  else head = `<button class="btn btn-gold" data-act="pushon">🔔 ${tx("pushGo")}</button>${P.denied ? `<p class="small" style="margin:0;text-align:left">${tx("pushDenied")}</p>` : `<p class="small" style="margin:0;text-align:left">${tx("pushWhy")}</p>`}`;
+  else head = `<div class="row" style="gap:10px"><span class="pushok">🔔</span><p class="small grow" style="margin:0;text-align:left">${P.denied ? tx("pushDenied") : tx("pushWhy")}</p><button class="pill gopill" data-act="pushon" style="flex:none">${tx("pushOn1")}</button></div>`;
   return `<div class="card pushcard"><p class="eyebrow gold" style="margin:0">${tx("pushT")}</p>${head}
     ${P.on ? `<div class="pushcats">${sw("msg", tx("pcMsg"))}${sw("partners", tx("pcPart"))}${sw("rewards", tx("pcRew"))}${sw("muninn", tx("pcMun"))}${own ? sw("admin", tx("pcAdm")) : ""}</div>` : ""}</div>`;
 }
@@ -3213,7 +3221,7 @@ function mainView(){
   return `${topBar()}<main>
     <div><p class="eyebrow">${greet()}${nm0}</p><h1 style="margin-top:4px">${t("mainSub")}</h1></div>
     ${STANDALONE || st.instHide ? "" : `<div class="early"><span class="ebadge">App</span><p class="grow">${t("instS")} <button class="instlink" data-act="install">${t("instGo")}</button></p><button class="ex" data-act="instcx" aria-label="${t("close")}">${I.x}</button></div>`}
-    ${st.earlyHide ? "" : `<div class="early"><span class="ebadge">${t("earlyT")}</span><p class="grow">${t("earlySub")} <a href="mailto:${SUPPORT}?subject=Feedback%20Black%20Bird%20Training">${t("feedback")}</a></p><button class="ex" data-act="earlyx" aria-label="${t("close")}">${I.x}</button></div>`}
+    ${st.earlyHide ? "" : `<div class="early"><span class="ebadge">${t("earlyT")}</span><p class="grow">${t("earlySub")} <a href="#" data-act="fbopen">${t("feedback")}</a></p><button class="ex" data-act="earlyx" aria-label="${t("close")}">${I.x}</button></div>`}
     ${bdayCard()}
     ${gvCard()}
     <div class="card today">
@@ -3655,6 +3663,16 @@ async function chatSend(){ const el = document.getElementById("ch-in"), c = st.c
   el.value = ""; st.chDraft = ""; c.list = [...(c.list||[]), {id:"tmp"+Date.now(), mine:true, body:b, created_at:new Date().toISOString(), read:false}]; render(); chatScroll();
   try{ const { data } = await sb.rpc("msg_send", {p_no:c.no, p_body:b}); if(data !== "ok") toast(tx({no:"chNo", slow:"chSlow"}[data] || "netErr")); }catch(e){ toast(t("netErr")); }
   loadThread(true); loadInbox(); }
+function fbSheet(){
+  return `<div class="backdrop" data-act="fbx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("fbT")}"><div class="grab"></div>
+    <div class="row"><h2 class="grow" style="margin:0">${tx("fbT")}</h2><button class="xbtn" data-act="fbx" aria-label="${t("close")}">${I.x}</button></div>
+    <p class="muted" style="margin:0;font-size:14px">${tx("fbSub")}</p>
+    ${st.user && st.user.cloud ? `<form id="fbform" style="display:flex;flex-direction:column;gap:10px"><textarea class="field" id="fb-in" rows="5" maxlength="2000" placeholder="${tx("fbPh")}" style="resize:vertical;min-height:120px;font:inherit"></textarea><button class="btn btn-gold" type="submit">${tx("fbSend")}</button></form>` : `<p class="note" style="margin:0">${tx("fbLogin")}</p>`}
+    <p class="small" style="margin:0;text-align:left">${tx("fbMail")} <a href="mailto:${SUPPORT}?subject=Feedback%20Black%20Bird%20Training" style="color:var(--gold)">${SUPPORT}</a></p></div>`;
+}
+function feedbackBlock(){ const F = st.fbAdm || []; if(!st.user || st.user.no !== 1) return "";
+  return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("fbAdmT")} · ${F.length}</p>${F.length ? F.map(f => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px"><span class="row" style="gap:8px"><b class="grow">${esc(f.name || "")}</b><small class="muted">${ago(f.created_at)}</small></span><span style="font-size:14px;white-space:pre-wrap">${esc(f.body)}</span></div>`).join("") : `<p class="muted" style="font-size:14px;margin:0">${tx("fbNone")}</p>`}</div>`;
+}
 function reportsBlock(){ const R = st.msgReps || []; if(!st.user || st.user.no !== 1 || !R.length) return "";
   return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("chReps")} · ${R.filter(r => !r.handled).length}</p>${R.map(r => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px;${r.handled ? "opacity:.5" : ""}"><span class="row" style="gap:8px"><b class="grow">@${esc(r.reported||"?")} <span class="muted" style="font-weight:400">${tx("chRepBy")} @${esc(r.reporter||"?")}</span></b><small class="muted">${ago(r.created_at)}</small></span>${r.body ? `<span style="font-size:14px">“${esc(r.body)}”</span>` : ""}<span class="row" style="gap:8px"><button class="pill" data-act="amopen" data-n="${r.reported_no}">${tx("chSeeM")}</button>${r.handled ? "" : `<button class="pill" data-act="repdone" data-id="${r.id}">✓ ${tx("chDone")}</button>`}</span></div>`).join("")}</div>`; }
 function partnersBlock(){
@@ -3918,6 +3936,7 @@ function me(){
 <!--/F-->
     <!--F:faq-->${faqAdminBlock()}<!--/F-->
     <!--F:rep-->${reportsBlock()}<!--/F-->
+    <!--F:fb-->${feedbackBlock()}<!--/F-->
     <!--F:rv-->${rvAdminBlock()}<!--/F-->
     <!--F:inv-->${inviteCard()}<!--/F-->
     <!--F:rate-->${reviewCard()}<!--/F-->
@@ -3929,7 +3948,8 @@ const SUPPORT = "contact@theblackbirdsociety.com";
 function helpCard(){
   return `<div class="card help" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">${t("helpTitle")}</p><p class="muted" style="font-size:14px">${t("helpSub")}</p>
     <p class="mail">${SUPPORT}</p>
-    <div class="btnrow"><a class="btn btn-gold" href="mailto:${SUPPORT}?subject=Black%20Bird%20Training" style="min-height:46px;font-size:14px;text-decoration:none">${t("emailUs")}</a><button class="btn btn-line" data-act="copymail" style="min-height:46px;font-size:14px">${t("copyEmail")}</button></div></div>`;
+    <button class="btn btn-gold" data-act="fbopen" style="min-height:46px;font-size:14px">${tx("fbT")}</button>
+    <div class="btnrow"><a class="btn btn-line" href="mailto:${SUPPORT}?subject=Black%20Bird%20Training" style="min-height:46px;font-size:14px;text-decoration:none">${t("emailUs")}</a><button class="btn btn-line" data-act="copymail" style="min-height:46px;font-size:14px">${t("copyEmail")}</button></div></div>`;
 }
 function missionCard(){ return `<div class="card mscard"><p class="eyebrow gold"><span class="rune" aria-hidden="true">ᛟ</span> ${tx("msT")}</p><h3>${tx("msH")}</h3>${tx("msP").map(p => `<p class="muted" style="margin:0;font-size:14px;line-height:1.55">${p}</p>`).join("")}<p class="gold" style="margin:0;font-size:13px;font-weight:700;letter-spacing:.06em">— ${tx("msSign")}</p></div>`; }
 function pro(){
@@ -3990,6 +4010,7 @@ function render(){
   if(st.mg) h += mgSheet(); else if(st.akOpen) h += askSheet();
   if(st.pre && st.view !== "work") h += preSheet();
   if(st.musOpen) h += musicSheet();
+  if(st.fbOpen) h += fbSheet();
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
   if(st.nOpen) h += nSheet();
@@ -4200,6 +4221,8 @@ app.addEventListener("click", e => {
     case "vuse": { const id = +el.dataset.id; sb.rpc("voucher_use", {p_id:id, p_start:null, p_today:todayISO()}).then(({ data }) => {
         toast(data === "ok" ? tx("pmVOk") : data === "expired" ? tx("pmVExp") : (data === "paid" || data === "lifetime") ? tx("pmVPaid") : t("netErr")); loadPrem(); }).catch(() => toast(t("netErr"))); break; }
     case "beep": { const on = store.get("bbt_beep", true) === false; store.set("bbt_beep", on); if(on) beep(true); break; }
+    case "fbopen": e.preventDefault(); st.fbOpen = true; break;
+    case "fbx": st.fbOpen = false; break;
     case "pushon": pushOn(); return;
     case "pushoff": pushOffAll(); return;
     case "pushcat": { const k = el.dataset.k; st.pushPrefs = st.pushPrefs || {}; st.pushPrefs[k] = st.pushPrefs[k] === false; if(sb) sb.rpc("push_prefs_set", {p_prefs: st.pushPrefs}).catch(() => {}); break; }
@@ -4649,6 +4672,8 @@ app.addEventListener("submit", e => {
   if(e.target.id === "cpdatef"){ e.preventDefault(); const v = (document.getElementById("cp-date")||{}).value || ""; cpGet().date = /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : ""; cpSave(); render(); return; }
   if(e.target.id === "cpbest"){ e.preventDefault(); const c = cpGet(); ["sq","bp","dl"].forEach(k => { const f = parseFloat(String((document.getElementById("cpb-"+k)||{}).value||"").replace(",", ".")); c.best[k] = isFinite(f) && f > 0 && f < 600 ? f : ""; }); cpSave(); render(); return; }
   if(e.target.id === "cpchk"){ e.preventDefault(); const c = cpGet(), f = parseFloat(String((document.getElementById("cpc-kg")||{}).value||"").replace(",", ".")), n = ((document.getElementById("cpc-n")||{}).value||"").trim().slice(0,80); if(!(f > 20 && f < 400) && !n) return; c.checks.push({d: Date.now(), kg: f > 20 && f < 400 ? f : null, n}); cpSave(); render(); return; }
+  if(e.target.id === "fbform"){ e.preventDefault(); const v = ((document.getElementById("fb-in")||{}).value || "").trim(); if(v.length < 3){ toast(tx("fbShort")); return; }
+    sb.rpc("feedback_send", {p_body: v}).then(({ data }) => { if(data === "ok"){ st.fbOpen = false; toast(tx("fbThanks")); } else toast(tx(data === "limit" ? "fbLimit" : "fbFail")); render(); }).catch(() => toast(tx("fbFail"))); return; }
   if(e.target.id === "splform"){ e.preventDefault(); const v = (document.getElementById("spl-in")||{}).value || "", id = splParse(v);
     if(!id){ toast(tx("musBad")); return; } store.set("bbt_spl", id); st.musPlay = id; st.musOpen = false; toast(tx("musSaved")); render(); musDock(); return; }
   if(e.target.id === "grform"){ e.preventDefault(); const f = document.getElementById("gr-in"), v = (f && f.value || "").trim().slice(0,60); if(!v) return; st.groc.items.push({id: "u" + Date.now().toString(36), n: v, q: "", done: false, own: true}); grSave(); st.grQ = ""; render(); setTimeout(() => { const g = document.getElementById("gr-in"); if(g) g.focus(); }, 40); return; }
@@ -4673,7 +4698,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v63";
+const APP_V = "bbt-v64";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
