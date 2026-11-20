@@ -3052,11 +3052,12 @@ function ssCalLinks(x){
 /* ===== Society Courses (21 Nov 2026): paid extras, waitlist + vote for the next course ===== */
 const CRS = ["flex","abs30","glutes","pullup","posture","over60","mama","fatloss"];
 const CRS_OFF = [0,5,10,15,20];
+const CRS_X = ["meals","challenge","coach","shop"];
 function loadCrs(){ if(!sb) return; sb.rpc("course_stats").then(({ data }) => { st.crs = data || {mine:[],counts:{}}; render(); }).catch(() => {}); }
 function crsWant(c){
   if(!(sb && st.user && st.user.cloud)){ toast(tx("crsLogin")); return; }
   const mine = (st.crs && st.crs.mine) || [], on = !mine.includes(c);
-  sb.rpc("course_want", {p_course: c, p_on: on}).then(({ data }) => { if(data) st.crs = data; if(on) toast(tx(c === "flex" ? "crsJoined" : "crsVoted")); render(); }).catch(() => toast(tx("fbFail")));
+  sb.rpc("course_want", {p_course: c, p_on: on}).then(({ data }) => { if(data) st.crs = data; if(on) toast(tx(c === "flex" ? "crsJoined" : CRS_X.includes(c) ? "crsNoted" : "crsVoted")); render(); }).catch(() => toast(tx("fbFail")));
 }
 function crsNudge(){
   if(st.crsHide || store.get("bbt_crshide", 0) > Date.now()) return "";
@@ -3067,6 +3068,8 @@ function crsSheet(){
   const r = rankOf(st.total || 0), joined = mine.includes("flex"), nFlex = +cnt.flex || 0;
   const chk = I.check;
   const ranks = RANKS.map((rk,i) => `<div class="${i === r ? "me" : ""}"><span class="rune">${RUNES[i]}</span><span>${RN(i)}${i === r ? ` <small class="muted">· ${tx("crsYou")}</small>` : ""}</span><em>${CRS_OFF[i] ? "-" + CRS_OFF[i] + "%" : "—"}</em></div>`).join("");
+  const extras = CRS_X.map(c => { const on = mine.includes(c);
+    return `<div class="crsv"><span class="grow" style="min-width:0"><b>${tx("crs_" + c)}</b><small>${tx("crsd_" + c)}</small></span><button class="pill${on ? " on" : ""}" data-act="crsw" data-c="${c}" aria-pressed="${on}">${on ? "✓ " + tx("crsNotOn") : tx("crsNot")}</button></div>`; }).join("");
   const votes = CRS.slice(1).map(c => { const on = mine.includes(c), n = +cnt[c] || 0;
     return `<div class="crsv"><span class="grow" style="min-width:0"><b>${tx("crs_" + c)}</b><small>${tx("crsd_" + c)}${n ? ` <span style="white-space:nowrap">· 🔥 ${n}</span>` : ""}</small></span><button class="pill${on ? " on" : ""}" data-act="crsw" data-c="${c}" aria-pressed="${on}">${on ? "✓ " + tx("crsVoteOn") : tx("crsVote")}</button></div>`; }).join("");
   return `<div class="backdrop" data-act="crsx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("crsT")}"><div class="grab"></div>
@@ -3074,8 +3077,7 @@ function crsSheet(){
     <p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("crsSub")}</p>
     <div class="crsfeat"><span class="crsnew" style="align-self:flex-start;font-size:11px;padding:3px 7px;margin:0">${tx("crsSoon")}</span>
       <h3>${tx("crs_flex")}</h3><p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("crsFlexP")}</p>
-      <ul><li>${chk}<span>${tx("crsB1")}</span></li><li>${chk}<span>${tx("crsB2")}</span></li><li>${chk}<span>${tx("crsB3")}</span></li><li>${chk}<span>${tx("crsB4")}</span></li></ul>
-      <div class="crsprice"><div><small>${tx("crsPrReg")}</small><b>$24.99</b></div><div class="hot"><small>${tx("crsPrEb")}</small><b>$12.49</b></div><div><small>Premium</small><b>$9.99</b></div><div class="hot"><small>${tx("crsPrBoth")}</small><b>$4.99</b></div></div>
+      <ul><li>${chk}<span>${tx("crsB1")}</span></li><li>${chk}<span>${tx("crsB2")}</span></li><li>${chk}<span>${tx("crsB4")}</span></li></ul>
       <div class="crsdeal">🔥 <b>${tx("crsDealT")}</b> ${tx("crsDealP")}</div>
       <button class="btn ${joined ? "btn-line" : "btn-gold"}" data-act="crsw" data-c="flex" aria-pressed="${joined}" style="min-height:48px">${joined ? "✓ " + tx("crsOnList") : tx("crsJoin")}</button>
       ${nFlex >= 5 ? `<p class="small" style="margin:0;text-align:center">${tx("crsCount").replace("{n}", nFlex)}</p>` : ""}
@@ -3083,36 +3085,36 @@ function crsSheet(){
     <div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">👑 ${t("pro")}</p>
       <p style="margin:0;font-size:14px;line-height:1.5">${isPro ? tx("crsProYes") : tx("crsProNo")}</p>
       ${isPro ? "" : `<button class="btn btn-line" data-act="crspro" style="min-height:44px;font-size:14px">${tx("pmGo")} ${I.arrow}</button>`}</div>
-    <div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("crsRkT")}</p>
-      <p class="muted" style="margin:0;font-size:13px;line-height:1.5">${tx("crsRkP")}</p><div class="crsrk">${ranks}</div></div>
     <div class="card" style="display:flex;flex-direction:column;gap:2px"><p class="eyebrow gold">${tx("crsVoteT")}</p>
       <p class="muted" style="margin:0 0 4px;font-size:13px;line-height:1.5">${tx("crsVoteP")}</p>${votes}</div>
+    <div class="card" style="display:flex;flex-direction:column;gap:2px"><p class="eyebrow gold">${tx("crsXT")}</p>
+      <p class="muted" style="margin:0 0 4px;font-size:13px;line-height:1.5">${tx("crsXP")}</p>${extras}</div>
   </div>`;
 }
 { const X = {
-en:{crsT:"Society Courses",crsNew:"New",crsTile:"Flexibility & Mobility · soon",crsSee:"See the offer",crsNudge:"Society Courses are coming: Flexibility & Mobility first. Early birds get 50% off.",
-crsSub:"Deep-dive programs built by our coaches. Buy a course once and keep it forever. Premium members get every course at a special low price. The free app stays free.",
+en:{crsT:"Society Courses",crsNew:"New",crsTile:"Flexibility & Mobility · soon",crsSee:"See the offer",crsNudge:"Society Courses are coming: Flexibility & Mobility first. Join the early bird list for a launch offer.",
+crsSub:"Deep-dive programs built by our coaches, plus more extras on the way. The free app stays free.",
 crsSoon:"Coming soon",crs_flex:"Flexibility & Mobility",crsFlexP:"A complete program to free up your hips, hamstrings, back and shoulders. Move better, feel looser, train with less pain.",
 crsB1:"Step-by-step guided sessions with timer and beeps",crsB2:"For every level, from stiff beginner up",crsB3:"First lesson free for everyone",crsB4:"Buy once, yours forever",
-crsDealT:"Early bird offer:",crsDealP:"join the list now and get 50% off at launch. Your rank discount stacks on top.",crsJoin:"Join the list · 50% off",crsOnList:"You're on the list",crsCount:"{n} members already on the list",
-crsProYes:"You're Premium: you get every Society course at the Premium price. Flexibility & Mobility: $9.99 instead of $24.99, or $4.99 as an early bird.",crsProNo:"Premium members get every Society course at a special price: Flexibility & Mobility for $9.99 instead of $24.99, or $4.99 as an early bird.",
+crsDealT:"Early bird list:",crsDealP:"join now and get a special launch offer, only for people on the list.",crsJoin:"Join the early bird list",crsOnList:"You're on the list",crsCount:"{n} members already on the list",
+crsProYes:"You're Premium: you'll get a special Premium price on every Society course.",crsProNo:"Premium members will get a special price on every Society course.",
 crsRkT:"Rank perks",crsRkP:"The more you train, the less you pay. Your rank gives you a discount on every course.",crsYou:"you",
-crsVoteT:"Vote for the next course",crsVoteP:"Tap the ones you want. The most wanted gets built next, and voters get the early bird price too.",crsVote:"I want it",crsVoteOn:"Voted",
+crsVoteT:"Vote for the next course",crsVoteP:"Tap the ones you want. The most wanted gets built next, and voters join its early bird list.",crsVote:"I want it",crsVoteOn:"Voted",
 crs_abs30:"Abs & Core 30 days",crsd_abs30:"A daily core challenge",crs_glutes:"Glute Builder",crsd_glutes:"Stronger, rounder glutes",crs_pullup:"First Pull-up",crsd_pullup:"From zero to your first rep",
 crs_posture:"Back & Posture",crsd_posture:"For desk days and sore backs",crs_over60:"60+ Strength & Balance",crsd_over60:"Stay strong and steady",crs_mama:"Pregnancy & After Birth",crsd_mama:"A full program, step by step",crs_fatloss:"Fat Loss 8 weeks",crsd_fatloss:"Training + meals + grocery lists",
-crsPrReg:"Price",crsPrEb:"Early bird",crsPrBoth:"Premium early bird",crsLogin:"Log in to join the list.",crsJoined:"You're on the list! We'll tell you first, with your early bird 50% off.",crsVoted:"Vote counted. Thanks!",crsPf:"Society courses at the Premium price, up to 80% off (coming soon)",
+crsPrReg:"Price",crsPrEb:"Early bird",crsPrBoth:"Premium early bird",crsXT:"More extras coming",crsXP:"Tap what you want and we'll tell you first when it's ready.",crsNot:"Notify me",crsNotOn:"On the list",crsNoted:"Noted! You'll be the first to know.",crs_meals:"Meal plan packs",crsd_meals:"Budget, high-protein, vegetarian",crs_challenge:"Monthly challenges",crsd_challenge:"30 days, a goal and a badge",crs_coach:"1-to-1 program",crsd_coach:"A plan written for you by a coach",crs_shop:"Society Shop",crsd_shop:"Apparel and gear",crsLogin:"Log in to join the list.",crsJoined:"You're on the list! We'll tell you first, with your early bird offer.",crsVoted:"Vote counted. Thanks!",crsPf:"Special Premium price on Society courses (coming soon)",
 n_adm_course:"📚 {name} wants the course: {course}"},
-fr:{crsT:"Cours de la Society",crsNew:"Nouveau",crsTile:"Souplesse & Mobilité · bientôt",crsSee:"Voir l'offre",crsNudge:"Les cours de la Society arrivent : Souplesse & Mobilité en premier. -50 % pour les premiers inscrits.",
-crsSub:"Des programmes complets créés par nos coachs. Achète un cours une fois et garde-le pour toujours. Les membres Premium ont chaque cours à petit prix. L'appli gratuite reste gratuite.",
+fr:{crsT:"Cours de la Society",crsNew:"Nouveau",crsTile:"Souplesse & Mobilité · bientôt",crsSee:"Voir l'offre",crsNudge:"Les cours de la Society arrivent : Souplesse & Mobilité en premier. Inscris-toi pour l'offre de lancement.",
+crsSub:"Des programmes complets créés par nos coachs, et d'autres extras en préparation. L'appli gratuite reste gratuite.",
 crsSoon:"Bientôt",crs_flex:"Souplesse & Mobilité",crsFlexP:"Un programme complet pour libérer tes hanches, ischios, dos et épaules. Bouge mieux, sens-toi plus libre, entraîne-toi avec moins de douleurs.",
 crsB1:"Séances guidées pas à pas avec minuteur et bips",crsB2:"Pour tous les niveaux, même si tu es raide",crsB3:"Première leçon offerte à tous",crsB4:"Achète une fois, à toi pour toujours",
-crsDealT:"Offre premiers inscrits :",crsDealP:"inscris-toi maintenant et profite de -50 % au lancement. La réduction de ton rang s'ajoute en plus.",crsJoin:"M'inscrire · -50 %",crsOnList:"Tu es sur la liste",crsCount:"{n} membres déjà inscrits",
-crsProYes:"Tu es Premium : tu as chaque cours de la Society au prix Premium. Souplesse & Mobilité : 9,99 $ au lieu de 24,99 $, ou 4,99 $ en premier inscrit.",crsProNo:"Les membres Premium ont chaque cours de la Society à prix spécial : Souplesse & Mobilité à 9,99 $ au lieu de 24,99 $, ou 4,99 $ en premier inscrit.",
+crsDealT:"Liste des premiers inscrits :",crsDealP:"inscris-toi maintenant et profite d'une offre de lancement réservée aux inscrits.",crsJoin:"M'inscrire en avant-première",crsOnList:"Tu es sur la liste",crsCount:"{n} membres déjà inscrits",
+crsProYes:"Tu es Premium : tu auras un prix Premium spécial sur chaque cours de la Society.",crsProNo:"Les membres Premium auront un prix spécial sur chaque cours de la Society.",
 crsRkT:"Avantages de rang",crsRkP:"Plus tu t'entraînes, moins tu paies. Ton rang te donne une réduction sur chaque cours.",crsYou:"toi",
-crsVoteT:"Vote pour le prochain cours",crsVoteP:"Touche ceux que tu veux. Le plus demandé sera créé ensuite, et les votants ont aussi le tarif premiers inscrits.",crsVote:"Je le veux",crsVoteOn:"Voté",
+crsVoteT:"Vote pour le prochain cours",crsVoteP:"Touche ceux que tu veux. Le plus demandé sera créé ensuite, et les votants rejoignent sa liste d'avant-première.",crsVote:"Je le veux",crsVoteOn:"Voté",
 crs_abs30:"Abdos & Gainage 30 jours",crsd_abs30:"Un défi gainage chaque jour",crs_glutes:"Fessiers sculptés",crsd_glutes:"Des fessiers plus forts et plus ronds",crs_pullup:"Première traction",crsd_pullup:"De zéro à ta première rep",
 crs_posture:"Dos & Posture",crsd_posture:"Pour les journées au bureau et le mal de dos",crs_over60:"60+ Force & Équilibre",crsd_over60:"Rester fort et stable",crs_mama:"Grossesse & Après bébé",crsd_mama:"Un programme complet, pas à pas",crs_fatloss:"Perte de gras 8 semaines",crsd_fatloss:"Entraînement + repas + listes de courses",
-crsPrReg:"Prix",crsPrEb:"Premier inscrit",crsPrBoth:"Premium + premier inscrit",crsLogin:"Connecte-toi pour t'inscrire.",crsJoined:"Tu es sur la liste ! Tu seras prévenu en premier, avec tes -50 %.",crsVoted:"Vote enregistré. Merci !",crsPf:"Cours de la Society au prix Premium, jusqu'à -80 % (bientôt)",
+crsPrReg:"Prix",crsPrEb:"Premier inscrit",crsPrBoth:"Premium + premier inscrit",crsXT:"D'autres extras arrivent",crsXP:"Touche ce qui t'intéresse, on te prévient en premier quand c'est prêt.",crsNot:"Me prévenir",crsNotOn:"Sur la liste",crsNoted:"C'est noté ! Tu seras prévenu en premier.",crs_meals:"Packs de plans repas",crsd_meals:"Petit budget, protéiné, végétarien",crs_challenge:"Défis du mois",crsd_challenge:"30 jours, un objectif et un badge",crs_coach:"Programme 1-to-1",crsd_coach:"Un plan écrit pour toi par un coach",crs_shop:"Boutique Society",crsd_shop:"Vêtements et équipement",crsLogin:"Connecte-toi pour t'inscrire.",crsJoined:"Tu es sur la liste ! Tu seras prévenu en premier, avec ton offre de lancement.",crsVoted:"Vote enregistré. Merci !",crsPf:"Prix Premium spécial sur les cours de la Society (bientôt)",
 n_adm_course:"📚 {name} veut le cours : {course}"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 function pushNudge(){
@@ -4913,7 +4915,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v76";
+const APP_V = "bbt-v77";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
