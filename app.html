@@ -3424,7 +3424,7 @@ async function makeShare(kind){
     if(who){ sp(4); font(600,34); center(who, 880+nl*56+40, FG); sp(0); }
     font(600,32); sp(1); wrap(("“"+quote(st.total)+"”").toUpperCase(), 1100, 860, 42, "#cfdccc", 2); sp(0);
   }
-  const qr = kind==="card" && u.no ? await qrMatrix(SITE + "/app?ref=" + u.no) : null;
+  const qr = kind==="card" && u.no ? await qrMatrix(SITE + "/?ref=" + u.no) : null;
   if(qr){
     const bx = 160, by = H-184, bw = W-320, bh = 152, qs = 124, n = qr.length, m = qs / (n + 2);
     x.fillStyle = "rgba(0,0,0,.55)"; x.strokeStyle = "rgba(124,255,79,.55)"; x.lineWidth = 2; x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, 18) : x.rect(bx, by, bw, bh); x.fill(); x.stroke();
@@ -3432,7 +3432,7 @@ async function makeShare(kind){
     qr.forEach((row, r) => row.forEach((on, c2) => { if(on) x.fillRect(bx+16+(c2+1)*m, by+16+(r+1)*m, Math.ceil(m), Math.ceil(m)); }));
     x.textAlign = "left"; const tx0 = bx+16+qs+28;
     sp(3); font(700,34); x.fillStyle = G; x.fillText(tx("cardJoin").toUpperCase(), tx0, by+54); sp(0);
-    font(600,26); x.fillStyle = FG; x.fillText(("theblackbirdsociety.com/app?ref=" + u.no), tx0, by+92);
+    font(600,26); x.fillStyle = FG; x.fillText(("theblackbirdsociety.com/?ref=" + u.no), tx0, by+92);
     font(500,24,"b"); x.fillStyle = "#cfdccc"; x.fillText(tx("cardFree"), tx0, by+126);
   } else {
     sp(4); font(600,28); center("TAG @THEBLACKBIRD.SOCIETY", H-112, "#cfdccc"); sp(0);
@@ -3449,7 +3449,7 @@ async function prepShare(kind){
 }
 function openPreview(f){ if(st.preview) URL.revokeObjectURL(st.preview); st.preview = URL.createObjectURL(f); render(); }
 function doShare(kind){
-  const u = st.user || {}, link = SITE + "/app" + (u.no ? "?ref=" + u.no : "");
+  const u = st.user || {}, link = SITE + "/" + (u.no ? "?ref=" + u.no : "");
   const text = (kind==="work" ? t("shareWorkText") : t("shareText")) + " " + link + " @theblackbird.society #TheBlackBirdSociety";
   const go = f => {
     if(f && navigator.canShare && navigator.share && navigator.canShare({files:[f]})){
@@ -4119,7 +4119,7 @@ app.addEventListener("click", e => {
         try{ if(l.up){ await sb.from("progress_photos").update({visibility:l.vis}).eq("taken_at", id); } else await phoUp(l); }catch(e){} st.photos = await phoAll(); render(); }); return; }
     case "teamopen": openTeam(+el.dataset.id); return;
     case "teamx": st.team = null; break;
-    case "teamcopy": { const c = el.dataset.c, txt = c + " · " + SITE + "/app"; try{ navigator.clipboard.writeText(txt).then(() => toast(tx("tCopied"))).catch(() => toast(c)); }catch(err){ toast(c); } return; }
+    case "teamcopy": { const c = el.dataset.c, txt = c + " · " + SITE; try{ navigator.clipboard.writeText(txt).then(() => toast(tx("tCopied"))).catch(() => toast(c)); }catch(err){ toast(c); } return; }
     case "teamleave": { const id = +el.dataset.id; sb.rpc("team_leave", {p_id:id}).then(() => { st.team = null; loadTeams(); }); return; }
     case "pgwalk": { const p = pg(); if(p.walkDay === dkey()) break; p.walkDay = dkey(); pgEvent("walk"); toast(tx("walkOk") + " · " + tx("xpGot").replace("{n}", XPV.walk)); break; }
     case "pgbdg": st.pgB = st.pgB === el.dataset.id ? null : el.dataset.id; break;
@@ -4166,7 +4166,7 @@ app.addEventListener("click", e => {
       sb.rpc("review_set", {p_id:id, p_status:s2}).then(({ data, error }) => { if(error || data!=="ok"){ toast(t("netErr")); return; }
         st.rvAdmin = (st.rvAdmin||[]).map(x => x.id===id ? {...x, status:s2} : x).filter(x => x.status!=="hidden"); cloud.loadReviews(); render(); }).catch(() => toast(t("netErr")));
       break; }
-    case "invite": { const url = SITE + "/app?ref=" + st.user.no, txt = t("invText");
+    case "invite": { const url = SITE + "/?ref=" + st.user.no, txt = t("invText");
       if(navigator.share){ navigator.share({text: txt, url}).catch(() => {}); }
       else { try{ navigator.clipboard.writeText(txt + " " + url).then(() => toast(t("linkCopied"))).catch(() => toast(url)); }catch(err){ toast(url); } }
       break; }
@@ -4558,7 +4558,7 @@ window.addEventListener("online", () => cloud.flushPending());
 cloud.loadReviews(); cloud.loadFaq(); try{ pgDaily(); }catch(e){}
 if("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("/sw.js").catch(() => {});
 /* new version check: on open and every time the app comes back to the screen */
-const APP_V = "bbt-v59";
+const APP_V = "bbt-v60";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
