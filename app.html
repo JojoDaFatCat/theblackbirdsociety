@@ -4236,6 +4236,10 @@ app.addEventListener("click", e => {
       else if(k === "msg"){ st.view = "me"; st.meSheet = "msg"; loadInbox(); }
       else if(k === "msg_report"){ st.view = "me"; st.meSheet = "rep"; }
       else if(k === "faq_new"){ st.view = "me"; st.meSheet = "faq"; }
+      else if(k === "adm_fb"){ st.view = "me"; st.meSheet = "fb"; if(sb) sb.rpc("admin_feedback").then(({ data }) => { st.fbAdm = data || []; render(); }).catch(() => {}); }
+      else if(k === "adm_q"){ st.view = "me"; st.meSheet = "faq"; }
+      else if(k === "adm_review"){ st.view = "me"; st.meSheet = "rv"; }
+      else if(k === "adm_member" || k === "adm_premium"){ st.view = "me"; st.meSheet = "adm"; }
       else if(k === "faq_ans"){ const n0 = (st.notifs||[]).find(x => x.kind === "faq_ans"); st.akQ = n0 && n0.data ? n0.data.q || "" : ""; st.akOpen = true; }
       else if(k.startsWith("ref")){ st.view = "me"; st.scrollGrp = "premcard"; loadPrem(); } else if(k.startsWith("review")){ st.view = "me"; }
       break; }
@@ -4698,7 +4702,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v64";
+const APP_V = "bbt-v65";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
