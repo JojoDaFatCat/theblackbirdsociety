@@ -323,6 +323,9 @@ a.btn{text-decoration:none}a.btn.btn-line{color:var(--fg)}a.btn.btn-gold{color:v
 .cpchk{display:grid;grid-template-columns:90px 1fr;gap:8px}.cpchk .field{min-width:0}.cpchk .btn{grid-column:1/-1;min-height:46px}
 .cplog{display:flex;flex-direction:column;gap:6px}.cplog div{display:grid;grid-template-columns:56px 90px 1fr 28px;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line2);border-radius:10px}.cplog small{font-size:12px;color:var(--muted)}.cplog span{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}.cplog em{font-style:normal;font-size:12px}.cplog em.dn{color:var(--gold)}.cplog em.up{color:#ffb84d}.cplog button{background:none;border:0;color:var(--muted);cursor:pointer}
 .grgen{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grgen .pill{min-height:44px}
+.prestat{display:flex;gap:10px}.prestat div{flex:1;border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column}.prestat b{font:700 24px var(--font-d);color:var(--gold)}.prestat span{font-size:12px;color:var(--muted)}
+.peekrow .bnum{width:22px;height:22px;flex:none;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:700}
+.grsugw{display:flex;flex-direction:column;gap:8px}.grsugw:empty{display:none}.grsugs{display:flex;flex-wrap:wrap;gap:8px}.grsugs .pill{color:var(--gold);border-color:var(--gold-dim)}.grsugs .pill.on{opacity:.5}
 .grform{display:flex;gap:8px}.grform .field{flex:1;min-width:0}.grform .btn{width:auto;min-height:48px;padding:0 18px}
 .grlist{display:flex;flex-direction:column;gap:6px}
 .grrow{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 8px;border:1px solid var(--line2);border-radius:12px}
@@ -396,7 +399,14 @@ button.meal{width:100%;text-align:left;align-items:stretch}
 .btnrow .btn svg{width:18px;height:18px;flex:none}
 .mywk{display:flex;align-items:center;gap:10px;padding:0 12px 0 0}
 .mywk .session{flex:1;min-width:0;background:none;border:0}
-.bitem{display:flex;flex-direction:column;gap:12px;padding:14px}
+.bitem{display:flex;flex-direction:column;gap:12px;padding:14px;transition:transform .15s}
+.blist{display:flex;flex-direction:column;gap:12px}
+.bitem .row{gap:10px}
+.bgrip{width:22px;height:40px;flex:none;display:grid;place-items:center;cursor:grab;touch-action:none;margin-left:-4px;color:var(--muted)}.bgrip svg{width:20px;height:20px;fill:currentColor}
+.bnum{width:22px;height:22px;flex:none;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:700}
+.bmv{display:flex;flex-direction:column;gap:4px;flex:none}.bmv button{width:34px;height:26px;border-radius:8px;border:1px solid var(--line2);background:var(--surface2);color:var(--gold);display:grid;place-items:center;cursor:pointer}.bmv button:disabled{opacity:.25;cursor:default}.bmv svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.bitem.bdrag{position:relative;z-index:5;border-color:var(--gold)!important;box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 0 1px var(--gold);transition:none}
+.bitem.bflash{animation:bfl .6s}@keyframes bfl{0%{border-color:var(--gold);background:rgba(124,255,79,.12)}100%{}}
 .bitem .mini{width:52px;height:46px;border-radius:10px;background:var(--surface2);flex:none;overflow:hidden;display:grid;place-items:center}
 .bitem .mini svg{width:60px}
 .stepper{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:6px 6px 6px 12px;border:1px solid var(--line2);border-radius:3px}
@@ -1769,6 +1779,18 @@ function grBuild(weeks){
   const L = [...M.values()].map((o, j) => { const q = Object.entries(o.a).map(([u, v]) => grQty(v, u)); if(o.uses) q.push(tx(o.uses === 1 ? "grUses1" : "grUses").replace("{n}", o.uses)); return {id: "g" + Date.now().toString(36) + j, n: o.n, q: q.join(" + "), done: false}; });
   return L.sort((a, b) => a.n.localeCompare(b.n, st.lang));
 }
+const GRSUG = "Chicken breast|Blanc de poulet;Chicken thighs|Hauts de cuisse de poulet;Whole chicken|Poulet entier;Chicken drumsticks|Pilons de poulet;Chicken mince|Poulet hach\u00e9;Chicken wings|Ailes de poulet;Turkey breast|Blanc de dinde;Turkey mince|Dinde hach\u00e9e;Beef mince 5%|B\u0153uf hach\u00e9 5 %;Beef steak|Steak de b\u0153uf;Stewing beef|B\u0153uf \u00e0 mijoter;Pork loin|Filet de porc;Pork chops|C\u00f4tes de porc;Ham|Jambon;Bacon|Bacon;Lamb|Agneau;Salmon fillets|Pav\u00e9s de saumon;Canned tuna|Thon en bo\u00eete;Canned sardines|Sardines en bo\u00eete;Canned salmon|Saumon en bo\u00eete;White fish fillets|Filets de poisson blanc;Prawns|Crevettes;Mackerel|Maquereau;Eggs|\u0152ufs;Egg whites|Blancs d'\u0153ufs;Tofu|Tofu;Tempeh|Tempeh;Milk|Lait;Oat milk|Lait d'avoine;Soy milk|Lait de soja;Almond milk|Lait d'amande;Greek yogurt|Yaourt grec;Plain yogurt|Yaourt nature;Skyr|Skyr;Cottage cheese|Cottage cheese;Fromage blanc|Fromage blanc;Cheddar|Cheddar;Mozzarella|Mozzarella;Feta|Feta;Parmesan|Parmesan;Butter|Beurre;Whey protein|Prot\u00e9ine whey;Rice|Riz;Brown rice|Riz complet;Basmati rice|Riz basmati;Oats|Flocons d'avoine;Pasta|P\u00e2tes;Wholewheat pasta|P\u00e2tes compl\u00e8tes;Bread|Pain;Wholegrain bread|Pain complet;Wraps|Wraps;Potatoes|Pommes de terre;Sweet potatoes|Patates douces;Quinoa|Quinoa;Couscous|Couscous;Noodles|Nouilles;Cereal|C\u00e9r\u00e9ales;Rice cakes|Galettes de riz;Lentils|Lentilles;Chickpeas|Pois chiches;Kidney beans|Haricots rouges;Black beans|Haricots noirs;Baked beans|Haricots blancs \u00e0 la tomate;Bananas|Bananes;Apples|Pommes;Oranges|Oranges;Berries|Fruits rouges;Frozen berries|Fruits rouges surgel\u00e9s;Strawberries|Fraises;Blueberries|Myrtilles;Grapes|Raisin;Pineapple|Ananas;Mango|Mangue;Kiwi|Kiwi;Lemons|Citrons;Limes|Citrons verts;Avocados|Avocats;Tomatoes|Tomates;Cherry tomatoes|Tomates cerises;Cucumber|Concombre;Lettuce|Salade;Spinach|\u00c9pinards;Broccoli|Brocoli;Carrots|Carottes;Onions|Oignons;Red onions|Oignons rouges;Garlic|Ail;Peppers|Poivrons;Courgettes|Courgettes;Mushrooms|Champignons;Green beans|Haricots verts;Frozen vegetables|L\u00e9gumes surgel\u00e9s;Frozen peas|Petits pois surgel\u00e9s;Sweetcorn|Ma\u00efs;Cabbage|Chou;Cauliflower|Chou-fleur;Pumpkin|Potiron;Ginger|Gingembre;Fresh herbs|Herbes fra\u00eeches;Canned tomatoes|Tomates en conserve;Tomato passata|Coulis de tomate;Olive oil|Huile d'olive;Vegetable oil|Huile v\u00e9g\u00e9tale;Peanut butter|Beurre de cacahu\u00e8te;Almonds|Amandes;Walnuts|Noix;Peanuts|Cacahu\u00e8tes;Mixed nuts|Noix m\u00e9lang\u00e9es;Chia seeds|Graines de chia;Honey|Miel;Dark chocolate|Chocolat noir;Salt|Sel;Pepper|Poivre;Spices|\u00c9pices;Paprika|Paprika;Cumin|Cumin;Curry powder|Curry en poudre;Soy sauce|Sauce soja;Mustard|Moutarde;Ketchup|Ketchup;Vinegar|Vinaigre;Stock cubes|Bouillon cube;Hummus|Houmous;Coffee|Caf\u00e9;Tea|Th\u00e9;Sparkling water|Eau gazeuse;Water|Eau;Coconut milk|Lait de coco;Flour|Farine;Sugar|Sucre;Baking powder|Levure chimique;Creatine|Cr\u00e9atine;Electrolytes|\u00c9lectrolytes".split(";").map(x => x.split("|"));
+function grNorm(x){ return String(x).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+function grSugs(q){ q = grNorm(q.trim()); if(q.length < 2) return [];
+  const fr = st.lang === "fr", have = new Set(((st.groc && st.groc.items) || []).map(x => grNorm(x.n))), out = [], seen = new Set();
+  const pool = GRSUG.map(p => fr ? p[1] : p[0]);
+  try{ if(st.mplan) grBuild(1).forEach(x => pool.push(x.n)); }catch(e){}
+  pool.forEach(n => { const k = grNorm(n); if(seen.has(k)) return; const w = k.split(/[^a-z0-9]+/);
+    const sc = k.startsWith(q) ? 0 : w.some(z => z.startsWith(q)) ? 1 : k.includes(q) ? 2 : -1; if(sc < 0) return; seen.add(k); out.push([sc, n, have.has(k), out.length]); });
+  return out.sort((a,b) => a[0]-b[0] || a[3]-b[3]).slice(0, 8);
+}
+function grSugHTML(q){ const L = grSugs(q || ""); if(!L.length) return "";
+  return `<p class="eyebrow" style="margin:0">${tx("grSugT")}</p><div class="grsugs">${L.map(([,n,h]) => `<button type="button" class="pill${h ? " on" : ""}" data-act="grsug" data-n="${esc(n)}"${h ? ' aria-disabled="true"' : ""}>${h ? "✓" : "+"} ${esc(n)}</button>`).join("")}</div>`; }
 function grocCard(){
   const L = (st.groc && st.groc.items) || [], dn = L.filter(x => x.done).length;
   return `<button class="card mindcard" data-act="gropen"><span class="mindrune" style="font-size:20px">🛒</span><span class="grow" style="min-width:0;text-align:left"><b>${tx("grT")}</b><small>${L.length ? tx("grCount").replace("{n}", L.length).replace("{d}", dn) : tx("grEmptyS")}</small></span>${I.arrow}</button>`;
@@ -1789,6 +1811,7 @@ function grocSheet(){
     ${st.mplan ? `<p class="eyebrow" style="margin:2px 0 0">${tx("grFill")}</p><div class="grgen"><button class="pill gopill" data-act="grgen" data-w="1">${tx("grWeek")}</button><button class="pill" data-act="grgen" data-w="4">${tx("grMonth")}</button></div><p class="small" style="margin:0;text-align:left">${tx("grGenNote")}</p>`
       : `<div class="note" style="margin:0">${tx("grNoPlan")} <button class="linkbtn" data-act="mpopen" style="padding:0">${t("mpBuild")}</button></div>`}
     <form id="grform" class="grform"><input class="field" id="gr-in" maxlength="60" placeholder="${tx("grAddPh")}" autocomplete="off" data-form-type="other"><button class="btn btn-gold" type="submit">${tx("grAdd")}</button></form>
+    <div id="grsug" class="grsugw">${grSugHTML(st.grQ)}</div>
     ${L.length ? `<div class="grlist">${L.map(row).join("")}</div>` : `<p class="small" style="margin:0">${tx("grEmpty")}</p>`}
     ${L.length ? `<div class="grfoot"><button class="pill" data-act="grcopy">📋 ${tx("grCopy")}</button><button class="pill" data-act="grclr">${tx("grClrDone")}</button><button class="pill" data-act="grall">${st.grAsk ? tx("grSure") : tx("grClrAll")}</button></div>` : ""}
   </div>`;
@@ -1891,6 +1914,24 @@ function peekSheet(){
     <div class="card" style="display:flex;flex-direction:column;gap:10px">${p.id==="stretch"?"":phRow("phS1","high_knees")}${rows}${p.id==="stretch"?"":phRow("phS3","quad_stretch")}</div>
     ${can ? `<button class="btn btn-gold" data-act="usepass" data-id="${p.id}">${t("passUse")} ${I.arrow}</button><p class="small" style="margin:0;text-align:center">${t("passInfo")}</p>` : `<p class="small" style="margin:0;text-align:center">${t("passNext").replace("{n}", passDays())}</p>`}
     <button class="btn ${can?"btn-line":"btn-gold"}" data-act="locked">${t("unlockAll")}</button></div>`;
+}
+function preSheet(){
+  const p = getP(st.pre.id); if(!p) return "";
+  const ph = p.id !== "stretch", eqs = [...new Set(p.items.flatMap(([e]) => (EX[e] && EX[e].eq) || []))].filter(q => EQ[q]);
+  const rows = p.items.map(([e,s,r,wt],k) => { const ex = EX[e]; if(!ex) return "";
+    return `<div class="row peekrow"><span class="bnum">${k+1}</span><span class="ico">${figureSVG(ex,1,true)}</span><span class="grow" style="min-width:0"><b>${nm(e)}</b>${ex.eq.length ? `<br><small class="muted">${ex.eq.map(q => EQ[q] ? eqName(q) : "").filter(Boolean).join(" · ")}</small>` : ""}</span><span class="muted" style="text-align:right;white-space:nowrap">${s} × ${r}${ex.tm?" s":""}${UNI.includes(e)?" "+tx("perSide"):""}${ex.f!=null && wt ? `<br><small>${fmt(wt)} kg</small>` : ""}</span></div>`; }).join("");
+  const phRow = (k,i,m) => `<div class="row peekrow phpk"><span class="bnum" style="border-style:dashed"></span><span class="ico">${figureSVG(EX[i],1,true)}</span><b class="grow">${tx(k)}</b><span class="muted">~${m} ${t("min")}</span></div>`;
+  const own = st.custom.some(x => x.id === p.id);
+  return `<div class="backdrop" data-act="preclose"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(L2(p))}"><div class="grab"></div>
+    <div class="row"><p class="eyebrow gold grow" style="margin:0">${tx("preT")}</p><button class="xbtn" data-act="preclose" aria-label="${t("close")}">${I.x}</button></div>
+    <h2 style="margin-top:-6px">${L2(p)}</h2>
+    <div class="prestat"><div><b>${p.items.length}</b><span>${t("exs")}</span></div><div><b>~${minsOf(p) + (ph ? 7 : 0)}</b><span>${t("min")}</span></div><div><b>${p.items.reduce((a,x)=>a+x[1],0)}</b><span>${tx("preSets")}</span></div></div>
+    <div><p class="eyebrow" style="margin:0 0 8px">${tx("preEq")}</p><div class="chips">${eqs.length ? eqs.map(q => `<span class="chip on">${eqName(q)}</span>`).join("") : `<span class="chip on">${t("bw")}</span>`}<span class="chip">${tx("preWater")}</span></div></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px">${ph ? phRow("phS1","high_knees",4) : ""}${rows}${ph ? phRow("phS3","quad_stretch",3) : ""}</div>
+    ${ph ? `<p class="note">${tx("phRule")}</p>` : ""}
+    <button class="btn btn-gold" data-act="start" data-id="${p.id}" data-day="${st.pre.day ?? ""}" data-go="1">${t("start")} ${I.arrow}</button>
+    ${own ? `<button class="btn btn-line" data-act="bedit" data-id="${p.id}" style="min-height:50px">${t("edit")}</button>` : ""}
+  </div>`;
 }
 const stars = n => `<span class="stars" aria-label="${n}/5">${"★".repeat(n)}<i>${"★".repeat(5-n)}</i></span>`;
 function reviewsBlock(){
@@ -2178,6 +2219,9 @@ es:{wuT:"Calentamiento",wuSub:"Unos minutos fáciles antes de entrenar. Músculo
 pt:{wuT:"Aquecimento",wuSub:"Alguns minutos fáceis antes de treinar. Músculos e articulações aquecidos rendem mais e se machucam menos. Nunca pule.",cdT:"Alongamento e volta à calma",cdSub:"3 minutos calmos para baixar o coração e manter a mobilidade. Respire devagar, sem balanço.",phS1:"Aquecer",phS2:"Treinar",phS3:"Alongar",phGo:"Começar aquecimento",phGoC:"Começar alongamento",phNext:"Próximo",phSkipW:"Pular aquecimento",phSkipC:"Pular alongamento",phTrain:"Aquecido, vamos treinar",phFin:"Terminar treino",phSide:"Troque de lado na metade",phPause:"Pausa",phRes:"Continuar",phRule:"Aquecer → treinar → alongar. Sempre.",uniNote:"Um lado de cada vez: {r} na direita, depois {r} na esquerda = 1 série.",uniHold:"Segure {r} s na direita, depois {r} s na esquerda = 1 série.",perSide:"/ lado",sideL:"Cada lado",wm_march:"Marche ou trote leve no lugar",wm_neck:"Gire devagar ombros e pescoço",wm_arms:"Círculos com os braços, pequenos e depois grandes",wm_squat:"Agachamentos fáceis, lentos e controlados",wm_lunge:"Afundos para trás, alternando as pernas",wm_catcow:"Gato-vaca, siga a respiração",wm_bridge:"Pontes de glúteo, contraia em cima",wm_punch:"Socos leves, relaxado",wm_twist:"Rotações suaves, esquerda e direita",wm_bend:"Inclinações laterais, devagar",wm_calf:"Elevação de panturrilhas",wm_marchG:"Marche leve no lugar, balance os braços",wm_calfG:"Elevação de panturrilhas, apoie numa cadeira ou parede",wm_squatG:"Agachamentos fáceis, apoie numa cadeira se precisar",cd_quad:"Quadríceps: calcanhar no glúteo, joelhos juntos",cd_quadG:"Quadríceps, apoie numa parede",cd_ham:"Posterior: leve as mãos em direção aos pés",cd_hip:"Flexores do quadril: leve o quadril à frente",cd_child:"Postura da criança: sente para trás, braços longos, respire",cd_catcow:"Gato-vaca: devagar, siga a respiração",cd_neck:"Solte pescoço e ombros",cd_twist:"Rotação sentado, olhe por cima do ombro",cd_bend:"Alongamento lateral, braço por cima da cabeça"},
 de:{wuT:"Aufwärmen",wuSub:"Ein paar lockere Minuten vor dem Training. Warme Muskeln und Gelenke leisten mehr und verletzen sich seltener. Nie auslassen.",cdT:"Dehnen & Cool-down",cdSub:"3 ruhige Minuten, um den Puls zu senken und beweglich zu bleiben. Langsam atmen, nicht wippen.",phS1:"Aufwärmen",phS2:"Training",phS3:"Dehnen",phGo:"Aufwärmen starten",phGoC:"Dehnen starten",phNext:"Nächste Übung",phSkipW:"Aufwärmen überspringen",phSkipC:"Dehnen überspringen",phTrain:"Bin warm, los geht's",phFin:"Training beenden",phSide:"Halbzeit: Seite wechseln",phPause:"Pause",phRes:"Weiter",phRule:"Aufwärmen → trainieren → dehnen. Jedes Mal.",uniNote:"Eine Seite nach der anderen: {r} rechts, dann {r} links = 1 Satz.",uniHold:"Halte {r} s rechts, dann {r} s links = 1 Satz.",perSide:"/ Seite",sideL:"Jede Seite",wm_march:"Locker auf der Stelle marschieren oder joggen",wm_neck:"Schultern und Nacken langsam kreisen",wm_arms:"Armkreisen, erst klein, dann groß",wm_squat:"Leichte Kniebeugen, langsam und kontrolliert",wm_lunge:"Ausfallschritte nach hinten, Beine abwechseln",wm_catcow:"Katze-Kuh, im Atemrhythmus",wm_bridge:"Glute Bridges, oben anspannen",wm_punch:"Lockere Boxschläge",wm_twist:"Sanfte Drehungen, links und rechts",wm_bend:"Seitbeugen, langsam",wm_calf:"Wadenheben",wm_marchG:"Locker auf der Stelle gehen, Arme mitschwingen",wm_calfG:"Wadenheben, an Stuhl oder Wand festhalten",wm_squatG:"Leichte Kniebeugen, bei Bedarf am Stuhl festhalten",cd_quad:"Oberschenkel: Ferse zum Po, Knie zusammen",cd_quadG:"Oberschenkel, an der Wand festhalten",cd_ham:"Beinrückseite: Hände Richtung Füße",cd_hip:"Hüftbeuger: Becken nach vorn schieben",cd_child:"Kindhaltung: nach hinten sitzen, Arme lang, atmen",cd_catcow:"Katze-Kuh: langsam, im Atemrhythmus",cd_neck:"Nacken und Schultern lockern",cd_twist:"Drehung im Sitzen, über die Schulter schauen",cd_bend:"Seitdehnung, Arm über den Kopf"}
 }; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {en:{mvUp:"Move up",mvDown:"Move down",mvHint:"Reorder: drag ⠿ or use the arrows."}, fr:{mvUp:"Monter",mvDown:"Descendre",mvHint:"Réorganise : fais glisser ⠿ ou utilise les flèches."}, es:{mvUp:"Subir",mvDown:"Bajar",mvHint:"Reordena: arrastra ⠿ o usa las flechas."}, pt:{mvUp:"Subir",mvDown:"Descer",mvHint:"Reorganize: arraste ⠿ ou use as setas."}, de:{mvUp:"Nach oben",mvDown:"Nach unten",mvHint:"Sortieren: ⠿ ziehen oder Pfeile nutzen."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {en:{grSugT:"Suggestions · tap to add"}, fr:{grSugT:"Suggestions · touche pour ajouter"}, es:{grSugT:"Sugerencias · toca para añadir"}, pt:{grSugT:"Sugestões · toque para adicionar"}, de:{grSugT:"Vorschläge · tippen zum Hinzufügen"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {en:{preT:"Your session · check before you start",preSets:"sets",preEq:"You'll need",preWater:"Water bottle"}, fr:{preT:"Ta séance · vérifie avant de commencer",preSets:"séries",preEq:"Il te faut",preWater:"Bouteille d'eau"}, es:{preT:"Tu sesión · revisa antes de empezar",preSets:"series",preEq:"Necesitarás",preWater:"Botella de agua"}, pt:{preT:"Sua sessão · confira antes de começar",preSets:"séries",preEq:"Você vai precisar",preWater:"Garrafa de água"}, de:{preT:"Deine Einheit · vor dem Start checken",preSets:"Sätze",preEq:"Du brauchst",preWater:"Wasserflasche"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2488,7 +2532,7 @@ function akMic(){
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
 /* ================= back button = go back inside the app ================= */
-const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat"];
+const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre"];
 const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
 const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
 let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
@@ -2511,7 +2555,7 @@ window.addEventListener("popstate", () => {
   // never lose a workout in progress: back only closes its sheet
   if(st.view === "work" && st.w){ if(st.sheet){ st.sheet = null; navCur = {key:navKey(navSnap()), snap:navSnap(), y:0}; render(); } try{ history.pushState({bb:navStack.length}, ""); }catch(e){} return; }
   if(st.view === "quiz" && !st.profile && st.qBack){ st.profile = st.qBack; }
-  const NUL = {progOpen:1, art:1, meal:1, mdArt:1, mmArt:1, rpOpen:1, chat:1};
+  const NUL = {progOpen:1, art:1, meal:1, mdArt:1, mmArt:1, rpOpen:1, chat:1, pre:1};
   let prev = navStack.pop();
   if(!prev){
     // bottom of the history: never close the app by surprise
@@ -3213,12 +3257,16 @@ function builder(){
   const b = st.build;
   const stepper = (k,f,lab,v) => `<div class="stepper"><span class="muted">${lab}</span><button data-act="bstep" data-i="${k}" data-f="${f}" data-d="-1" aria-label="−">−</button><b>${v}</b><button data-act="bstep" data-i="${k}" data-f="${f}" data-d="1" aria-label="+">+</button></div>`;
   const rows = b.items.map((it,k) => { const ex = EX[it[0]];
-    return `<div class="card bitem"><div class="row"><span class="mini">${figureSVG(ex,1,true)}</span><b class="grow">${L2(ex)}</b><button class="xbtn" data-act="bdel" data-i="${k}" aria-label="${t("removeMachine")}">${I.x}</button></div>
+    const n = b.items.length;
+    return `<div class="card bitem" data-bi="${k}"><div class="row"><span class="bgrip" data-bgrip="${k}" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.4"/><circle cx="15" cy="6" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="9" cy="18" r="1.4"/><circle cx="15" cy="18" r="1.4"/></svg></span><span class="bnum">${k+1}</span><span class="mini">${figureSVG(ex,1,true)}</span><b class="grow">${L2(ex)}</b>
+      <span class="bmv"><button data-act="bmove" data-i="${k}" data-d="-1" aria-label="${tx("mvUp")}"${k===0?" disabled":""}><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button><button data-act="bmove" data-i="${k}" data-d="1" aria-label="${tx("mvDown")}"${k===n-1?" disabled":""}><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></span>
+      <button class="xbtn" data-act="bdel" data-i="${k}" aria-label="${t("removeMachine")}">${I.x}</button></div>
       <div class="row" style="gap:8px">${stepper(k,1,t("sets"),it[1])}${stepper(k,2,t("reps"),it[2])}</div></div>`; }).join("");
   return `${topBar()}<main>
     <div><p class="eyebrow gold">${t("myWorkouts")}</p><h1 style="margin-top:6px">${t("buildTitle")}</h1></div>
     <input class="field" id="bname" maxlength="30" value="${esc(b.name)}" placeholder="${t("wNamePh")}" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other">
-    ${rows || `<p class="muted">${t("noEx")}</p>`}
+    ${b.items.length > 1 ? `<p class="muted" style="font-size:13px;margin-bottom:-6px">${tx("mvHint")}</p>` : ""}
+    <div class="blist">${rows || `<p class="muted">${t("noEx")}</p>`}</div>
     <button class="btn btn-line" data-act="bpick">+ ${t("addEx")}</button>
     <button class="btn btn-gold" data-act="bsave">${I.check} ${t("saveW")}</button>
     ${b.id && st.custom.some(x => x.id===b.id) ? `<button class="linkbtn" data-act="bremove">${t("delW")}</button>` : ""}
@@ -3776,6 +3824,7 @@ function render(){
   else if(st.view==="build" && st.build) h = builder() + (st.pick ? pickSheet() : "");
   else { st.view = "main"; h = mainView(); }
   if(st.mg) h += mgSheet(); else if(st.akOpen) h += askSheet();
+  if(st.pre && st.view !== "work") h += preSheet();
   if(st.musOpen) h += musicSheet();
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
@@ -3910,11 +3959,12 @@ app.addEventListener("click", e => {
     case "qfinish": st.profile = {...st.q}; store.set("bbt_profile", st.profile); cloud.save({plan:st.profile}); st.view = "home"; break;
     case "requiz": st.qBack = st.profile; st.q = {...(st.profile||{})}; st.qi = 0; st.profile = null; st.view = "quiz"; break;
     case "bnew": st.build = {id:null, name:"", items:[]}; st.pick = false; st.view = "build"; break;
-    case "bedit": { const p = st.custom.find(x => x.id===el.dataset.id); if(p){ st.build = {id:p.id, name:p.en, items:p.items.map(x => x.slice())}; st.pick = false; st.view = "build"; } break; }
+    case "bedit": { st.pre = null; const p = st.custom.find(x => x.id===el.dataset.id); if(p){ st.build = {id:p.id, name:p.en, items:p.items.map(x => x.slice())}; st.pick = false; st.view = "build"; } break; }
     case "bpick": st.pick = true; break;
     case "bpickclose": st.pick = false; break;
     case "badd": { const e2 = EX[el.dataset.id]; st.build.items.push([e2.id, 3, 10, defW(e2)]); toast(`${t("added")}: ${L2(e2)}`); break; }
     case "bdel": st.build.items.splice(+el.dataset.i, 1); break;
+    case "bmove": { const i = +el.dataset.i, j = i + (+el.dataset.d), L = st.build.items; if(j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; render(); const c = app.querySelector(`[data-bi="${j}"]`); if(c){ c.classList.add("bflash"); c.scrollIntoView({block:"nearest", behavior:"smooth"}); } return; }
     case "bstep": { const it = st.build.items[+el.dataset.i], f = +el.dataset.f; it[f] = Math.max(1, Math.min(f===1 ? 10 : 50, it[f] + (+el.dataset.d))); break; }
     case "bsave": {
       const b = st.build; if(!b.items.length){ toast(t("noEx")); break; }
@@ -3936,6 +3986,7 @@ app.addEventListener("click", e => {
     case "instcx": st.instHide = true; store.set("bbt_insthide", true); break;
     case "peek": st.peek = el.dataset.id; break;
     case "closepeek": st.peek = null; break;
+    case "preclose": st.pre = null; break;
     case "amopen": { const n = +el.dataset.n; st.amOpen = n; st.amData = null;
       sb.rpc("admin_member", {p_no:n}).then(({ data, error }) => { if(st.amOpen !== n) return; if(error || !data){ toast(t("netErr")); st.amOpen = null; render(); return; } st.amData = data; render(); }).catch(() => { toast(t("netErr")); st.amOpen = null; render(); });
       break; }
@@ -4049,6 +4100,8 @@ app.addEventListener("click", e => {
     case "usepass": store.set("bbt_pass", weekKey()); st.peek = null;
     // falls through: start the chosen session
     case "start": {
+      if(act === "start" && el.dataset.go !== "1"){ st.pre = {id: el.dataset.id, day: el.dataset.day != null && el.dataset.day !== "" ? el.dataset.day : ""}; break; }
+      st.pre = null;
       const p = getP(el.dataset.id);
       st.w = {pid:p.id, day:el.dataset.day!=null && el.dataset.day!=="" ? +el.dataset.day : -1, rest:p.rest||90, i:0, swaps:0, t0:Date.now(), list:p.items.map(([ex,sets,reps,wt]) => ({ex,sets,reps,w:wt,done:0,from:null,fromW:null}))};
       st.w.list.forEach(makeSafe); phInit(st.w); phStop(); st.phPause = null;
@@ -4071,9 +4124,10 @@ app.addEventListener("click", e => {
       st.mplan = buildMealPlan({...st.mpd, w: wv}); st.mpDay = 0; store.set("bbt_mplan", st.mplan); store.set("bbt_mpn", store.get("bbt_mpn",0) + 1);
       st.mpd = null; toast(t("mpDone")); break; }
     case "mpday": st.mpDay = +el.dataset.i; break;
-    case "gropen": st.grOpen = true; st.grEd = null; st.grAsk = false; break;
+    case "gropen": st.grOpen = true; st.grEd = null; st.grAsk = false; st.grQ = ""; break;
     case "grclose": st.grOpen = false; st.grEd = null; st.grAsk = false; break;
     case "grgen": { const w = +el.dataset.w || 1, mine = (st.groc.items||[]).filter(x => x.own); st.groc = {items: grBuild(w).concat(mine), w}; grSave(); toast(tx("grMade")); break; }
+    case "grsug": { const n = el.dataset.n; if(el.getAttribute("aria-disabled")) return; st.groc.items.push({id: "u" + Date.now().toString(36), n, q: "", done: false, own: true}); grSave(); st.grQ = ""; toast(`✓ ${esc(n)}`); render(); setTimeout(() => { const g = document.getElementById("gr-in"); if(g) g.focus(); }, 40); return; }
     case "grck": { const x = st.groc.items.find(z => z.id === el.dataset.id); if(x){ x.done = !x.done; grSave(); } break; }
     case "gred": st.grEd = el.dataset.id; setTimeout(() => { const f = document.getElementById("gr-ed"); if(f){ f.focus(); f.select(); } }, 60); break;
     case "grmv": { const L = st.groc.items, i = L.findIndex(z => z.id === el.dataset.id), j = i + (+el.dataset.d); if(i >= 0 && j >= 0 && j < L.length){ [L[i], L[j]] = [L[j], L[i]]; grSave(); } break; }
@@ -4217,7 +4271,21 @@ app.addEventListener("change", e => {
     im.src = r.result; };
   r.readAsDataURL(e.target.files[0]);
 });
+/* drag to reorder in the workout builder */
+(() => { let d = null;
+  app.addEventListener("pointerdown", e => { const g = e.target.closest("[data-bgrip]"); if(!g || !st.build) return; e.preventDefault();
+    const card = g.closest(".bitem"), list = card.parentNode, cards = [...list.querySelectorAll(".bitem")];
+    d = {from:+g.dataset.bgrip, to:+g.dataset.bgrip, y0:e.clientY, card, cards, mids:cards.map(c => { const r = c.getBoundingClientRect(); return r.top + r.height/2; }), h:card.getBoundingClientRect().height + 12};
+    card.classList.add("bdrag"); try{ g.setPointerCapture(e.pointerId); }catch(x){} });
+  app.addEventListener("pointermove", e => { if(!d) return; const dy = e.clientY - d.y0; d.card.style.transform = `translateY(${dy}px)`;
+    const y = d.mids[d.from] + dy; let to = d.from; d.mids.forEach((m,k) => { if(k < d.from && y < m) to = Math.min(to, k); if(k > d.from && y > m) to = Math.max(to, k); }); d.to = to;
+    d.cards.forEach((c,k) => { if(c === d.card) return; c.style.transform = (k > d.from && k <= to) ? `translateY(${-d.h}px)` : (k < d.from && k >= to) ? `translateY(${d.h}px)` : ""; }); });
+  const end = () => { if(!d) return; const {from, to} = d; d.cards.forEach(c => { c.style.transform = ""; c.classList.remove("bdrag"); }); d = null;
+    if(from !== to && st.build){ const [it] = st.build.items.splice(from, 1); st.build.items.splice(to, 0, it); render(); const c = app.querySelector(`[data-bi="${to}"]`); if(c) c.classList.add("bflash"); } };
+  app.addEventListener("pointerup", end); app.addEventListener("pointercancel", end);
+})();
 app.addEventListener("input", e => { if(e.target.id==="bname" && st.build) st.build.name = e.target.value;
+  if(e.target.id === "gr-in"){ st.grQ = e.target.value; const b = document.getElementById("grsug"); if(b) b.innerHTML = grSugHTML(st.grQ); }
   if(e.target.id==="cmpr"){ st.cmpP = +e.target.value; const c = e.target.closest(".cmp"); if(c) c.style.setProperty("--p", st.cmpP + "%"); return; }
   if(e.target.id==="akq"){ st.akQ = e.target.value; const r = document.getElementById("akres"); clearTimeout(akTimer); clearTimeout(akThinkT);
     if(r && akNorm(st.akQ)) r.innerHTML = `<div class="akthink" role="status"><span class="rune" aria-hidden="true">ᛗ</span>${tx("akThink")}<i></i><i></i><i></i></div>`;
@@ -4394,7 +4462,7 @@ app.addEventListener("submit", e => {
   if(e.target.id === "cpdatef"){ e.preventDefault(); const v = (document.getElementById("cp-date")||{}).value || ""; cpGet().date = /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : ""; cpSave(); render(); return; }
   if(e.target.id === "cpbest"){ e.preventDefault(); const c = cpGet(); ["sq","bp","dl"].forEach(k => { const f = parseFloat(String((document.getElementById("cpb-"+k)||{}).value||"").replace(",", ".")); c.best[k] = isFinite(f) && f > 0 && f < 600 ? f : ""; }); cpSave(); render(); return; }
   if(e.target.id === "cpchk"){ e.preventDefault(); const c = cpGet(), f = parseFloat(String((document.getElementById("cpc-kg")||{}).value||"").replace(",", ".")), n = ((document.getElementById("cpc-n")||{}).value||"").trim().slice(0,80); if(!(f > 20 && f < 400) && !n) return; c.checks.push({d: Date.now(), kg: f > 20 && f < 400 ? f : null, n}); cpSave(); render(); return; }
-  if(e.target.id === "grform"){ e.preventDefault(); const f = document.getElementById("gr-in"), v = (f && f.value || "").trim().slice(0,60); if(!v) return; st.groc.items.push({id: "u" + Date.now().toString(36), n: v, q: "", done: false, own: true}); grSave(); render(); setTimeout(() => { const g = document.getElementById("gr-in"); if(g) g.focus(); }, 40); return; }
+  if(e.target.id === "grform"){ e.preventDefault(); const f = document.getElementById("gr-in"), v = (f && f.value || "").trim().slice(0,60); if(!v) return; st.groc.items.push({id: "u" + Date.now().toString(36), n: v, q: "", done: false, own: true}); grSave(); st.grQ = ""; render(); setTimeout(() => { const g = document.getElementById("gr-in"); if(g) g.focus(); }, 40); return; }
   if(e.target.id === "gredf"){ e.preventDefault(); const f = document.getElementById("gr-ed"), v = (f && f.value || "").trim().slice(0,60), x = st.groc.items.find(z => z.id === e.target.dataset.id); if(x && v){ x.n = v; x.q = ""; x.own = true; } st.grEd = null; grSave(); render(); return; }
   if(e.target.id !== "otpform") return;
   e.preventDefault();
