@@ -1,5 +1,5 @@
 /* Black Bird Training offline support: the app shell is cached so workouts run without a signal. */
-const CACHE = "bbt-v57";
+const CACHE = "bbt-v58";
 const SHELL = ["/app", "/icon-192.png", "/icon-512.png", "/maskable-512.png", "/apple-touch-icon.png", "/favicon.ico", "/manifest.json", "/qrcode.min.js"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -12,7 +12,7 @@ self.addEventListener("fetch", e => {
   if(r.method !== "GET") return;
   /* the app page: network first, cached copy when offline */
   if(r.mode === "navigate" && u.origin === location.origin && (u.pathname === "/app" || u.pathname === "/app.html" || u.pathname === "/app/")){
-    e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(CACHE).then(c => c.put("/app", cp)); return res; })
+    e.respondWith(fetch(r.url, {cache:"no-store", credentials:"same-origin"}).then(res => { const cp = res.clone(); caches.open(CACHE).then(c => c.put("/app", cp)); return res; })
       .catch(() => caches.match("/app")));
     return;
   }
