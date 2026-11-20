@@ -325,6 +325,7 @@ a.btn{text-decoration:none}a.btn.btn-line{color:var(--fg)}a.btn.btn-gold{color:v
 .cplog{display:flex;flex-direction:column;gap:6px}.cplog div{display:grid;grid-template-columns:56px 90px 1fr 28px;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line2);border-radius:10px}.cplog small{font-size:12px;color:var(--muted)}.cplog span{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}.cplog em{font-style:normal;font-size:12px}.cplog em.dn{color:var(--gold)}.cplog em.up{color:#ffb84d}.cplog button{background:none;border:0;color:var(--muted);cursor:pointer}
 .grgen{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grgen .pill{min-height:44px}
 .rvsh{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--gold-dim);background:rgba(124,255,79,.06);color:var(--gold);font:600 12px var(--font-b,inherit);cursor:pointer}.rvsh svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.rvadm .rvsh{margin:0 0 0 6px}
+.upnext{border-color:var(--gold-dim)!important;box-shadow:0 0 0 1px rgba(124,255,79,.15)}
 .prestat{display:flex;gap:10px}.prestat div{flex:1;border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column}.prestat b{font:700 24px var(--font-d);color:var(--gold)}.prestat span{font-size:12px;color:var(--muted)}
 .peekrow .bmv button{width:30px;height:22px}.peekrow.bflash{animation:bfl .6s}
 .peekrow .bnum{width:22px;height:22px;flex:none;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:700}
@@ -2308,6 +2309,12 @@ es:{invT:"Invitar a tu entreno",invBtn:"Invitar a un amigo",invPart:"Tus compañ
 pt:{invT:"Convidar para o treino",invBtn:"Convidar um amigo",invPart:"Seus parceiros",invNowBtn:"Agora",invSchBtn:"Convidar",invNoPart:"Ainda sem parceiros. Encontre amigos no app ou envie um link abaixo.",invFind:"Encontrar parceiros",invOut:"Seu amigo ainda não está no app?",invShare:"Enviar link de convite",invShareSub:"Ele entra grátis com seu link e vocês dois ganham 7 dias de Premium.",invLogin:"Entre na conta para treinar ao vivo com parceiros. Você ainda pode enviar um link.",invMsg:"Treine comigo 💪 \"{w}\" (~{m} min) no Black Bird Training, o app de fitness grátis. Entre aqui:"},
 de:{invT:"Zum Training einladen",invBtn:"Freund einladen",invPart:"Deine Trainingspartner",invNowBtn:"Jetzt",invSchBtn:"Einladen",invNoPart:"Noch keine Trainingspartner. Finde Freunde in der App oder schick unten einen Link.",invFind:"Trainingspartner finden",invOut:"Freund noch nicht in der App?",invShare:"Einladungslink senden",invShareSub:"Mit deinem Link ist es kostenlos und ihr bekommt beide 7 Tage Premium.",invLogin:"Melde dich an, um live mit Partnern zu trainieren. Einen Link kannst du trotzdem senden.",invMsg:"Trainier mit mir 💪 \"{w}\" (~{m} min) in Black Bird Training, der kostenlosen Fitness-App. Mach mit:"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{pmTile:"Premium"}, fr:{pmTile:"Premium"}, es:{pmTile:"Premium"}, pt:{pmTile:"Premium"}, de:{pmTile:"Premium"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {
+en:{ssUp:"Coming up",ssDoneT:"Invite sent",ssDoneWait:"Waiting for {name} to accept. You'll get a notification.",ssDoneOk:"OK",ssAccT:"✓ Session confirmed. {name} gets a notification.",ssDecT:"Session declined."},
+fr:{ssUp:"À venir",ssDoneT:"Invitation envoyée",ssDoneWait:"En attente de {name}. Tu recevras une notification quand c'est accepté.",ssDoneOk:"OK",ssAccT:"✓ Séance confirmée. {name} reçoit une notification.",ssDecT:"Séance refusée."},
+es:{ssUp:"Próximas",ssDoneT:"Invitación enviada",ssDoneWait:"Esperando a que {name} acepte. Recibirás una notificación.",ssDoneOk:"OK",ssAccT:"✓ Sesión confirmada. {name} recibe una notificación.",ssDecT:"Sesión rechazada."},
+pt:{ssUp:"Em breve",ssDoneT:"Convite enviado",ssDoneWait:"Aguardando {name} aceitar. Você vai receber uma notificação.",ssDoneOk:"OK",ssAccT:"✓ Sessão confirmada. {name} recebe uma notificação.",ssDecT:"Sessão recusada."},
+de:{ssUp:"Demnächst",ssDoneT:"Einladung gesendet",ssDoneWait:"Warte auf {name}. Du bekommst eine Benachrichtigung.",ssDoneOk:"OK",ssAccT:"✓ Einheit bestätigt. {name} wird benachrichtigt.",ssDecT:"Einheit abgelehnt."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -3016,7 +3023,7 @@ async function ssCreate(no, name, pid, at){
   const p = getP(pid), d = new Date(at);
   if(!(d > Date.now() - 60000)){ toast(tx("ssBad")); return; }
   try{ const { data } = await sb.rpc("session_create", {p_no:+no, p_pid:pid, p_prog:p ? L2(p) : pid, p_at:d.toISOString(), p_label:ssLabel(d), p_plan:lvPlanOf(pid)});
-    if(data === "ok"){ toast(lvT("ssSent", {name:esc(name)})); st.lvPickFor = null; loadSess(); } else toast(data === "baddate" ? tx("ssBad") : t("netErr")); }catch(e){ toast(t("netErr")); }
+    if(data === "ok"){ st.lvPickFor = null; st.ssDone = {id: "new" + Date.now(), starts_at: d.toISOString(), pid, prog: p ? L2(p) : pid, partner_name: name}; loadSess(); } else toast(data === "baddate" ? tx("ssBad") : t("netErr")); }catch(e){ toast(t("netErr")); }
   render();
 }
 function ssCalLinks(x){
@@ -3029,15 +3036,31 @@ function ssCalLinks(x){
   const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Black Bird Training//EN","BEGIN:VEVENT","UID:bbt-sess-" + x.id + "@theblackbirdsociety.com","DTSTAMP:" + z(new Date()),"DTSTART:" + z(st0),"DTEND:" + z(en),"SUMMARY:" + esc2(title),"DESCRIPTION:" + esc2(desc),"URL:https://theblackbirdsociety.com","BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:" + esc2(title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   return {g, o, ics:"data:text/calendar;charset=utf-8," + encodeURIComponent(ics)};
 }
-function sessBlock(){
+function upNext(){
   if(!(sb && st.user && st.user.cloud)) return "";
-  const L = st.sess || [];
+  const now = Date.now(), L = (st.sess || []).filter(x => new Date(x.starts_at) - now > -90*60000 && new Date(x.starts_at) - now < 8*864e5);
+  return L.length ? sessBlock(L, true) : "";
+}
+function ssDoneSheet(){
+  const x = st.ssDone; if(!x) return ""; const k = ssCalLinks(x);
+  return `<div class="backdrop" data-act="ssdonex"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("ssDoneT")}"><div class="grab"></div>
+    <div class="lvwait"><span style="font-size:44px">✅</span><h2 style="margin:0">${tx("ssDoneT")}</h2></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:4px"><b>${esc(ssWhen(x.starts_at))}</b><span class="muted" style="font-size:14px">${esc(x.prog)} · ${lvT("ssWith", {name:esc(x.partner_name)})}</span><span class="gold" style="font-size:14px">⏳ ${lvT("ssDoneWait", {name:esc(x.partner_name)})}</span></div>
+    <p class="eyebrow" style="margin:4px 0 0">${tx("ssCalT")}</p>
+    <a class="btn btn-gold" href="${k.g}" target="_blank" rel="noopener">${tx("ssCalG")}</a>
+    <a class="btn btn-line" href="${k.ics}" download="black-bird-session.ics">${tx("ssCalA")}</a>
+    <p class="small" style="margin:0">${tx("ssCalSub")}</p>
+    <button class="btn btn-line" data-act="ssdonex">${tx("ssDoneOk")}</button></div>`;
+}
+function sessBlock(only, home){
+  if(!(sb && st.user && st.user.cloud)) return "";
+  const L = only || st.sess || [];
   const row = x => { const ms = new Date(x.starts_at) - Date.now(), soon = ms < 15*60000, nm0 = esc(x.partner_name || "");
     const state = x.status === "pending" ? (x.mine ? `<span class="muted">${lvT("ssWait", {name:nm0})}</span>` : `<span class="gold">${lvT("ssInc", {name:nm0})}</span>`) : `<span class="gold">✓ ${tx("ssOk")}${ms > 0 && soon ? " · " + lvT("ssSoon", {n:Math.max(1, Math.round(ms/60000))}) : ms <= 0 ? " · " + tx("ssNowL") : ""}</span>`;
     const btns = x.status === "pending" && !x.mine ? `<button class="pill gopill" data-act="ssans" data-id="${x.id}" data-ok="1">${tx("ssAcc")}</button><button class="pill" data-act="ssans" data-id="${x.id}" data-ok="0">${tx("ssDec")}</button>`
       : `${x.status === "accepted" && soon ? `<button class="pill gopill" data-act="ssstart" data-id="${x.id}">▶ ${tx("ssStart")}</button>` : ""}<button class="pill" data-act="sscal" data-id="${x.id}">📅 ${tx("ssCal")}</button>`;
     return `<div class="ssrow"><div class="row" style="gap:10px;align-items:flex-start"><div class="grow" style="min-width:0"><b>${esc(ssWhen(x.starts_at))}</b><small>${esc(x.prog)} · ${lvT("ssWith", {name:nm0})}</small><small>${state}</small></div><button class="pdots" data-act="sscancel" data-id="${x.id}" aria-label="${tx("ssCancel")}">✕</button></div><div class="btnrow ssbtns">${btns}</div></div>`; };
-  return `<div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">📅 ${tx("ssT")}</p>${L.length ? L.map(row).join("") : `<p class="muted" style="font-size:14px;margin:0">${tx("ssNone")}</p>`}</div>`;
+  return `<div class="card${home ? " upnext" : ""}" style="display:flex;flex-direction:column;gap:10px"><p class="eyebrow gold">📅 ${tx(home ? "ssUp" : "ssT")}</p>${L.length ? L.map(row).join("") : `<p class="muted" style="font-size:14px;margin:0">${tx("ssNone")}</p>`}</div>`;
 }
 function ssCalSheet(){
   const x = (st.sess||[]).find(z => z.id === st.ssCal); if(!x) return ""; const k = ssCalLinks(x);
@@ -3250,6 +3273,7 @@ function mainView(){
   const nm0 = st.user && st.user.name ? ", " + esc(st.user.name) : "";
   return `${topBar()}<main>
     <div><p class="eyebrow">${greet()}${nm0}</p><h1 style="margin-top:4px">${t("mainSub")}</h1></div>
+    ${upNext()}
     ${STANDALONE || st.instHide ? "" : `<div class="early"><span class="ebadge">App</span><p class="grow">${t("instS")} <button class="instlink" data-act="install">${t("instGo")}</button></p><button class="ex" data-act="instcx" aria-label="${t("close")}">${I.x}</button></div>`}
     ${st.earlyHide ? "" : `<div class="early"><span class="ebadge">${t("earlyT")}</span><p class="grow">${t("earlySub")} <a href="#" data-act="fbopen">${t("feedback")}</a></p><button class="ex" data-act="earlyx" aria-label="${t("close")}">${I.x}</button></div>`}
     ${bdayCard()}
@@ -3299,6 +3323,7 @@ function home(){
     + fold("wild", tx("wdT"), tx("wdTile"), "", PROGRAMS.filter(p => p.grp==="wild"));
   return `${topBar()}<main>
     <div><p class="eyebrow">${greet()}</p><h1 style="margin-top:4px">${t("readyQ")}</h1></div>
+    ${upNext()}
     <div class="card hero">
       <div class="figmini">${figureSVG(firstEx,.5,true)}</div>
       <div class="txt"><p class="eyebrow gold">${t("today")}</p><h2>${L2(first)}</h2></div>
@@ -4092,6 +4117,7 @@ function render(){
   if(st.live && st.live.status === "wait") h += lvWaitSheet();
   if(st.lvInv) h += lvInvSheet();
   if(st.ssCal) h += ssCalSheet();
+  if(st.ssDone) h += ssDoneSheet();
   if(st.lkd && st.view === "me") h += lookSheet();
   if(st.toast) h += `<div class="toast" role="status">${st.toast}</div>`;
   const pm = app.querySelector("main"), pTop = pm ? pm.scrollTop : 0, ps = app.querySelector(".sheet"), psTop = ps ? ps.scrollTop : 0, same = st._lv===st.view && ["main","home","me","gym","pro","build","meals"].includes(st.view);
@@ -4321,7 +4347,7 @@ app.addEventListener("click", e => {
     case "ngo": { const k = el.dataset.k; st.nOpen = false; (st.notifs||[]).forEach(x => x.read = true);
       if(k === "partner_req" || k === "partner_ok"){ st.view = "me"; st.findOpen = true; st.pres = null; st.pq = ""; }
       else if(k === "photo" || k === "team_join"){ st.view = "prog"; st.duels = null; loadDuels(); st.shared = null; loadShared(); loadTeams(); }
-      else if(k.startsWith("sess")){ st.view = "me"; loadSess(); }
+      else if(k.startsWith("sess")){ st.view = "main"; loadSess(); }
       else if(k === "msg"){ st.view = "me"; st.meSheet = "msg"; loadInbox(); }
       else if(k === "msg_report"){ st.view = "me"; st.meSheet = "rep"; }
       else if(k === "faq_new"){ st.view = "me"; st.meSheet = "faq"; }
@@ -4476,7 +4502,9 @@ app.addEventListener("click", e => {
       if(st.custom.length >= maxCustom()){ st.lvPickFor = null; st.view = "pro"; break; }
       st.build = {id:null, name:"", items:[], forLive:{...L}}; st.lvPickFor = null; st.pick = false; st.view = "build"; toast(lvT("lvBuildSub", {name:esc(L.name)})); break; }
     case "lvmode": { const L = st.lvPickFor; if(L){ const d = document.getElementById("ssd"), tm = document.getElementById("sst"); if(d) L.d = d.value; if(tm) L.t = tm.value; L.mode = el.dataset.v; } break; }
-    case "ssans": sb.rpc("session_answer", {p_id:+el.dataset.id, p_ok:el.dataset.ok === "1"}).then(() => loadSess()).catch(() => toast(t("netErr"))); return;
+    case "ssdonex": st.ssDone = null; break;
+    case "ssans": { const ok = el.dataset.ok === "1", id = +el.dataset.id, x = (st.sess||[]).find(z => z.id === id); sb.rpc("session_answer", {p_id:id, p_ok:ok}).then(() => { toast(ok ? lvT("ssAccT", {name: esc(x ? x.partner_name : "")}) : tx("ssDecT")); return loadSess(); }).then(() => { if(ok){ st.ssCal = id; render(); } }).catch(() => toast(t("netErr"))); return; }
+    case "ssans_old": sb.rpc("session_answer", {p_id:+el.dataset.id, p_ok:el.dataset.ok === "1"}).then(() => loadSess()).catch(() => toast(t("netErr"))); return;
     case "sscancel": if(st.ssDel !== +el.dataset.id){ st.ssDel = +el.dataset.id; toast(tx("ssCancel") + " ?"); return; } st.ssDel = null; sb.rpc("session_cancel", {p_id:+el.dataset.id}).then(() => loadSess()).catch(() => toast(t("netErr"))); return;
     case "sscal": st.ssCal = +el.dataset.id; break;
     case "sscalx": st.ssCal = null; break;
@@ -4791,7 +4819,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v70";
+const APP_V = "bbt-v71";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
