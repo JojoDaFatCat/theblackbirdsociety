@@ -1983,6 +1983,7 @@ function preSheet(){
     <div class="card" style="display:flex;flex-direction:column;gap:10px">${ph ? phRow("phS1","high_knees",4) : ""}${rows}${ph ? phRow("phS3","quad_stretch",3) : ""}</div>
     ${ph ? `<p class="note">${tx("phRule")}</p>` : ""}
     <button class="btn btn-gold" data-act="start" data-id="${p.id}" data-day="${st.pre.day ?? ""}" data-go="1">${t("start")} ${I.arrow}</button>
+    <button class="btn btn-line" data-act="invopen" data-id="${p.id}" style="min-height:50px">👥 ${tx("invBtn")}</button>
     ${own ? `<button class="btn btn-line" data-act="bedit" data-id="${p.id}" style="min-height:50px">${t("edit")}</button>` : ""}
   </div>`;
 }
@@ -2300,6 +2301,12 @@ pt:{pushOn1:"Ativar",fbT:"Enviar feedback",fbSub:"Ideias, erros, o que você ama
 de:{pushOn1:"Einschalten",fbT:"Feedback senden",fbSub:"Ideen, Fehler, was du liebst oder nicht. Es geht direkt ans Team und wir lesen alles.",fbPh:"Schreib dein Feedback hier…",fbSend:"Senden",fbLogin:"Melde dich an, um Feedback aus der App zu senden, oder schreib uns eine E-Mail.",fbMail:"Lieber per E-Mail?",fbThanks:"Danke! Dein Feedback wurde gesendet 🖤",fbShort:"Schreib erst ein paar Worte.",fbLimit:"Viel Feedback heute, danke! Versuch es morgen.",fbFail:"Senden fehlgeschlagen. Versuch es nochmal oder schreib uns.",fbAdmT:"Feedback",fbMsgs:"Nachrichten",fbNone:"Noch kein Feedback."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{getPos:"Get in position",getPosHint:"Hold starts after the beeps."}, fr:{getPos:"Mets-toi en position",getPosHint:"Le gainage démarre après les bips."}, es:{getPos:"Ponte en posición",getPosHint:"Empieza después de los pitidos."}, pt:{getPos:"Fique em posição",getPosHint:"Começa depois dos bipes."}, de:{getPos:"In Position gehen",getPosHint:"Startet nach den Tönen."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{rvShare:"Share",rvImgT:"Member review",rvShareTxt:"What our members say 🖤 Join The Black Bird Society, the free fitness app for every body."}, fr:{rvShare:"Partager",rvImgT:"Avis d'un membre",rvShareTxt:"Ce que disent nos membres 🖤 Rejoins The Black Bird Society, l'appli fitness gratuite pour tous."}, es:{rvShare:"Compartir",rvImgT:"Opinión de un miembro",rvShareTxt:"Lo que dicen nuestros miembros 🖤 Únete a The Black Bird Society, la app de fitness gratis para todos."}, pt:{rvShare:"Compartilhar",rvImgT:"Avaliação de membro",rvShareTxt:"O que nossos membros dizem 🖤 Entre na The Black Bird Society, o app de fitness grátis para todos."}, de:{rvShare:"Teilen",rvImgT:"Mitglieder-Bewertung",rvShareTxt:"Was unsere Mitglieder sagen 🖤 Werde Teil der Black Bird Society, der kostenlosen Fitness-App für alle."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {
+en:{invT:"Invite to your workout",invBtn:"Invite a friend",invPart:"Your gym partners",invNowBtn:"Train now",invSchBtn:"Invite",invNoPart:"No gym partners yet. Find friends in the app first, or send a link below.",invFind:"Find gym partners",invOut:"Friend not in the app yet?",invShare:"Send an invite link",invShareSub:"They join free with your link and you both get a 7-day Premium voucher.",invLogin:"Log in to train live with your gym partners. You can still send a link.",invMsg:"Train with me 💪 \"{w}\" (~{m} min) on Black Bird Training, the free fitness app. Join me here:"},
+fr:{invT:"Inviter à ta séance",invBtn:"Inviter un ami",invPart:"Tes partenaires",invNowBtn:"Maintenant",invSchBtn:"Inviter",invNoPart:"Pas encore de partenaire. Trouve tes amis dans l'appli, ou envoie un lien ci-dessous.",invFind:"Trouver des partenaires",invOut:"Ton ami n'est pas encore dans l'appli ?",invShare:"Envoyer un lien d'invitation",invShareSub:"Il rejoint gratuitement avec ton lien et vous gagnez chacun un bon de 7 jours de Premium.",invLogin:"Connecte-toi pour t'entraîner en direct avec tes partenaires. Tu peux quand même envoyer un lien.",invMsg:"Viens t'entraîner avec moi 💪 \"{w}\" (~{m} min) sur Black Bird Training, l'appli fitness gratuite. Rejoins-moi ici :"},
+es:{invT:"Invitar a tu entreno",invBtn:"Invitar a un amigo",invPart:"Tus compañeros",invNowBtn:"Ahora",invSchBtn:"Invitar",invNoPart:"Aún no tienes compañeros. Busca amigos en la app o envía un enlace abajo.",invFind:"Buscar compañeros",invOut:"¿Tu amigo aún no está en la app?",invShare:"Enviar enlace de invitación",invShareSub:"Se une gratis con tu enlace y ambos ganáis 7 días de Premium.",invLogin:"Inicia sesión para entrenar en vivo con tus compañeros. Igual puedes enviar un enlace.",invMsg:"Entrena conmigo 💪 \"{w}\" (~{m} min) en Black Bird Training, la app de fitness gratis. Únete aquí:"},
+pt:{invT:"Convidar para o treino",invBtn:"Convidar um amigo",invPart:"Seus parceiros",invNowBtn:"Agora",invSchBtn:"Convidar",invNoPart:"Ainda sem parceiros. Encontre amigos no app ou envie um link abaixo.",invFind:"Encontrar parceiros",invOut:"Seu amigo ainda não está no app?",invShare:"Enviar link de convite",invShareSub:"Ele entra grátis com seu link e vocês dois ganham 7 dias de Premium.",invLogin:"Entre na conta para treinar ao vivo com parceiros. Você ainda pode enviar um link.",invMsg:"Treine comigo 💪 \"{w}\" (~{m} min) no Black Bird Training, o app de fitness grátis. Entre aqui:"},
+de:{invT:"Zum Training einladen",invBtn:"Freund einladen",invPart:"Deine Trainingspartner",invNowBtn:"Jetzt",invSchBtn:"Einladen",invNoPart:"Noch keine Trainingspartner. Finde Freunde in der App oder schick unten einen Link.",invFind:"Trainingspartner finden",invOut:"Freund noch nicht in der App?",invShare:"Einladungslink senden",invShareSub:"Mit deinem Link ist es kostenlos und ihr bekommt beide 7 Tage Premium.",invLogin:"Melde dich an, um live mit Partnern zu trainieren. Einen Link kannst du trotzdem senden.",invMsg:"Trainier mit mir 💪 \"{w}\" (~{m} min) in Black Bird Training, der kostenlosen Fitness-App. Mach mit:"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2629,7 +2636,7 @@ function akMic(){
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
 /* ================= back button = go back inside the app ================= */
-const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen"];
+const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen","invW"];
 const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
 const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
 let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
@@ -2673,7 +2680,7 @@ window.addEventListener("popstate", () => {
       quitWork(); // second back: leave the workout and keep going back normally
     } }
   if(st.view === "quiz" && !st.profile && st.qBack){ st.profile = st.qBack; }
-  const NUL = {progOpen:1, art:1, meal:1, mdArt:1, mmArt:1, rpOpen:1, chat:1, pre:1};
+  const NUL = {progOpen:1, art:1, meal:1, mdArt:1, mmArt:1, rpOpen:1, chat:1, pre:1, invW:1};
   let prev = navStack.pop();
   if(!prev){
     // bottom of the history: never close the app by surprise
@@ -2968,6 +2975,23 @@ function lvPickSheet(){
     ${L.mode === "sch" ? `<p class="muted" style="margin:0;font-size:14px">${lvT("lvSchSub", {name:esc(L.name)})}</p><div class="hgnums" style="grid-template-columns:1.3fr 1fr"><label><span class="eyebrow">${tx("lvDate")}</span><input class="field" type="date" id="ssd" min="${todayISO()}" value="${L.d || todayISO()}"></label><label><span class="eyebrow">${tx("lvTime")}</span><input class="field" type="time" id="sst" value="${L.t || "18:00"}" step="300"></label></div>` : `<p class="muted" style="margin:0;font-size:14px">${lvT("lvPickSub", {name:esc(L.name)})}</p>`}
     <button class="btn btn-line" data-act="lvbuild" style="min-height:48px;font-size:14px">+ ${tx("lvBuild")}</button>
     <div class="akpop">${list.map(p => `<button data-act="lvsend" data-id="${p.id}"${L.sel === p.id ? ' class="lvsel"' : ""}><span>${L.sel === p.id ? "✨ " : ""}${esc(L2(p))} <small class="muted">· ~${minsOf(p)} ${t("min")}</small></span>${I.arrow}</button>`).join("")}</div></div>`;
+}
+/* invite friends to a workout: start together now, schedule, or send a link to someone not in the app yet */
+function invWSheet(){
+  const W = st.invW, p = W && getP(W.pid); if(!p) return "";
+  const acc = (st.partners || []).filter(x => x.status === "accepted"), sch = W.mode === "sch";
+  const rows = acc.length ? acc.map(x => `<div class="prow"><span class="pprof" style="pointer-events:none">${pav(x.avatar, x.name)}<span class="grow" style="text-align:left"><b>${esc(x.name || x.username || "")}</b><br><small class="muted">#${String(x.member_no).padStart(4,"0")}</small></span></span><button class="pill gopill" data-act="invsend" data-no="${x.member_no}" data-name="${esc(x.name || x.username || "")}">${sch ? "📅 " + tx("invSchBtn") : "▶ " + tx("invNowBtn")}</button></div>`).join("")
+    : `<p class="muted" style="margin:0;font-size:14px">${st.partners == null && st.user && st.user.cloud ? "…" : tx("invNoPart")}</p><button class="btn btn-line" data-act="invfind" style="min-height:46px;font-size:14px">🤝 ${tx("invFind")}</button>`;
+  return `<div class="backdrop" data-act="invx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("invT")}"><div class="grab"></div>
+    <div class="row"><h2 class="grow" style="margin:0">${tx("invT")}</h2><button class="xbtn" data-act="invx" aria-label="${t("close")}">${I.x}</button></div>
+    <p class="gold" style="margin:0;font-weight:700">${esc(L2(p))} · ~${minsOf(p)} ${t("min")}</p>
+    ${st.user && st.user.cloud ? `<p class="eyebrow" style="margin:4px 0 0">${tx("invPart")}</p>
+    <div class="gseg" role="tablist"><button role="tab" data-act="invmode" data-v="now" aria-selected="${!sch}">▶ ${tx("lvNow")}</button><button role="tab" data-act="invmode" data-v="sch" aria-selected="${sch}">📅 ${tx("lvSch")}</button></div>
+    ${sch ? `<div class="hgnums" style="grid-template-columns:1.3fr 1fr"><label><span class="eyebrow">${tx("lvDate")}</span><input class="field" type="date" id="ssd" min="${todayISO()}" value="${W.d || todayISO()}"></label><label><span class="eyebrow">${tx("lvTime")}</span><input class="field" type="time" id="sst" value="${W.t || "18:00"}"></label></div>` : ""}
+    <div style="display:flex;flex-direction:column;gap:8px">${rows}</div>` : `<p class="note" style="margin:0">${tx("invLogin")}</p>`}
+    <p class="eyebrow" style="margin:6px 0 0">${tx("invOut")}</p>
+    <button class="btn btn-gold" data-act="invshare">${tx("invShare")} ${I.arrow}</button>
+    <p class="small" style="margin:0;text-align:left">${tx("invShareSub")}</p></div>`;
 }
 function lvWaitSheet(){
   const L = st.live; if(!L || L.status !== "wait") return "";
@@ -3421,7 +3445,7 @@ function codeSheet(){
 }
 function myBlock(){
   const cards = st.custom.map(p => { const ex = EX[p.items[0][0]];
-    return `<div class="card mywk"><button class="session" data-act="start" data-id="${p.id}"><span class="ico">${figureSVG(ex,1,true)}</span><span class="grow"><h3>${esc(p.en)}</h3><span class="muted">${p.items.length} ${t("exs")} · ~${minsOf(p)} ${t("min")}</span></span></button><button class="pill" data-act="bedit" data-id="${p.id}">${t("edit")}</button></div>`; }).join("");
+    return `<div class="card mywk"><button class="session" data-act="start" data-id="${p.id}"><span class="ico">${figureSVG(ex,1,true)}</span><span class="grow"><h3>${esc(p.en)}</h3><span class="muted">${p.items.length} ${t("exs")} · ~${minsOf(p)} ${t("min")}</span></span></button><span class="row" style="gap:6px;flex:none"><button class="pill" data-act="invopen" data-id="${p.id}" aria-label="${tx("invT")}">+ 👥</button><button class="pill" data-act="bedit" data-id="${p.id}">${t("edit")}</button></span></div>`; }).join("");
   const can = st.custom.length < maxCustom();
   return `<p class="eyebrow gold">${t("myWorkouts")}</p>${cards}
     <button class="btn btn-line" data-act="${can?"bnew":"locked"}" style="min-height:52px;font-size:16px">${can ? "+ "+t("build") : I.lock+" "+t("moreCustom")}</button>`;
@@ -4051,6 +4075,7 @@ function render(){
   if(st.mg) h += mgSheet(); else if(st.akOpen) h += askSheet();
   if(st.pre && st.view !== "work") h += preSheet();
   if(st.musOpen) h += musicSheet();
+  if(st.invW) h += invWSheet();
   if(st.fbOpen) h += fbSheet();
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
@@ -4271,6 +4296,16 @@ app.addEventListener("click", e => {
         toast(data === "ok" ? tx("pmVOk") : data === "expired" ? tx("pmVExp") : (data === "paid" || data === "lifetime") ? tx("pmVPaid") : t("netErr")); loadPrem(); }).catch(() => toast(t("netErr"))); break; }
     case "beep": { const on = store.get("bbt_beep", true) === false; store.set("bbt_beep", on); if(on) beep(true); break; }
     case "rvshare": { const L = el.dataset.src === "adm" ? (st.rvAdmin||[]) : (st.reviews||[]), r = L[+el.dataset.i]; if(r) shareReview(r); return; }
+    case "invopen": st.pre = null; st.invW = {pid: el.dataset.id, mode: "now"}; if(st.partners == null && st.user && st.user.cloud) loadPartners().then(() => render()).catch(() => {}); break;
+    case "invx": st.invW = null; break;
+    case "invmode": { const W = st.invW; if(W){ const d = document.getElementById("ssd"), tm = document.getElementById("sst"); if(d) W.d = d.value; if(tm) W.t = tm.value; W.mode = el.dataset.v; } break; }
+    case "invfind": st.invW = null; st.view = "me"; st.findOpen = true; st.pres = null; st.pq = ""; break;
+    case "invsend": { const W = st.invW; if(!W) return; const no = +el.dataset.no, nm = el.dataset.name;
+      if(W.mode === "sch"){ const d = (document.getElementById("ssd")||{}).value, tm = (document.getElementById("sst")||{}).value; if(!d || !tm){ toast(tx("ssBad")); return; } st.invW = null; ssCreate(no, nm, W.pid, new Date(d + "T" + tm)); render(); return; }
+      st.invW = null; render(); lvInvite(no, nm, W.pid); return; }
+    case "invshare": { const W = st.invW, p = W && getP(W.pid); if(!p) return; const u = st.user || {}, link = SITE + "/" + (u.no ? "?ref=" + u.no : "");
+      const txt = tx("invMsg").replace("{w}", L2(p)).replace("{m}", minsOf(p)) + " " + link;
+      if(navigator.share) navigator.share({text: txt}).catch(() => {}); else { try{ navigator.clipboard.writeText(txt).then(() => toast(t("linkCopied"))); }catch(e){ toast(txt); } } return; }
     case "fbopen": e.preventDefault(); st.fbOpen = true; break;
     case "fbx": st.fbOpen = false; break;
     case "pushon": pushOn(); return;
@@ -4752,7 +4787,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v68";
+const APP_V = "bbt-v69";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
