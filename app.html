@@ -447,6 +447,26 @@ select.field{appearance:auto}
 .adtag{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:3px;border:1px solid var(--gold-dim);color:var(--gold);white-space:nowrap}.adtag.pay{background:var(--gold);color:#041004;border-color:var(--gold)}.adtag.wk{border-color:var(--line2);color:var(--muted)}
 .eplook{display:flex;flex-direction:column;gap:14px}.ep-av{width:84px;height:84px}.ep-av span{font-size:32px}
 .lwl{display:flex;flex-direction:column;gap:4px}.lwl small{color:var(--muted);font-size:12px}
+.ibrow{display:flex;align-items:center;gap:10px;padding:10px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;cursor:pointer;width:100%}.ibrow:first-of-type{border-top:0}
+.ibrow b{display:block;font-size:15px}.ibrow small{display:block;color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ibrow.un b,.ibrow.un small{color:var(--fg)}.ibmeta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}.ibmeta small{font-size:11px}.ibmeta i{font-style:normal;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--gold);color:#041004;font-size:11px;font-weight:700;display:grid;place-items:center}
+.chstart{display:flex;flex-wrap:wrap;gap:8px}.chstart .pill svg,.lvbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px}
+.tabs button{position:relative}.tabdot{position:absolute;top:8px;left:calc(50% + 8px);width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.chat{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);z-index:30;padding-top:env(safe-area-inset-top,0px)}
+.chhead{display:flex;align-items:center;gap:10px;padding:10px max(14px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line2);background:var(--surface,#0b0f0b)}
+.chwho{flex:1;display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;font:inherit;cursor:pointer;min-width:0}.chwho b{font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chmenu{display:flex;flex-direction:column;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line2);background:#00000060}
+.chbody{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.chday{align-self:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:10px 0 4px}
+.chb{max-width:80%;padding:9px 12px 6px;border-radius:16px;line-height:1.4;font-size:15px;word-wrap:break-word;overflow-wrap:anywhere}.chb p{margin:0}.chb small{display:block;font-size:10.5px;opacity:.65;margin-top:3px;text-align:right}
+.chb.me{align-self:flex-end;background:var(--gold);color:#041004;border-bottom-right-radius:4px}
+.chb.them{align-self:flex-start;background:var(--surface2,#151b15);border:1px solid var(--line2);border-bottom-left-radius:4px;cursor:pointer}.chb.them.sel{border-color:#ff6b6b}
+.chrep{align-self:flex-start;font-size:12px;border-color:#ff6b6b;color:#ff9a9a}
+.chempty{text-align:center;margin:auto 20px;font-size:14px}
+.chform{display:flex;gap:8px;align-items:flex-end;padding:10px max(12px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line2);background:var(--surface,#0b0f0b)}
+.chform textarea{flex:1;min-height:46px;max-height:140px;resize:none;font:inherit;font-size:16px;padding:11px 14px;border-radius:22px}
+.chsend{flex:none;width:46px;height:46px;min-height:46px;padding:0;border-radius:50%;display:grid;place-items:center}
+.chblocked{margin:0;padding:16px;text-align:center;color:var(--muted);border-top:1px solid var(--line2)}
 .ranks{display:flex;gap:6px}
 .ranks span{flex:1;text-align:center;font-family:var(--font-d);font-size:13px;padding:4px 0;border:1px solid var(--line2);border-radius:2px;color:var(--muted)}
 .ranks span.on{border-color:var(--gold-dim);color:var(--gold)}
@@ -639,7 +659,7 @@ const cloud = {
   async loadReviews(){ if(!sb) return; try{ const { data } = await sb.rpc("public_reviews"); st.reviews = data || []; if(st.view==="main") render(); }catch(e){} },
   async myReview(){ if(!sb) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(!session) return;
       const { data } = await sb.from("reviews").select("rating,body,status").eq("user_id", session.user.id).maybeSingle(); st.myRv = data || null;
-      if(st.user && st.user.no === 1){ const { data:a } = await sb.rpc("admin_reviews"); st.rvAdmin = a || []; const { data:s2 } = await sb.rpc("admin_stats"); st.adStats = s2 || null; const { data:fm } = await sb.rpc("admin_faq_misses"); st.faqMiss = fm || []; } }catch(e){} },
+      if(st.user && st.user.no === 1){ const { data:a } = await sb.rpc("admin_reviews"); st.rvAdmin = a || []; const { data:s2 } = await sb.rpc("admin_stats"); st.adStats = s2 || null; const { data:fm } = await sb.rpc("admin_faq_misses"); st.faqMiss = fm || []; try{ const { data:mr } = await sb.rpc("admin_msg_reports"); st.msgReps = mr || []; }catch(e){} } }catch(e){} },
   async save(fields){ if(!sb || !st.user || !st.user.cloud) return; try{ const { data:{ session } } = await sb.auth.getSession(); if(session) await sb.from("profiles").update(fields).eq("id", session.user.id); }catch(e){} },
   async workout(row){ if(!st.user || !st.user.cloud) return;
     const queue = () => { const q = store.get("bbt_pendw", []); q.push(row); store.set("bbt_pendw", q.slice(-50)); };
@@ -1475,7 +1495,7 @@ function topBar(){
 }
 function tabs(){
   const b = (v,ic,lab) => `<button data-act="tab" data-v="${v}" ${st.view===v?'aria-current="page"':""}>${I[ic]}${lab}</button>`;
-  return `<nav class="tabs">${b("main","hub",t("mainTab"))}${b("home","train",t("train"))}${b("gym","gym",t("gym"))}<button data-act="ask" ${st.akOpen?'aria-current="page"':""}>${I.search}${tx("srchTab")}</button>${b("me","me",t("me"))}</nav>`;
+  return `<nav class="tabs">${b("main","hub",t("mainTab"))}${b("home","train",t("train"))}${b("gym","gym",t("gym"))}<button data-act="ask" ${st.akOpen?'aria-current="page"':""}>${I.search}${tx("srchTab")}</button>${b("me","me",t("me")).replace("</button>", st.unread ? `<i class="tabdot" aria-label="${tx("chUnread").replace("{n}", st.unread)}"></i></button>` : "</button>")}</nav>`;
 }
 function minsOf(p){ if(p.mins) return p.mins; const sets=p.items.reduce((a,x)=>a+x[1],0); return Math.round(sets*2.5/5)*5; }
 function greet(){ const h=new Date().getHours(); return h<12?t("morning"):h<18?t("afternoon"):t("evening"); }
@@ -2122,6 +2142,7 @@ Object.keys({"en":{"msT":"Why Black Bird costs less","msH":"Health shouldn't be 
 { const X = {"en": {"cardJoin": "Scan to join me", "cardFree": "Free to start · every body welcome"}, "fr": {"cardJoin": "Scanne pour me rejoindre", "cardFree": "Gratuit pour commencer · pour tous"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {"en": {"hlT": "Training record", "hlSub": "Everything you've done in the app.", "hlWk": "Workouts", "hlSets": "Sets", "hlKg": "kg lifted", "hlDays": "Days active", "hlProg": "Programs conquered", "hlHeat": "Last 12 weeks", "hlNext": "{n} more to {r}", "hlMax": "Top rank reached", "hlEmpty": "Finish a program and it lights up here. Try to light them all.", "hlLess": "Less", "hlMore": "More", "hlRank": "Rank", "hlFav": "Most trained", "hlTimes": "×{n}", "hlAll": "See all {n} programs"}, "fr": {"hlT": "Carnet d'entraînement", "hlSub": "Tout ce que tu as fait dans l'appli.", "hlWk": "Séances", "hlSets": "Séries", "hlKg": "kg soulevés", "hlDays": "Jours actifs", "hlProg": "Programmes conquis", "hlHeat": "12 dernières semaines", "hlNext": "Encore {n} pour {r}", "hlMax": "Rang maximum atteint", "hlEmpty": "Termine un programme et il s'allume ici. Essaie de tous les allumer.", "hlLess": "Moins", "hlMore": "Plus", "hlRank": "Rang", "hlFav": "Le plus fait", "hlTimes": "×{n}", "hlAll": "Voir les {n} programmes"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {"en": {"epLook": "Photo & look", "epCover": "cover, theme, motto", "adPayTag": "PAID", "adWkTag": "this wk", "adAll": "Show all", "adNone": "Nobody here yet.", "lwBtn": "Log a workout", "lwSub": "Trained outside the app? Add it here so your record stays complete. Only log sessions you really did.", "lwWhat": "What did you do?", "lwOwn": "My own session", "lwWhen": "When?", "lwSave": "Add to my record", "lwOk": "Workout logged. Keep going!", "lwRank": "Rank up! You're now {r}.", "lwBad": "Pick a date in the last 60 days."}, "fr": {"epLook": "Photo & style", "epCover": "couverture, thème, devise", "adPayTag": "PAYÉ", "adWkTag": "cette sem.", "adAll": "Tout voir", "adNone": "Personne pour l'instant.", "lwBtn": "Ajouter une séance", "lwSub": "Tu t'es entraîné hors de l'appli ? Ajoute-la ici pour garder ton carnet complet. N'ajoute que les séances vraiment faites.", "lwWhat": "Qu'as-tu fait ?", "lwOwn": "Ma propre séance", "lwWhen": "Quand ?", "lwSave": "Ajouter à mon carnet", "lwOk": "Séance ajoutée. Continue !", "lwRank": "Nouveau rang ! Tu es maintenant {r}.", "lwBad": "Choisis une date dans les 60 derniers jours."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {"en": {"chT": "Messages", "chTile": "Chat with your gym partners", "chUnread": "{n} unread", "chConv": "{n} chats", "chSub": "Private messages with your gym partners only. Be kind: the Code applies here too.", "chNone": "No messages yet. Say hi to a partner below.", "chNoP": "Add a gym partner first. Once they accept, you can message each other.", "chStart": "Start a chat", "chYou": "You:", "chMsg": "Message", "chMore": "More", "chPh": "Write a message…", "chSend": "Send", "chSeen": "Seen", "chFirst": "Say hi to {name}. Plan a session, share a win, keep each other going.", "chReport": "Report this message", "chRepOk": "Thanks. We'll review it. You can also block this member from the ⋯ menu.", "chRepHint": "To report a message, tap it.", "chBlock": "Block", "chBlockQ": "Block {name}? You won't be able to message each other.", "chBlocked": "You can't message this member.", "chNo": "You can only message accepted gym partners.", "chSlow": "Slow down a little, then try again.", "chReps": "Reported messages", "chRepBy": "reported by", "chSeeM": "See member", "chDone": "Done", "n_msg": "{name} sent you a message", "n_msg_report": "A message from {name} was reported"}, "fr": {"chT": "Messages", "chTile": "Discute avec tes partenaires", "chUnread": "{n} non lu(s)", "chConv": "{n} discussions", "chSub": "Messages privés avec tes partenaires de salle uniquement. Reste bienveillant : le Code s'applique ici aussi.", "chNone": "Pas encore de messages. Dis bonjour à un partenaire ci-dessous.", "chNoP": "Ajoute d'abord un partenaire. Dès qu'il accepte, vous pouvez vous écrire.", "chStart": "Commencer une discussion", "chYou": "Toi :", "chMsg": "Message", "chMore": "Plus", "chPh": "Écris un message…", "chSend": "Envoyer", "chSeen": "Vu", "chFirst": "Dis bonjour à {name}. Prévoyez une séance, partagez une victoire, motivez-vous.", "chReport": "Signaler ce message", "chRepOk": "Merci. Nous allons vérifier. Tu peux aussi bloquer ce membre via le menu ⋯.", "chRepHint": "Pour signaler un message, touche-le.", "chBlock": "Bloquer", "chBlockQ": "Bloquer {name} ? Vous ne pourrez plus vous écrire.", "chBlocked": "Tu ne peux pas écrire à ce membre.", "chNo": "Tu ne peux écrire qu'à tes partenaires acceptés.", "chSlow": "Doucement, réessaie dans un instant.", "chReps": "Messages signalés", "chRepBy": "signalé par", "chSeeM": "Voir le membre", "chDone": "Traité", "n_msg": "{name} t'a envoyé un message", "n_msg_report": "Un message de {name} a été signalé"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -2539,9 +2560,9 @@ function hgSessSheet(){
     <button class="btn btn-line" data-act="hgsx">${t("close")}</button></div>`;
 }
 /* ================= Me page: tiles that open a window ================= */
-const MEIC = {"part": "<circle cx=\"8\" cy=\"8\" r=\"3\"/><circle cx=\"16\" cy=\"8\" r=\"3\"/><path d=\"M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M10.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5\"/>", "prog": "<path d=\"M3 20h18\"/><path d=\"M5 16l4.5-5 3.5 3 6-7\"/><path d=\"M15 7h4v4\"/>", "inv": "<rect x=\"3\" y=\"5.5\" width=\"18\" height=\"13\" rx=\"2\"/><path d=\"M3.5 7l8.5 6 8.5-6\"/>", "rate": "<path d=\"M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/><path d=\"M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9\"/>", "adm": "<path d=\"M3 20h18\"/><rect x=\"5\" y=\"11\" width=\"3\" height=\"6\" rx=\".5\"/><rect x=\"10.5\" y=\"7\" width=\"3\" height=\"10\" rx=\".5\"/><rect x=\"16\" y=\"4\" width=\"3\" height=\"13\" rx=\".5\"/>", "rank": "<path d=\"M7 4h10v5a5 5 0 01-10 0z\"/><path d=\"M7 6H4v1.5A3.5 3.5 0 007.3 11M17 6h3v1.5a3.5 3.5 0 01-3.3 3.5\"/><path d=\"M12 14v3M8.5 20h7M9.5 20l.5-3h4l.5 3\"/>", "chal": "<path d=\"M5 19L19 5M15 5h4v4\"/><path d=\"M19 19L5 5M5 9V5h4\"/><path d=\"M7 14l3 3M17 14l-3 3\"/>", "card": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"8.5\" cy=\"11\" r=\"2.2\"/><path d=\"M5.5 16c.5-1.7 1.6-2.5 3-2.5s2.5.8 3 2.5M14 10h4M14 13.5h3\"/>", "rew": "<rect x=\"3.5\" y=\"9\" width=\"17\" height=\"11\" rx=\"1.5\"/><path d=\"M2.5 9h19v-3h-19zM12 6v14\"/><path d=\"M12 6c-1-2.5-4.5-3-4.5-.8S10 6 12 6zM12 6c1-2.5 4.5-3 4.5-.8S14 6 12 6z\"/>", "set": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/>", "faq": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M10 8.6a2 2 0 113 1.7c-.6.4-1 .8-1 1.5M12 13.6v.1\"/>", "rv": "<path d=\"M4 4h16v12H9l-5 4z\"/><path d=\"M12 6.8l1.1 2.2 2.4.4-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.4z\"/>"};
+const MEIC = {"part": "<circle cx=\"8\" cy=\"8\" r=\"3\"/><circle cx=\"16\" cy=\"8\" r=\"3\"/><path d=\"M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M10.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5\"/>", "prog": "<path d=\"M3 20h18\"/><path d=\"M5 16l4.5-5 3.5 3 6-7\"/><path d=\"M15 7h4v4\"/>", "inv": "<rect x=\"3\" y=\"5.5\" width=\"18\" height=\"13\" rx=\"2\"/><path d=\"M3.5 7l8.5 6 8.5-6\"/>", "rate": "<path d=\"M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/><path d=\"M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9\"/>", "adm": "<path d=\"M3 20h18\"/><rect x=\"5\" y=\"11\" width=\"3\" height=\"6\" rx=\".5\"/><rect x=\"10.5\" y=\"7\" width=\"3\" height=\"10\" rx=\".5\"/><rect x=\"16\" y=\"4\" width=\"3\" height=\"13\" rx=\".5\"/>", "rank": "<path d=\"M7 4h10v5a5 5 0 01-10 0z\"/><path d=\"M7 6H4v1.5A3.5 3.5 0 007.3 11M17 6h3v1.5a3.5 3.5 0 01-3.3 3.5\"/><path d=\"M12 14v3M8.5 20h7M9.5 20l.5-3h4l.5 3\"/>", "chal": "<path d=\"M5 19L19 5M15 5h4v4\"/><path d=\"M19 19L5 5M5 9V5h4\"/><path d=\"M7 14l3 3M17 14l-3 3\"/>", "card": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"8.5\" cy=\"11\" r=\"2.2\"/><path d=\"M5.5 16c.5-1.7 1.6-2.5 3-2.5s2.5.8 3 2.5M14 10h4M14 13.5h3\"/>", "rew": "<rect x=\"3.5\" y=\"9\" width=\"17\" height=\"11\" rx=\"1.5\"/><path d=\"M2.5 9h19v-3h-19zM12 6v14\"/><path d=\"M12 6c-1-2.5-4.5-3-4.5-.8S10 6 12 6zM12 6c1-2.5 4.5-3 4.5-.8S14 6 12 6z\"/>", "set": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/>", "msg": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M8 9.5h8M8 12.5h5\"/>", "rep": "<path d=\"M5 21V4\"/><path d=\"M5 4h12l-2 4 2 4H5\"/>", "faq": "<path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M10 8.6a2 2 0 113 1.7c-.6.4-1 .8-1 1.5M12 13.6v.1\"/>", "rv": "<path d=\"M4 4h16v12H9l-5 4z\"/><path d=\"M12 6.8l1.1 2.2 2.4.4-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.4z\"/>"};
 const meIc = k => MEIC[k] ? `<svg viewBox="0 0 24 24" aria-hidden="true">${MEIC[k]}</svg>` : "";
-const ME_TILES = {part:["🤝","meTPart"], prog:["📈","meTProg"], inv:["📨","meTInv"], rate:["🌟","meTRate"], help:["🛟","meTHelp"], adm:["📊","meTAdm"], rank:["🏆","hlT"], chal:["⚔️","meTChal"], card:["🪪","meTCard"], rew:["🎁","meTRew"], set:["⚙️","meTSet"], faq:["💬","meTFaq"], rv:["⭐","meTRv"]};
+const ME_TILES = {msg:["💬","chT"], rep:["⚑","chReps"], part:["🤝","meTPart"], prog:["📈","meTProg"], inv:["📨","meTInv"], rate:["🌟","meTRate"], help:["🛟","meTHelp"], adm:["📊","meTAdm"], rank:["🏆","hlT"], chal:["⚔️","meTChal"], card:["🪪","meTCard"], rew:["🎁","meTRew"], set:["⚙️","meTSet"], faq:["💬","meTFaq"], rv:["⭐","meTRv"]};
 function meTiles(html){
   const parts = {}, order = [];
   html = html.replace(/<!--F:(\w+)-->([\s\S]*?)<!--\/F-->/g, (m, k, c) => { if(!c.replace(/<span id="settings"[^>]*><\/span>/, "").trim()) return ""; parts[k] = c; order.push(k); return ""; });
@@ -2551,6 +2572,8 @@ function meTiles(html){
     if(k === "prog") return tx("meLvl").replace("{n}", lvlOf(pg().xp||0)) + " · 🔥 " + streak();
     if(k === "adm" && a) return `${a.total} ${tx("meMem")} · +${a.today} ${tx("meToday")}`;
     if(k === "faq") return `${(st.faqMiss||[]).length} ${tx("meQs")}`;
+    if(k === "msg") return st.unread ? `<span class="gold">${tx("chUnread").replace("{n}", st.unread)}</span>` : (st.inbox||[]).length ? tx("chConv").replace("{n}", st.inbox.length) : tx("chTile");
+    if(k === "rep") return `${(st.msgReps||[]).filter(r => !r.handled).length} ${tx("mePend")}`;
     if(k === "rv") return `${(st.rvAdmin||[]).filter(x => x.status === "pending").length} ${tx("mePend")}`;
     return ""; };
   const tiles = order.length ? `<div class="metiles">${order.map(k => { const [ic, lab] = ME_TILES[k] || ["•", k], sb = sub(k);
@@ -3291,6 +3314,49 @@ function machineSheet(){
 const RN = i => st.lang==="en" ? RANKS[i][1] : st.lang==="fr" ? RANKS[i][2] : RANKX[st.lang][i];
 function pav(url, name){ return `<span class="pav">${url ? `<img src="${esc(url)}" alt="">` : esc(((name||"?").charAt(0)||"?").toUpperCase())}</span>`; }
 function pwho(p){ return `<span class="grow" style="min-width:0"><b class="pnm">${esc(p.name||"")}</b><span class="muted pid">${p.username ? "@"+esc(p.username)+" · " : ""}#${String(p.member_no).padStart(4,"0")}</span></span>`; }
+
+/* ================= messages (gym partners only) ================= */
+const CHATIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>`;
+async function loadInbox(){ if(!(sb && st.user && st.user.cloud)) return;
+  try{ const { data } = await sb.rpc("msg_inbox"); st.inbox = data || []; const u = st.inbox.reduce((a,x) => a + Number(x.unread||0), 0); const ch = u !== st.unread; st.unread = u;
+    if(st.view === "me" || st.view === "chat" || ch) render(); }catch(e){} }
+async function loadThread(silent){ const c = st.chat; if(!c) return;
+  try{ const { data } = await sb.rpc("msg_thread", {p_no:c.no}); if(st.chat !== c) return; const L = data || [];
+    const changed = JSON.stringify((c.list||[]).map(x => x.id + ":" + x.read)) !== JSON.stringify(L.map(x => x.id + ":" + x.read));
+    c.list = L; c.loaded = true; if(changed || !silent){ render(); chatScroll(); } }catch(e){ c.loaded = true; render(); } }
+function chatScroll(){ setTimeout(() => { const b = document.querySelector(".chbody"); if(b) b.scrollTop = b.scrollHeight; }, 30); }
+function chatOpen(no, name){ st.chat = {no:+no, name:name || "", list:[], loaded:false}; st.chSel = null; st.chMenu = false; st.blockAsk = false; st.prevView = st.view === "chat" ? st.prevView : st.view; st.view = "chat"; render(); loadThread(); }
+setInterval(() => { if(document.visibilityState !== "visible" || !st.user) return; if(st.view === "chat") loadThread(true); }, 6000);
+setInterval(() => { if(document.visibilityState === "visible" && st.user && !st.w) loadInbox(); }, 45000);
+function inboxBlock(){
+  if(!(sb && st.user && st.user.cloud)) return "";
+  const acc = (st.partners||[]).filter(p => p.status === "accepted"), L = st.inbox || [], have = new Set(L.map(x => +x.member_no));
+  const rows = L.map(x => `<button class="ibrow${Number(x.unread) ? " un" : ""}" data-act="chatopen" data-no="${x.member_no}" data-name="${esc(x.name||"")}">${pav(x.avatar, x.name)}<span class="grow" style="min-width:0;text-align:left"><b>${esc(x.name||"")}</b><small>${x.last_mine ? tx("chYou") + " " : ""}${esc(x.last_body||"")}</small></span><span class="ibmeta"><small>${ago(x.last_at)}</small>${Number(x.unread) ? `<i>${x.unread}</i>` : ""}</span></button>`).join("");
+  const start = acc.filter(p => !have.has(+p.member_no));
+  return `<div class="card" style="display:flex;flex-direction:column;gap:10px"><p class="small" style="margin:0;text-align:left">${tx("chSub")}</p>
+    ${rows || (start.length ? "" : `<p class="muted" style="margin:0;font-size:14px">${acc.length ? tx("chNone") : tx("chNoP")}</p>`)}
+    ${start.length ? `<p class="eyebrow" style="margin:6px 0 0">${tx("chStart")}</p><div class="chstart">${start.map(p => `<button class="pill" data-act="chatopen" data-no="${p.member_no}" data-name="${esc(p.name||p.username||"")}">${CHATIC} ${esc(p.name||p.username||"")}</button>`).join("")}</div>` : ""}
+    ${acc.length ? "" : `<button class="btn btn-line" data-act="findopen" style="min-height:46px;font-size:14px">+ ${t("findP")}</button>`}</div>`;
+}
+function chatView(){
+  const c = st.chat || {list:[]}, L = c.list || [], inb = (st.inbox||[]).find(x => +x.member_no === c.no), blocked = inb && inb.can === false;
+  let lastDay = "";
+  const bub = L.map(m => { const d = new Date(m.created_at), day = d.toLocaleDateString(LOC(), {weekday:"short", day:"numeric", month:"short"}), sep = day !== lastDay ? `<div class="chday">${day}</div>` : ""; lastDay = day;
+    return sep + `<div class="chb ${m.mine ? "me" : "them"}${st.chSel === m.id ? " sel" : ""}"${m.mine ? "" : ` data-act="chsel" data-id="${m.id}" role="button" tabindex="0"`}><p>${esc(m.body).replace(/\n/g,"<br>")}</p><small>${d.toLocaleTimeString(LOC(), {hour:"2-digit", minute:"2-digit"})}${m.mine && m.read ? " · " + tx("chSeen") : ""}</small></div>${st.chSel === m.id ? `<button class="pill chrep" data-act="chreport" data-id="${m.id}">⚑ ${tx("chReport")}</button>` : ""}`; }).join("");
+  return `<div class="chat"><header class="chhead"><button class="xbtn" data-act="chback" aria-label="${t("close")}"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="chwho" data-act="mprof" data-no="${c.no}">${pav(inb && inb.avatar, c.name)}<b>${esc(c.name)}</b></button>
+      <button class="xbtn" data-act="chmenu" aria-label="${tx("chMore")}">⋯</button></header>
+    ${st.chMenu ? `<div class="chmenu">${st.blockAsk ? `<p style="margin:0;font-size:14px">${tx("chBlockQ").replace("{name}", esc(c.name))}</p><div class="btnrow"><button class="btn btn-gold" data-act="chblock" style="min-height:44px;font-size:14px">${tx("chBlock")}</button><button class="btn btn-line" data-act="chmenu" style="min-height:44px;font-size:14px">${t("cancel") || "Cancel"}</button></div>` : `<button class="btn btn-line" data-act="chblockask" style="min-height:44px;font-size:14px">⛔ ${tx("chBlock")}</button><p class="small" style="margin:0;text-align:left">${tx("chRepHint")}</p>`}</div>` : ""}
+    <div class="chbody">${!c.loaded ? `<p class="muted" style="text-align:center">${t("searching")}</p>` : L.length ? bub : `<p class="muted chempty">${tx("chFirst").replace("{name}", esc(c.name))}</p>`}</div>
+    ${blocked ? `<p class="chblocked">${tx("chBlocked")}</p>` : `<form id="chform" class="chform" autocomplete="off"><textarea class="field" id="ch-in" rows="1" maxlength="1000" placeholder="${tx("chPh")}" enterkeyhint="send" data-form-type="other">${esc(st.chDraft||"")}</textarea><button class="btn btn-gold chsend" type="submit" aria-label="${tx("chSend")}"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg></button></form>`}
+  </div>`;
+}
+async function chatSend(){ const el = document.getElementById("ch-in"), c = st.chat; if(!el || !c) return; const b = el.value.trim(); if(!b) return;
+  el.value = ""; st.chDraft = ""; c.list = [...(c.list||[]), {id:"tmp"+Date.now(), mine:true, body:b, created_at:new Date().toISOString(), read:false}]; render(); chatScroll();
+  try{ const { data } = await sb.rpc("msg_send", {p_no:c.no, p_body:b}); if(data !== "ok") toast(tx({no:"chNo", slow:"chSlow"}[data] || "netErr")); }catch(e){ toast(t("netErr")); }
+  loadThread(true); loadInbox(); }
+function reportsBlock(){ const R = st.msgReps || []; if(!st.user || st.user.no !== 1 || !R.length) return "";
+  return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("chReps")} · ${R.filter(r => !r.handled).length}</p>${R.map(r => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px;${r.handled ? "opacity:.5" : ""}"><span class="row" style="gap:8px"><b class="grow">@${esc(r.reported||"?")} <span class="muted" style="font-weight:400">${tx("chRepBy")} @${esc(r.reporter||"?")}</span></b><small class="muted">${ago(r.created_at)}</small></span>${r.body ? `<span style="font-size:14px">“${esc(r.body)}”</span>` : ""}<span class="row" style="gap:8px"><button class="pill" data-act="amopen" data-n="${r.reported_no}">${tx("chSeeM")}</button>${r.handled ? "" : `<button class="pill" data-act="repdone" data-id="${r.id}">✓ ${tx("chDone")}</button>`}</span></div>`).join("")}</div>`; }
 function partnersBlock(){
   const ok = sb && st.user && st.user.cloud;
   if(!ok) return `<div class="card"><p class="eyebrow gold">${t("partners")}</p><p class="muted" style="font-size:14px;margin-top:6px">${t("partnersJoin")}</p></div>`;
@@ -3298,7 +3364,7 @@ function partnersBlock(){
   const inc = list.filter(p => p.status==="pending" && p.incoming), acc = list.filter(p => p.status==="accepted"), out = list.filter(p => p.status==="pending" && !p.incoming);
   const rows = [
     ...inc.map(p => `<div class="prow req">${pav(p.avatar,p.name)}<span class="grow" style="min-width:0"><b class="pnm">${esc(p.name||"")}</b><span class="muted pid wrap">${t("reqIn")}</span></span><div class="reqbtns"><button class="pill gopill" data-act="paccept" data-no="${p.member_no}">${t("acceptL")}</button><button class="pill" data-act="pdecline" data-no="${p.member_no}">${t("declineL")}</button></div></div>`),
-    ...acc.map(p => `<div class="prow"><button class="pprof" data-act="mprof" data-no="${p.member_no}">${pav(p.avatar,p.name)}${pwho(p)}</button><button class="lvbtn" data-act="lvpick" data-no="${p.member_no}" data-name="${esc(p.name || p.username || "")}" aria-label="${tx("lvBtn")}" title="${tx("lvBtn")}"><span aria-hidden="true">▶</span></button><span class="pwk"><b>${Math.min(3, Number(p.week)||0)}/3</b>${p.total!=null ? `<i class="rune">${RUNES[rankOf(Number(p.total))]}</i>` : ""}</span><button class="pdots" data-act="prem" data-no="${p.member_no}" aria-label="${t("removeL")}">${st.premArm===p.member_no ? `<small>${t("removeConfirm")}</small>` : I.x}</button></div>`),
+    ...acc.map(p => `<div class="prow"><button class="pprof" data-act="mprof" data-no="${p.member_no}">${pav(p.avatar,p.name)}${pwho(p)}</button><button class="lvbtn" data-act="chatopen" data-no="${p.member_no}" data-name="${esc(p.name || p.username || "")}" aria-label="${tx("chMsg")}" title="${tx("chMsg")}">${CHATIC}</button><button class="lvbtn" data-act="lvpick" data-no="${p.member_no}" data-name="${esc(p.name || p.username || "")}" aria-label="${tx("lvBtn")}" title="${tx("lvBtn")}"><span aria-hidden="true">▶</span></button><span class="pwk"><b>${Math.min(3, Number(p.week)||0)}/3</b>${p.total!=null ? `<i class="rune">${RUNES[rankOf(Number(p.total))]}</i>` : ""}</span><button class="pdots" data-act="prem" data-no="${p.member_no}" aria-label="${t("removeL")}">${st.premArm===p.member_no ? `<small>${t("removeConfirm")}</small>` : I.x}</button></div>`),
     ...out.map(p => `<div class="prow">${pav(p.avatar,p.name)}${pwho(p)}<span class="muted" style="font-size:12px">${t("pendingL")}</span></div>`)
   ].join("");
   return `<div class="card" style="display:flex;flex-direction:column;gap:12px"><div><p class="eyebrow gold">${t("partners")}</p><p class="muted" style="font-size:13px;margin-top:4px">${t("partnersSub")}</p></div>
@@ -3508,6 +3574,7 @@ function me(){
     <!--F:adm-->${adminStats()}<!--/F-->
     <input id="avfile" type="file" accept="image/*" hidden>
     <!--F:prog-->${progBlock()}<!--/F-->
+    <!--F:msg-->${inboxBlock()}<!--/F-->
     <!--F:part-->${partnersBlock()}
     ${sessBlock()}<!--/F-->
     <!--F:rank-->${hall()}<!--/F-->
@@ -3548,6 +3615,7 @@ function me(){
     </div>
 <!--/F-->
     <!--F:faq-->${faqAdminBlock()}<!--/F-->
+    <!--F:rep-->${reportsBlock()}<!--/F-->
     <!--F:rv-->${rvAdminBlock()}<!--/F-->
     <!--F:inv-->${inviteCard()}<!--/F-->
     <!--F:rate-->${reviewCard()}<!--/F-->
@@ -3614,6 +3682,7 @@ function render(){
   else if(st.view==="supp") h = suppView() + (st.supp ? suppSheet() : "");
   else if(st.view==="meals") h = meals() + (st.mym ? mmSheet() : "") + (st.meal!=null ? mealSheet() : "") + (st.mpd ? mpSheet() : "") + (st.grOpen ? grocSheet() : "") + (st.bcOpen ? bcSheet() : "");
   else if(st.view==="me") h = meTiles(me()) + (st.codeOpen ? codeSheet() : "") + (st.runesOpen ? runeSheet() : "") + (st.progOpen!=null ? progSheet() : "") + (st.findOpen ? findSheet() : "") + (st.amOpen ? memberSheet() : "") + (st.guideOpen ? guideSheet() : "");
+  else if(st.view==="chat" && st.chat) h = chatView() + (st.mp !== undefined && st.mp !== false ? "" : "");
   else if(st.view==="build" && st.build) h = builder() + (st.pick ? pickSheet() : "");
   else { st.view = "main"; h = mainView(); }
   if(st.mg) h += mgSheet(); else if(st.akOpen) h += askSheet();
@@ -3639,6 +3708,7 @@ function render(){
   if((st.view==="me" && st.user) || st.view==="done") setTimeout(() => { prepShare(st.view==="done" ? "work" : "card").catch(() => {}); }, 400);
   if(st.view==="me" && st.prog==null && st.user && st.user.cloud) loadProg();
   if(st.view==="me" && st.partners==null && st.user && st.user.cloud) loadPartners();
+  if(st.user && st.user.cloud && st.inbox === undefined){ st.inbox = null; loadInbox(); }
   if(document.getElementById("fighost") && !raf) raf = requestAnimationFrame(loop);
   if(st.scrollGrp){ const g = document.getElementById("grp_"+st.scrollGrp) || document.getElementById(st.scrollGrp); st.scrollGrp = null; if(g) setTimeout(() => g.scrollIntoView({block:"start",behavior:"smooth"}), 30); }
   updateRing();
@@ -3816,6 +3886,8 @@ app.addEventListener("click", e => {
       if(k === "partner_req" || k === "partner_ok"){ st.view = "me"; st.findOpen = true; st.pres = null; st.pq = ""; }
       else if(k === "photo" || k === "team_join"){ st.view = "prog"; st.duels = null; loadDuels(); st.shared = null; loadShared(); loadTeams(); }
       else if(k.startsWith("sess")){ st.view = "me"; loadSess(); }
+      else if(k === "msg"){ st.view = "me"; st.meSheet = "msg"; loadInbox(); }
+      else if(k === "msg_report"){ st.view = "me"; st.meSheet = "rep"; }
       else if(k === "faq_new"){ st.view = "me"; st.meSheet = "faq"; }
       else if(k === "faq_ans"){ const n0 = (st.notifs||[]).find(x => x.kind === "faq_ans"); st.akQ = n0 && n0.data ? n0.data.q || "" : ""; st.akOpen = true; }
       else if(k.startsWith("ref")){ st.view = "me"; st.scrollGrp = "premcard"; loadPrem(); } else if(k.startsWith("review")){ st.view = "me"; }
@@ -4001,6 +4073,14 @@ app.addEventListener("click", e => {
     case "closemeal": st.ingOpen = null; st.meal = null; break;
     case "copymail": try{ navigator.clipboard.writeText(SUPPORT).then(() => toast(t("emailCopied"))).catch(() => toast(SUPPORT)); }catch(err){ toast(SUPPORT); } break;
     case "hallall": st.hallAll = true; break;
+    case "chatopen": st.meSheet = null; st.nOpen = false; chatOpen(el.dataset.no, el.dataset.name); return;
+    case "chback": st.view = st.prevView && st.prevView !== "chat" ? st.prevView : "me"; st.chat = null; st.meSheet = st.view === "me" ? "msg" : st.meSheet; loadInbox(); break;
+    case "chmenu": st.chMenu = !st.chMenu; st.blockAsk = false; break;
+    case "chblockask": st.blockAsk = true; break;
+    case "chblock": { const c = st.chat; st.chMenu = false; st.blockAsk = false; sb.rpc("msg_block", {p_no:c.no, p_on:true}).then(() => { toast(tx("chBlocked")); loadInbox(); }).catch(() => toast(t("netErr"))); break; }
+    case "chsel": st.chSel = st.chSel === +el.dataset.id ? null : +el.dataset.id; break;
+    case "chreport": { const c = st.chat; st.chSel = null; sb.rpc("msg_report", {p_no:c.no, p_msg:+el.dataset.id, p_reason:"user report"}).then(() => toast(tx("chRepOk"))).catch(() => toast(t("netErr"))); break; }
+    case "repdone": { sb.rpc("admin_report_done", {p_id:+el.dataset.id}).then(() => sb.rpc("admin_msg_reports")).then(({ data }) => { st.msgReps = data || []; render(); }).catch(() => {}); break; }
     case "lwopen": st.lw = true; break;
     case "lwx": st.lw = false; break;
     case "adf": st.adF = el.dataset.k; break;
@@ -4110,6 +4190,7 @@ app.addEventListener("submit", e => {
     if(!sb) return; sb.rpc(cr ? "team_create" : "team_join", cr ? {p_name:v} : {p_code:v}).then(({ data }) => {
       if(data === "none") toast(tx("tErr")); else if(data === "full") toast(tx("tFull")); else if(data === "max") toast(tx("tMax")); else if(data === "bad" || data === "login" || !data) toast(t("netErr")); else { toast(tx("tOk")); loadTeams(); } }).catch(() => toast(t("netErr")));
     return; }
+  if(e.target.id === "chform"){ e.preventDefault(); chatSend(); return; }
   if(e.target.id === "lwform"){ e.preventDefault();
     const pid = (document.getElementById("lw-p")||{}).value || "own", d = (document.getElementById("lw-d")||{}).value || dkey();
     if(d > dkey() || d < addDays(dkey(), -60)){ toast(tx("lwBad")); return; }
