@@ -2263,6 +2263,7 @@ de:{wuT:"Aufwärmen",wuSub:"Ein paar lockere Minuten vor dem Training. Warme Mus
 { const X = {en:{coreT:"Abs & Core",coreNote:"From 5-minute finishers to six-pack sessions. No equipment needed except the hanging moves."}, fr:{coreT:"Abdos & gainage",coreNote:"Du finisher de 5 minutes aux séances tablettes. Sans matériel, sauf les mouvements suspendus."}, es:{coreT:"Abdominales y core",coreNote:"De finales de 5 minutos a sesiones six-pack. Sin material, salvo los ejercicios colgado."}, pt:{coreT:"Abdômen e core",coreNote:"De finalizadores de 5 minutos a treinos de tanquinho. Sem equipamento, exceto os exercícios na barra."}, de:{coreT:"Bauch & Core",coreNote:"Von 5-Minuten-Finishern bis Sixpack-Einheiten. Ohne Geräte, außer den Übungen an der Stange."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{qT:"Leave this workout?",qSub:"You're mid-session. Leave now and this workout won't be saved.",qKeep:"Keep training",qLeave:"Leave workout"}, fr:{qT:"Quitter la séance ?",qSub:"Tu es en pleine séance. Si tu quittes maintenant, elle ne sera pas enregistrée.",qKeep:"Je continue",qLeave:"Quitter la séance"}, es:{qT:"¿Salir del entrenamiento?",qSub:"Estás a mitad de sesión. Si sales ahora, no se guardará.",qKeep:"Seguir entrenando",qLeave:"Salir"}, pt:{qT:"Sair do treino?",qSub:"Você está no meio da sessão. Se sair agora, o treino não será salvo.",qKeep:"Continuar treinando",qLeave:"Sair do treino"}, de:{qT:"Training verlassen?",qSub:"Du bist mitten in der Einheit. Wenn du jetzt gehst, wird sie nicht gespeichert.",qKeep:"Weiter trainieren",qLeave:"Training verlassen"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{preOrd:"Change the order with the arrows (this session only).",preOrdOwn:"Change the order with the arrows. Saved to your workout."}, fr:{preOrd:"Change l'ordre avec les flèches (pour cette séance).",preOrdOwn:"Change l'ordre avec les flèches. C'est enregistré dans ta séance."}, es:{preOrd:"Cambia el orden con las flechas (solo esta sesión).",preOrdOwn:"Cambia el orden con las flechas. Se guarda en tu entrenamiento."}, pt:{preOrd:"Mude a ordem com as setas (só nesta sessão).",preOrdOwn:"Mude a ordem com as setas. Fica salvo no seu treino."}, de:{preOrd:"Reihenfolge mit den Pfeilen ändern (nur diese Einheit).",preOrdOwn:"Reihenfolge mit den Pfeilen ändern. Wird im Training gespeichert."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {en:{phReady:"Get ready · next up",phNow:"Start now"}, fr:{phReady:"Prépare-toi · ensuite",phNow:"Commencer"}, es:{phReady:"Prepárate · siguiente",phNow:"Empezar ya"}, pt:{phReady:"Prepare-se · a seguir",phNow:"Começar já"}, de:{phReady:"Mach dich bereit · als Nächstes",phNow:"Jetzt starten"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -3200,30 +3201,34 @@ const PH = {
 function phInit(w){ const p = getP(w.pid) || {}; w.gentle = p.grp === "adapt" ? "A" : ["silver","health","mama"].includes(p.grp) ? "G" : ""; if(p.id === "stretch"){ w.ph = null; w.noCool = true; } else { w.ph = "warm"; } w.pi = 0; return w; }
 function phList(w){ return PH[(w.ph === "cool" ? "cool" : "warm") + (w.gentle || "")].filter(m => EX[m[0]]); }
 let phTimer = null;
-function phStop(){ clearInterval(phTimer); phTimer = null; st.phEnd = 0; }
-function phStart(){ const w = st.w, m = phList(w)[w.pi]; if(!m) return; st.phLen = m[2]; st.phEnd = Date.now() + m[2]*1000; figStart = performance.now();
+const PH_PREP = 20;
+function phStop(){ clearInterval(phTimer); phTimer = null; st.phEnd = 0; st.phPrep = false; }
+function phPrep(){ st.phPrep = true; st.phLen = PH_PREP; st.phEnd = Date.now() + PH_PREP*1000; figStart = performance.now(); clearInterval(phTimer); phTimer = setInterval(phTick, 250); }
+function phStart(){ const w = st.w, m = phList(w)[w.pi]; if(!m) return; st.phPrep = false; st.phLen = m[2]; st.phEnd = Date.now() + m[2]*1000; figStart = performance.now();
   clearInterval(phTimer); phTimer = setInterval(phTick, 250); }
 function phTick(){ const w = st.w; if(!w || !w.ph){ phStop(); return; }
   const left = Math.max(0, st.phEnd - Date.now()), n = document.getElementById("phnum"), r = document.getElementById("phring");
   if(n) n.textContent = Math.ceil(left/1000); if(r) r.setAttribute("stroke-dashoffset", String(Math.round(207.3*(1-left/(st.phLen*1000))*10)/10));
-  if(left <= 0){ try{ navigator.vibrate && navigator.vibrate([150,80,150]); }catch(e){} w.pi++; if(w.pi < phList(w).length) phStart(); else phStop(); render(); } }
+  if(left <= 0){ try{ navigator.vibrate && navigator.vibrate(st.phPrep ? [300] : [150,80,150]); }catch(e){}
+    if(st.phPrep) phStart(); else { w.pi++; if(w.pi < phList(w).length) phPrep(); else phStop(); } render(); } }
 function phSteps(cur){ return `<div class="phsteps">${["phS1","phS2","phS3"].map((k,i)=>`<span class="${i===cur?"on":i<cur?"ok":""}">${i<cur?"✓":i+1} ${tx(k)}</span>`).join('<i></i>')}</div>`; }
 function phaseView(){
   const w = st.w, L = phList(w), cool = w.ph === "cool", done = w.pi >= L.length, m = L[Math.min(w.pi, L.length-1)], ex = EX[m[0]];
   const run = st.phEnd > Date.now(), paused = !run && st.phPause != null && !done;
-  const secs = run ? Math.ceil((st.phEnd-Date.now())/1000) : paused ? Math.ceil(st.phPause/1000) : m[2];
+  const prep = !!st.phPrep && !done, len = prep ? PH_PREP : m[2];
+  const secs = run ? Math.ceil((st.phEnd-Date.now())/1000) : paused ? Math.ceil(st.phPause/1000) : len;
   const rows = L.map((x,k)=>`<div class="phrow${k===w.pi?" now":k<w.pi?" ok":""}"><span class="phck">${k<w.pi?"✓":k+1}</span><span class="grow">${tx(x[1])}${x[3]?` <em>· ${tx("sideL")}</em>`:""}</span><span class="muted">${x[2]} s</span></div>`).join("");
   let foot;
   if(done) foot = `<button class="btn btn-gold" data-act="${cool?"phfin":"phtrain"}">${cool?t("finish"):tx("phTrain")} ${I.arrow}</button>`;
-  else if(run) foot = `<div class="row" style="gap:10px"><button class="btn btn-line" data-act="phpause" style="flex:1;min-height:52px">${tx("phPause")}</button><button class="btn btn-gold" data-act="phnext" style="flex:1.4">${tx("phNext")} ${I.arrow}</button></div>`;
+  else if(run) foot = `<div class="row" style="gap:10px"><button class="btn btn-line" data-act="phpause" style="flex:1;min-height:52px">${tx("phPause")}</button><button class="btn btn-gold" data-act="phnext" style="flex:1.4">${tx(prep ? "phNow" : "phNext")} ${I.arrow}</button></div>`;
   else foot = `<button class="btn btn-gold" data-act="phgo">${paused ? tx("phRes") : w.pi ? tx("phNext") : tx(cool?"phGoC":"phGo")} ${I.arrow}</button>`;
   return `<header class="wk-top"><button class="xbtn" data-act="quit" aria-label="${t("end")}">${I.x}</button>${phSteps(cool?2:0)}</header>
   <main class="phase">
     <div><p class="eyebrow gold">${tx(cool?"phS3":"phS1")} · ~${Math.round(L.reduce((a,x)=>a+x[2],0)/60)} ${t("min")}</p><h1>${tx(cool?"cdT":"wuT")}</h1><p class="muted" style="margin-top:6px">${tx(cool?"cdSub":"wuSub")}</p></div>
     ${done ? `<div class="card phdone"><b>✓ ${tx(cool?"phS3":"phS1")}</b><p class="muted">${tx("phRule")}</p></div>` : `
     <div class="stagewrap"><div class="stage" id="fighost" data-ex="${ex.id}">${figureSVG(ex, 0)}</div></div>
-    <div class="restbar"><div class="ring"><svg viewBox="0 0 76 76"><circle class="bgc" cx="38" cy="38" r="33"/><circle class="fgc" id="phring" cx="38" cy="38" r="33" stroke-dasharray="207.3" stroke-dashoffset="${run||paused ? Math.round(207.3*(1-secs/m[2])*10)/10 : 0}"/></svg><b id="phnum">${secs}</b></div>
-      <div class="grow"><b>${tx(m[1])}</b>${m[3] ? `<p class="note" style="margin-top:4px">⇄ ${tx("phSide")}</p>` : ""}</div></div>`}
+    <div class="restbar"><div class="ring"><svg viewBox="0 0 76 76"><circle class="bgc" cx="38" cy="38" r="33"/><circle class="fgc" id="phring" cx="38" cy="38" r="33" stroke-dasharray="207.3" stroke-dashoffset="${run||paused ? Math.round(207.3*(1-secs/len)*10)/10 : 0}"/></svg><b id="phnum">${secs}</b></div>
+      <div class="grow">${prep ? `<p class="eyebrow gold" style="margin:0 0 4px">${tx("phReady")}</p>` : ""}<b>${tx(m[1])}</b>${m[3] ? `<p class="note" style="margin-top:4px">⇄ ${tx("phSide")}</p>` : ""}</div></div>`}
     <div class="phlist">${rows}</div>
     ${done ? "" : `<button class="linkbtn" data-act="${cool?"phfin":"phtrain"}">${tx(cool?"phSkipC":"phSkipW")}</button>`}
   </main>
@@ -4300,9 +4305,9 @@ app.addEventListener("click", e => {
     case "editprof": st.meSheet = "set"; break;
     case "soonplay": toast(t("hubPlaySoon")); break;
     case "hubbuild": if(st.custom.length >= maxCustom()){ st.view = "pro"; break; } st.build = {id:null, name:"", items:[]}; st.pick = false; st.view = "build"; break;
-    case "phgo": { const L = phList(w), m = L[w.pi]; if(st.phPause != null){ st.phLen = m[2]; st.phEnd = Date.now() + st.phPause; st.phPause = null; clearInterval(phTimer); phTimer = setInterval(phTick, 250); } else phStart(); break; }
-    case "phpause": st.phPause = Math.max(0, st.phEnd - Date.now()); phStop(); break;
-    case "phnext": phStop(); st.phPause = null; w.pi++; if(w.pi < phList(w).length) phStart(); break;
+    case "phgo": { const L = phList(w), m = L[w.pi]; if(st.phPause != null){ st.phLen = st.phPrep ? PH_PREP : m[2]; st.phEnd = Date.now() + st.phPause; st.phPause = null; clearInterval(phTimer); phTimer = setInterval(phTick, 250); } else phStart(); break; }
+    case "phpause": { const pr = st.phPrep; st.phPause = Math.max(0, st.phEnd - Date.now()); phStop(); st.phPrep = pr; break; }
+    case "phnext": { const pr = st.phPrep && st.phPause == null; phStop(); st.phPause = null; if(pr){ phStart(); break; } w.pi++; if(w.pi < phList(w).length) phPrep(); break; }
     case "phtrain": phStop(); st.phPause = null; w.ph = null; w.pi = 0; figStart = performance.now(); window.scrollTo(0,0); break;
     case "phfin": phStop(); st.phPause = null; w.ph = null; w.noCool = true; w.i = w.list.length-1;
     // falls through: finish the workout
@@ -4553,7 +4558,7 @@ window.addEventListener("online", () => cloud.flushPending());
 cloud.loadReviews(); cloud.loadFaq(); try{ pgDaily(); }catch(e){}
 if("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("/sw.js").catch(() => {});
 /* new version check: on open and every time the app comes back to the screen */
-const APP_V = "bbt-v58";
+const APP_V = "bbt-v59";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
