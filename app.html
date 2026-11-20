@@ -324,6 +324,7 @@ a.btn{text-decoration:none}a.btn.btn-line{color:var(--fg)}a.btn.btn-gold{color:v
 .cpchk{display:grid;grid-template-columns:90px 1fr;gap:8px}.cpchk .field{min-width:0}.cpchk .btn{grid-column:1/-1;min-height:46px}
 .cplog{display:flex;flex-direction:column;gap:6px}.cplog div{display:grid;grid-template-columns:56px 90px 1fr 28px;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line2);border-radius:10px}.cplog small{font-size:12px;color:var(--muted)}.cplog span{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}.cplog em{font-style:normal;font-size:12px}.cplog em.dn{color:var(--gold)}.cplog em.up{color:#ffb84d}.cplog button{background:none;border:0;color:var(--muted);cursor:pointer}
 .grgen{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grgen .pill{min-height:44px}
+.rvsh{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--gold-dim);background:rgba(124,255,79,.06);color:var(--gold);font:600 12px var(--font-b,inherit);cursor:pointer}.rvsh svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.rvadm .rvsh{margin:0 0 0 6px}
 .prestat{display:flex;gap:10px}.prestat div{flex:1;border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column}.prestat b{font:700 24px var(--font-d);color:var(--gold)}.prestat span{font-size:12px;color:var(--muted)}
 .peekrow .bmv button{width:30px;height:22px}.peekrow.bflash{animation:bfl .6s}
 .peekrow .bnum{width:22px;height:22px;flex:none;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:700}
@@ -1990,7 +1991,7 @@ function reviewsBlock(){
   const r = st.reviews || []; if(!r.length) return "";
   const avg = r.reduce((a,x) => a + x.rating, 0) / r.length;
   return `<div style="display:flex;flex-direction:column;gap:10px"><div class="rvhead"><p class="eyebrow">${t("rvHome")}</p><span class="rvavg"><b>${avg.toFixed(1)}</b>${stars(Math.round(avg))}<small class="muted">(${r.length})</small></span></div>
-    <div class="rvscroll">${r.slice(0,12).map(x => `<div class="card rvcard">${stars(x.rating)}<p>“${esc(x.body)}”</p><span class="muted rvwho">${esc(x.name||"")} · #${String(x.member_no).padStart(4,"0")}</span>${x.reply ? `<div class="rvrep"><b>The Black Bird Society</b><p>${esc(x.reply)}</p></div>` : ""}</div>`).join("")}</div></div>`;
+    <div class="rvscroll">${r.slice(0,12).map(x => `<div class="card rvcard">${stars(x.rating)}<p>“${esc(x.body)}”</p><span class="muted rvwho">${esc(x.name||"")} · #${String(x.member_no).padStart(4,"0")}</span><button class="rvsh" data-act="rvshare" data-src="pub" data-i="${st.reviews.indexOf(x)}" aria-label="${tx("rvShare")}"><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>${tx("rvShare")}</button>${x.reply ? `<div class="rvrep"><b>The Black Bird Society</b><p>${esc(x.reply)}</p></div>` : ""}</div>`).join("")}</div></div>`;
 }
 function reviewCard(){
   if(!sb || !st.user || !st.user.cloud) return "";
@@ -2298,6 +2299,7 @@ es:{pushOn1:"Activar",fbT:"Enviar opinión",fbSub:"Ideas, errores, lo que te gus
 pt:{pushOn1:"Ativar",fbT:"Enviar feedback",fbSub:"Ideias, erros, o que você ama ou não. Vai direto para a equipe e lemos tudo.",fbPh:"Escreva seu feedback aqui…",fbSend:"Enviar",fbLogin:"Entre na conta para enviar pelo app, ou mande um e-mail abaixo.",fbMail:"Prefere e-mail?",fbThanks:"Obrigado! Seu feedback foi enviado 🖤",fbShort:"Escreva algumas palavras primeiro.",fbLimit:"Muito feedback hoje, obrigado! Tente amanhã.",fbFail:"Não foi possível enviar. Tente de novo ou mande um e-mail.",fbAdmT:"Feedback",fbMsgs:"mensagens",fbNone:"Nenhum feedback ainda."},
 de:{pushOn1:"Einschalten",fbT:"Feedback senden",fbSub:"Ideen, Fehler, was du liebst oder nicht. Es geht direkt ans Team und wir lesen alles.",fbPh:"Schreib dein Feedback hier…",fbSend:"Senden",fbLogin:"Melde dich an, um Feedback aus der App zu senden, oder schreib uns eine E-Mail.",fbMail:"Lieber per E-Mail?",fbThanks:"Danke! Dein Feedback wurde gesendet 🖤",fbShort:"Schreib erst ein paar Worte.",fbLimit:"Viel Feedback heute, danke! Versuch es morgen.",fbFail:"Senden fehlgeschlagen. Versuch es nochmal oder schreib uns.",fbAdmT:"Feedback",fbMsgs:"Nachrichten",fbNone:"Noch kein Feedback."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 { const X = {en:{getPos:"Get in position",getPosHint:"Hold starts after the beeps."}, fr:{getPos:"Mets-toi en position",getPosHint:"Le gainage démarre après les bips."}, es:{getPos:"Ponte en posición",getPosHint:"Empieza después de los pitidos."}, pt:{getPos:"Fique em posição",getPosHint:"Começa depois dos bipes."}, de:{getPos:"In Position gehen",getPosHint:"Startet nach den Tönen."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {en:{rvShare:"Share",rvImgT:"Member review",rvShareTxt:"What our members say 🖤 Join The Black Bird Society, the free fitness app for every body."}, fr:{rvShare:"Partager",rvImgT:"Avis d'un membre",rvShareTxt:"Ce que disent nos membres 🖤 Rejoins The Black Bird Society, l'appli fitness gratuite pour tous."}, es:{rvShare:"Compartir",rvImgT:"Opinión de un miembro",rvShareTxt:"Lo que dicen nuestros miembros 🖤 Únete a The Black Bird Society, la app de fitness gratis para todos."}, pt:{rvShare:"Compartilhar",rvImgT:"Avaliação de membro",rvShareTxt:"O que nossos membros dizem 🖤 Entre na The Black Bird Society, o app de fitness grátis para todos."}, de:{rvShare:"Teilen",rvImgT:"Mitglieder-Bewertung",rvShareTxt:"Was unsere Mitglieder sagen 🖤 Werde Teil der Black Bird Society, der kostenlosen Fitness-App für alle."}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -3174,7 +3176,7 @@ function rvAdminBlock(){
   if(!st.user || st.user.no !== 1 || !st.rvAdmin) return "";
   const l = st.rvAdmin, n = l.filter(x => x.status==="pending").length;
   return `<div class="card" style="display:flex;flex-direction:column;gap:12px"><p class="eyebrow gold">${t("rvAdmin")} (${n})</p>
-    ${l.length ? l.map(x => `<div class="rvadm"><div class="row" style="gap:8px">${stars(x.rating)}<span class="muted grow" style="font-size:12px">${esc(x.name||"")} · #${String(x.member_no).padStart(4,"0")}</span>${x.status==="approved" ? `<span class="muted" style="font-size:12px">${t("rvLive")}</span>` : ""}</div>
+    ${l.length ? l.map(x => `<div class="rvadm"><div class="row" style="gap:8px">${stars(x.rating)}<span class="muted grow" style="font-size:12px">${esc(x.name||"")} · #${String(x.member_no).padStart(4,"0")}</span>${x.status==="approved" ? `<span class="muted" style="font-size:12px">${t("rvLive")}</span><button class="rvsh" data-act="rvshare" data-src="adm" data-i="${l.indexOf(x)}" aria-label="${tx("rvShare")}"><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>${tx("rvShare")}</button>` : ""}</div>
       <p style="font-size:14px;margin:6px 0 10px">“${esc(x.body)}”</p>${x.reply && st.rpOpen!==x.id ? `<div class="rvrep" style="margin:0 0 10px"><b>The Black Bird Society</b><p>${esc(x.reply)}</p></div>` : ""}${st.rpOpen===x.id ? `<form class="rpform" data-id="${x.id}" novalidate style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"><textarea class="field" maxlength="400" rows="3" placeholder="${t("rpPh")}">${esc(x.reply||"")}</textarea><div class="row" style="gap:8px"><button class="pill gopill" type="submit">${t("rpSend")}</button><button class="pill" type="button" data-act="rpx">${t("cancel")}</button></div></form>` : ""}<div class="row" style="gap:8px;flex-wrap:wrap">${x.status==="pending" ? `<button class="pill gopill" data-act="rvok" data-id="${x.id}">${t("rvApprove")}</button>` : ""}${st.rpOpen===x.id ? "" : `<button class="pill" data-act="rpopen" data-id="${x.id}">${t("rpL")}</button>`}<button class="pill" data-act="rvno" data-id="${x.id}">${t("rvHide")}</button></div></div>`).join("")
       : `<p class="muted" style="font-size:14px">${t("rvNone")}</p>`}</div>`;
 }
@@ -3480,6 +3482,44 @@ function qrMatrix(text){
   return QRLIB.then(ok => ok && window.qrcode ? make() : null);
 }
 function shareKey(kind){ const u = st.user || {}; return kind + "|" + st.lang + "|" + (kind==="card" ? [u.name,u.username,u.no,(u.avatar||"").slice(-30),st.total,st.showRank].join("|") : JSON.stringify(st.lastDone||{})); }
+/* share a member review as an Instagram-ready image */
+async function makeReviewImg(r){
+  const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
+  const G = "#7cff4f", FG = "#eef5ec", MU = "#8a9788";
+  try{ await Promise.all(['700 80px "Chakra Petch"','600 40px "Chakra Petch"','500 34px "Inter"','400 40px "Noto Sans Runic"'].map(f => document.fonts.load(f))); }catch(e){}
+  const sp = v => { try{ x.letterSpacing = v+"px"; }catch(e){} };
+  const font = (w,sz,fam) => { x.font = `${w} ${sz}px ${fam==="r"?'"Noto Sans Runic","Segoe UI Historic",sans-serif':fam==="b"?'"Inter",system-ui,sans-serif':'"Chakra Petch","Arial Narrow",Arial,sans-serif'}`; };
+  const center = (str,y,col) => { x.fillStyle = col; x.textAlign = "center"; x.fillText(str, W/2, y); };
+  const lines = (str,maxW) => { const out = []; let line = ""; str.split(/\s+/).forEach(wd => { const tt = line ? line+" "+wd : wd; if(x.measureText(tt).width > maxW && line){ out.push(line); line = wd; } else line = tt; }); if(line) out.push(line); return out; };
+  x.fillStyle = "#050605"; x.fillRect(0,0,W,H);
+  let g = x.createRadialGradient(W/2,560,40,W/2,560,820); g.addColorStop(0,"rgba(124,255,79,.18)"); g.addColorStop(1,"rgba(124,255,79,0)"); x.fillStyle = g; x.fillRect(0,0,W,H);
+  x.strokeStyle = "rgba(124,255,79,.05)"; x.lineWidth = 1; for(let y=0; y<H; y+=36){ x.beginPath(); x.moveTo(0,y+.5); x.lineTo(W,y+.5); x.stroke(); }
+  x.strokeStyle = G; x.lineWidth = 6; const m = 46, Lc = 90;
+  [[m,m,1,1],[W-m,m,-1,1],[m,H-m,1,-1],[W-m,H-m,-1,-1]].forEach(([a,b,sx,sy]) => { x.beginPath(); x.moveTo(a,b+sy*Lc); x.lineTo(a,b); x.lineTo(a+sx*Lc,b); x.stroke(); });
+  const logo = await loadImg(logoSrc()), ls = 130, ly = 96;
+  if(logo){ x.save(); x.shadowColor = "rgba(124,255,79,.55)"; x.shadowBlur = 36; x.drawImage(logo, W/2-ls/2, ly, ls, ls); x.restore(); }
+  sp(10); font(600,30); center("THE BLACK BIRD SOCIETY", ly+ls+54, G); sp(0);
+  sp(8); font(700,34); center(tx("rvImgT").toUpperCase(), ly+ls+120, MU); sp(0);
+  // stars
+  const n = Math.max(1, Math.min(5, r.rating|0)); font(700,86); x.save(); x.shadowColor = "rgba(124,255,79,.6)"; x.shadowBlur = 24;
+  center("★".repeat(n), 520, G); x.restore(); if(n < 5){ x.textAlign = "left"; }
+  // quote: biggest size that fits in 6 lines
+  const body = "“" + String(r.body||"").trim() + "”"; let sz = 66, L;
+  while(true){ font(600, sz, "b"); L = lines(body, 860); if((L.length <= 6 && L.length*sz*1.32 <= 470) || sz <= 34) break; sz -= 4; }
+  const lh = sz*1.32, top = 640 + (470 - L.length*lh)/2 + sz*0.8;
+  L.slice(0,7).forEach((l,k) => center(l, top + k*lh, FG));
+  sp(4); font(600,36); center(("— " + (r.name||"").trim() + (r.member_no ? "  ·  #" + String(r.member_no).padStart(4,"0") : "")).toUpperCase(), 1170, G); sp(0);
+  sp(6); font(700,32); center("THEBLACKBIRDSOCIETY.COM", H-82, FG); sp(0);
+  font(400,20,"r"); sp(12); center("ᚠᚢᚱᚲᚷᚹᚾᛁᛃᛇᛒᛖᛗᛚᛜᛞ", H-38, "rgba(124,255,79,.4)"); sp(0);
+  return new Promise(res => c.toBlob(b => res(new File([b], "black-bird-review.png", {type:"image/png"})), "image/png"));
+}
+function shareReview(r){
+  const text = tx("rvShareTxt") + " https://theblackbirdsociety.com @theblackbird.society #TheBlackBirdSociety";
+  makeReviewImg(r).then(f => {
+    if(f && navigator.canShare && navigator.share && navigator.canShare({files:[f]})) navigator.share({files:[f], text}).catch(err => { if(err && err.name !== "AbortError") openPreview(f); });
+    else openPreview(f);
+  }).catch(() => toast(t("netErr")));
+}
 async function makeShare(kind){
   const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
   const G = "#7cff4f", FG = "#eef5ec", MU = "#8a9788";
@@ -4230,6 +4270,7 @@ app.addEventListener("click", e => {
     case "vuse": { const id = +el.dataset.id; sb.rpc("voucher_use", {p_id:id, p_start:null, p_today:todayISO()}).then(({ data }) => {
         toast(data === "ok" ? tx("pmVOk") : data === "expired" ? tx("pmVExp") : (data === "paid" || data === "lifetime") ? tx("pmVPaid") : t("netErr")); loadPrem(); }).catch(() => toast(t("netErr"))); break; }
     case "beep": { const on = store.get("bbt_beep", true) === false; store.set("bbt_beep", on); if(on) beep(true); break; }
+    case "rvshare": { const L = el.dataset.src === "adm" ? (st.rvAdmin||[]) : (st.reviews||[]), r = L[+el.dataset.i]; if(r) shareReview(r); return; }
     case "fbopen": e.preventDefault(); st.fbOpen = true; break;
     case "fbx": st.fbOpen = false; break;
     case "pushon": pushOn(); return;
@@ -4711,7 +4752,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v67";
+const APP_V = "bbt-v68";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
