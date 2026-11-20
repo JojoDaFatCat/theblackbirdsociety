@@ -61,6 +61,7 @@ p{margin:0}
 .btn-gold:active{filter:brightness(.92)}
 .btn-line{border:1px solid var(--line2);background:var(--surface)}
 .btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pushcard{display:flex;flex-direction:column;gap:10px;border-color:var(--gold-dim)!important}.pushcats{display:flex;flex-direction:column;border-top:1px solid var(--line2);padding-top:4px}.pushrow{padding:8px 0;font-size:14px;font-weight:600}.pushok{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;background:rgba(124,255,79,.1);border:1px solid var(--gold-dim)}.epnotif{display:flex;width:100%;gap:12px;text-align:left;align-items:center;color:inherit;font:inherit;cursor:pointer}
 .switch{width:52px;height:32px;border-radius:999px;background:var(--surface2);border:1px solid var(--line2);position:relative;flex:none}
 .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--muted);transition:transform .2s}
 .switch[aria-checked="true"]{background:var(--gold);border-color:var(--gold)}
@@ -2283,6 +2284,12 @@ fr:{musTile:"Spotify & plus",musSub2:"Lance ta playlist Spotify ici pendant ta s
 es:{musTile:"Spotify y más",musSub2:"Pon tu playlist de Spotify aquí mientras entrenas, o abre tu app de música.",musPaste:"Pega un enlace de playlist de Spotify",musSave:"Guardar y reproducir",musChange:"Cambiar",musPlayMine:"Poner mi playlist",musHow:"En Spotify: abre una playlist → ⋯ → Compartir → Copiar enlace y pégalo aquí. Inicia sesión en Spotify en este teléfono para canciones completas.",musOpenSp:"Abrir Spotify",musFind:"Buscar playlists de gym",musSociety:"Poner la playlist de la Society",musOther:"Otras apps de música",musBg:"Tu app de música sigue sonando de fondo mientras entrenas aquí.",musBad:"Eso no es un enlace de Spotify. Cópialo desde Compartir → Copiar enlace.",musSaved:"Playlist guardada. Suena abajo de la pantalla.",musMin:"Ocultar reproductor"},
 pt:{musTile:"Spotify e mais",musSub2:"Toque sua playlist do Spotify aqui enquanto treina, ou abra seu app de música.",musPaste:"Cole um link de playlist do Spotify",musSave:"Salvar e tocar",musChange:"Trocar",musPlayMine:"Tocar minha playlist",musHow:"No Spotify: abra uma playlist → ⋯ → Compartilhar → Copiar link e cole aqui. Entre no Spotify neste celular para músicas completas.",musOpenSp:"Abrir Spotify",musFind:"Achar playlists de treino",musSociety:"Tocar a playlist da Society",musOther:"Outros apps de música",musBg:"Seu app de música continua tocando em segundo plano enquanto você treina aqui.",musBad:"Isso não é um link do Spotify. Copie em Compartilhar → Copiar link.",musSaved:"Playlist salva. Ela toca no rodapé da tela.",musMin:"Esconder player"},
 de:{musTile:"Spotify & mehr",musSub2:"Spiel deine Spotify-Playlist direkt hier beim Training ab oder öffne deine Musik-App.",musPaste:"Spotify-Playlist-Link einfügen",musSave:"Speichern & abspielen",musChange:"Ändern",musPlayMine:"Meine Playlist abspielen",musHow:"In Spotify: Playlist öffnen → ⋯ → Teilen → Link kopieren und hier einfügen. Bei Spotify auf diesem Handy anmelden für ganze Songs.",musOpenSp:"Spotify öffnen",musFind:"Workout-Playlists finden",musSociety:"Society-Playlist abspielen",musOther:"Andere Musik-Apps",musBg:"Deine Musik-App spielt im Hintergrund weiter, während du hier trainierst.",musBad:"Das ist kein Spotify-Link. Kopiere ihn über Teilen → Link kopieren.",musSaved:"Playlist gespeichert. Sie spielt unten am Bildschirm.",musMin:"Player ausblenden"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+{ const X = {
+en:{pushT:"Phone notifications",pushGo:"Turn on notifications",pushWhy:"Get a buzz for messages, partner requests and rewards. You choose what you get.",pushOnT:"Notifications are on",pushOnS:"On this phone. Switch off what you don't want:",pushOff:"Turn off",pushNo:"This browser can't show notifications. Open the app in Chrome (Android) or add it to your Home Screen (iPhone).",pushIos:"On iPhone: tap Share → “Add to Home Screen”, open the app from there, then turn notifications on.",pushLogin:"Log in to your account to get notifications.",pushDenied:"Notifications are blocked for this site. Allow them in your phone's settings, then try again.",pushFail:"Couldn't turn on notifications. Try again in a moment.",pushTest:"Notifications are on. See you at training 🖤",pcMsg:"Messages",pcPart:"Partners & sessions",pcRew:"Rewards & reviews",pcMun:"Muninn answers",pcAdm:"Owner alerts (reviews, members, questions)",n_adm_review:"⭐ New review from {name}.",n_adm_member:"🖤 New member joined: {name}.",n_adm_q:"❓ New question for Muninn: {q}"},
+fr:{pushT:"Notifications sur le téléphone",pushGo:"Activer les notifications",pushWhy:"Reçois une alerte pour les messages, les demandes de partenaire et les récompenses. Tu choisis ce que tu reçois.",pushOnT:"Notifications activées",pushOnS:"Sur ce téléphone. Coupe ce que tu ne veux pas :",pushOff:"Désactiver",pushNo:"Ce navigateur ne peut pas afficher de notifications. Ouvre l'appli dans Chrome (Android) ou ajoute-la à l'écran d'accueil (iPhone).",pushIos:"Sur iPhone : touche Partager → « Sur l'écran d'accueil », ouvre l'appli depuis là, puis active les notifications.",pushLogin:"Connecte-toi à ton compte pour recevoir les notifications.",pushDenied:"Les notifications sont bloquées pour ce site. Autorise-les dans les réglages du téléphone, puis réessaie.",pushFail:"Impossible d'activer les notifications. Réessaie dans un instant.",pushTest:"Notifications activées. À l'entraînement 🖤",pcMsg:"Messages",pcPart:"Partenaires & séances",pcRew:"Récompenses & avis",pcMun:"Réponses de Muninn",pcAdm:"Alertes propriétaire (avis, membres, questions)",n_adm_review:"⭐ Nouvel avis de {name}.",n_adm_member:"🖤 Nouveau membre : {name}.",n_adm_q:"❓ Nouvelle question pour Muninn : {q}"},
+es:{pushT:"Notificaciones en el móvil",pushGo:"Activar notificaciones",pushWhy:"Recibe un aviso de mensajes, solicitudes de compañero y recompensas. Tú eliges qué recibes.",pushOnT:"Notificaciones activadas",pushOnS:"En este móvil. Desactiva lo que no quieras:",pushOff:"Desactivar",pushNo:"Este navegador no puede mostrar notificaciones. Abre la app en Chrome (Android) o añádela a la pantalla de inicio (iPhone).",pushIos:"En iPhone: toca Compartir → «Añadir a pantalla de inicio», abre la app desde ahí y activa las notificaciones.",pushLogin:"Inicia sesión para recibir notificaciones.",pushDenied:"Las notificaciones están bloqueadas para este sitio. Permítelas en los ajustes del móvil y vuelve a intentarlo.",pushFail:"No se pudieron activar. Inténtalo de nuevo en un momento.",pushTest:"Notificaciones activadas. Nos vemos entrenando 🖤",pcMsg:"Mensajes",pcPart:"Compañeros y sesiones",pcRew:"Recompensas y reseñas",pcMun:"Respuestas de Muninn",pcAdm:"Alertas de propietario"},
+pt:{pushT:"Notificações no celular",pushGo:"Ativar notificações",pushWhy:"Receba um aviso de mensagens, pedidos de parceiro e recompensas. Você escolhe o que recebe.",pushOnT:"Notificações ativadas",pushOnS:"Neste celular. Desligue o que não quiser:",pushOff:"Desativar",pushNo:"Este navegador não mostra notificações. Abra o app no Chrome (Android) ou adicione à tela inicial (iPhone).",pushIos:"No iPhone: toque em Compartilhar → «Adicionar à Tela de Início», abra o app por lá e ative as notificações.",pushLogin:"Entre na sua conta para receber notificações.",pushDenied:"As notificações estão bloqueadas para este site. Permita nos ajustes do celular e tente de novo.",pushFail:"Não foi possível ativar. Tente de novo em instantes.",pushTest:"Notificações ativadas. Até o treino 🖤",pcMsg:"Mensagens",pcPart:"Parceiros e sessões",pcRew:"Recompensas e avaliações",pcMun:"Respostas do Muninn",pcAdm:"Alertas do dono"},
+de:{pushT:"Handy-Benachrichtigungen",pushGo:"Benachrichtigungen einschalten",pushWhy:"Bekomm einen Hinweis bei Nachrichten, Partneranfragen und Belohnungen. Du wählst, was du bekommst.",pushOnT:"Benachrichtigungen sind an",pushOnS:"Auf diesem Handy. Schalte aus, was du nicht willst:",pushOff:"Ausschalten",pushNo:"Dieser Browser kann keine Benachrichtigungen zeigen. Öffne die App in Chrome (Android) oder füge sie zum Home-Bildschirm hinzu (iPhone).",pushIos:"Auf dem iPhone: Teilen → „Zum Home-Bildschirm“, App dort öffnen und Benachrichtigungen einschalten.",pushLogin:"Melde dich an, um Benachrichtigungen zu bekommen.",pushDenied:"Benachrichtigungen sind für diese Seite blockiert. Erlaube sie in den Handy-Einstellungen und versuch es erneut.",pushFail:"Konnte nicht eingeschaltet werden. Versuch es gleich noch mal.",pushTest:"Benachrichtigungen sind an. Wir sehen uns beim Training 🖤",pcMsg:"Nachrichten",pcPart:"Partner & Einheiten",pcRew:"Belohnungen & Bewertungen",pcMun:"Antworten von Muninn",pcAdm:"Inhaber-Hinweise"}}; Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 const tx = k => (TX[st.lang] && TX[st.lang][k] != null) ? TX[st.lang][k] : (TX.en[k] != null ? TX.en[k] : (TX.fr[k] || k));
 const BADGES = [["first","ᚠ",{"en":["First rep","Finish your first workout"],"fr":["Première rép","Termine ta première séance"]}],["w10","ᚢ",{"en":["Ten strong","10 workouts"],"fr":["Dix de force","10 séances"]}],["w50","ᚦ",{"en":["Iron fifty","50 workouts"],"fr":["Cinquante de fer","50 séances"]}],["w100","ᛟ",{"en":["Centurion","100 workouts"],"fr":["Centurion","100 séances"]}],["s7","ᚲ",{"en":["Week of fire","7-day streak"],"fr":["Semaine de feu","7 jours de suite"]}],["s30","ᛊ",{"en":["Month of fire","30-day streak"],"fr":["Mois de feu","30 jours de suite"]}],["s100","ᛞ",{"en":["Eternal flame","100-day streak"],"fr":["Flamme éternelle","100 jours de suite"]}],["week","ᛗ",{"en":["Full week","Every planned session in one week"],"fr":["Semaine complète","Toutes les séances prévues d'une semaine"]}],["early","ᛋ",{"en":["Early raven","Train before 7 am"],"fr":["Corbeau matinal","Séance avant 7 h"]}],["night","ᛜ",{"en":["Night owl","Train after 9 pm"],"fr":["Oiseau de nuit","Séance après 21 h"]}],["comeback","ᚱ",{"en":["Comeback","Train again after 14 days off"],"fr":["Le retour","Reprendre après 14 jours d'arrêt"]}],["mind","ᛉ",{"en":["Calm warrior","5 breathing resets"],"fr":["Guerrier calme","5 pauses respiration"]}],["walker","ᚱ",{"en":["Wanderer","Log 10 walks"],"fr":["Voyageur","10 marches enregistrées"]}],["steady","ᛒ",{"en":["Steady","4 weekly weigh-ins"],"fr":["Régulier","4 pesées"]}],["photo","ᛈ",{"en":["Mirror","First progress photo"],"fr":["Miroir","Première photo de progression"]}],["duel","ᛏ",{"en":["Duel winner","Win a weekly duel"],"fr":["Vainqueur","Gagner un duel de la semaine"]}],["lvl5","ᛇ",{"en":["Rising raven","Reach level 5"],"fr":["Corbeau montant","Atteindre le niveau 5"]}],["lvl10","ᛝ",{"en":["Legend","Reach level 10"],"fr":["Légende","Atteindre le niveau 10"]}]];
 const THEMES = [["","#7cff4f",1,{"en":"Rune green","fr":"Vert rune"}],["frost","#4fe3ff",3,{"en":"Frost","fr":"Givre"}],["ember","#ff9a3c",5,{"en":"Ember","fr":"Braise"}],["blood","#ff4f5e",7,{"en":"Blood moon","fr":"Lune de sang"}],["void","#b26bff",10,{"en":"Void","fr":"Néant"}]];
@@ -3029,10 +3036,55 @@ function nText(x){ const d = x.data || {}; return esc(tx("n_" + x.kind)).replace
 function ago(ts){ const s = Math.max(1, Math.round((Date.now() - new Date(ts))/1000)); let v, u;
   if(s < 3600){ v = Math.max(1, Math.round(s/60)); u = "minute"; } else if(s < 86400){ v = Math.round(s/3600); u = "hour"; } else { v = Math.round(s/86400); u = "day"; }
   try{ return new Intl.RelativeTimeFormat(LOC(), {numeric:"auto", style:"short"}).format(-v, u); }catch(e){ return v + " " + u[0]; } }
+/* ===== phone push notifications (20 Nov 2026) ===== */
+const PUSH_OK = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window && location.protocol === "https:";
+const IOS_WEB = /iPad|iPhone|iPod/.test(navigator.userAgent) && !STANDALONE;
+const PUSH_CATS = ["msg", "partners", "rewards", "muninn"];
+function b64u(s){ const p = "=".repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from([...b].map(c => c.charCodeAt(0))); }
+async function pushState(){
+  if(!PUSH_OK){ st.push = {on:false, ok:false}; return; }
+  try{ const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription(); st.push = {on: !!sub && Notification.permission === "granted", ok:true, denied: Notification.permission === "denied"}; }
+  catch(e){ st.push = {on:false, ok:false}; }
+  if(sb && st.user && st.user.cloud){ try{ const { data } = await sb.rpc("push_prefs_get"); st.pushPrefs = (data && data.prefs) || {}; }catch(e){} }
+  if(st.nOpen) render();
+}
+async function pushOn(){
+  if(!(sb && st.user && st.user.cloud)){ toast(tx("pushLogin")); return; }
+  if(IOS_WEB){ toast(tx("pushIos")); return; }
+  try{
+    const perm = await Notification.requestPermission(); if(perm !== "granted"){ st.push = {on:false, ok:true, denied: perm === "denied"}; render(); toast(tx("pushDenied")); return; }
+    const { data:key } = await sb.rpc("push_pubkey"); if(!key) throw 0;
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if(!sub) sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64u(key)});
+    const j = sub.toJSON();
+    await sb.rpc("push_save", {p_endpoint:j.endpoint, p_p256dh:j.keys.p256dh, p_auth:j.keys.auth, p_ua:navigator.userAgent});
+    st.push = {on:true, ok:true}; toast(tx("pushOnT"));
+    try{ reg.showNotification("The Black Bird Society", {body: tx("pushTest"), icon:"/icon-192.png", badge:"/favicon-96.png", tag:"bbt-test"}); }catch(e){}
+  }catch(e){ toast(tx("pushFail")); }
+  render();
+}
+async function pushOffAll(){
+  try{ const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription(); if(sub){ const ep = sub.endpoint; await sub.unsubscribe(); if(sb) await sb.rpc("push_del", {p_endpoint: ep}); } }catch(e){}
+  st.push = {on:false, ok:true}; render();
+}
+function pushBlock(){
+  const P = st.push || {}, pr = st.pushPrefs || {}, own = st.user && st.user.no === 1;
+  const sw = (k, lab) => `<div class="row pushrow"><span class="grow">${lab}</span><button class="switch" role="switch" aria-checked="${pr[k] !== false}" aria-label="${lab}" data-act="pushcat" data-k="${k}"></button></div>`;
+  let head;
+  if(!PUSH_OK && !IOS_WEB) head = `<p class="small" style="margin:0;text-align:left">${tx("pushNo")}</p>`;
+  else if(IOS_WEB) head = `<p class="note" style="margin:0">${tx("pushIos")}</p>`;
+  else if(!(st.user && st.user.cloud)) head = `<p class="small" style="margin:0;text-align:left">${tx("pushLogin")}</p>`;
+  else if(P.on) head = `<div class="row" style="gap:10px"><span class="pushok">🔔</span><div class="grow"><b style="font-size:14px">${tx("pushOnT")}</b><p class="small" style="margin:2px 0 0;text-align:left">${tx("pushOnS")}</p></div><button class="pill" data-act="pushoff">${tx("pushOff")}</button></div>`;
+  else head = `<button class="btn btn-gold" data-act="pushon">🔔 ${tx("pushGo")}</button>${P.denied ? `<p class="small" style="margin:0;text-align:left">${tx("pushDenied")}</p>` : `<p class="small" style="margin:0;text-align:left">${tx("pushWhy")}</p>`}`;
+  return `<div class="card pushcard"><p class="eyebrow gold" style="margin:0">${tx("pushT")}</p>${head}
+    ${P.on ? `<div class="pushcats">${sw("msg", tx("pcMsg"))}${sw("partners", tx("pcPart"))}${sw("rewards", tx("pcRew"))}${sw("muninn", tx("pcMun"))}${own ? sw("admin", tx("pcAdm")) : ""}</div>` : ""}</div>`;
+}
 function nSheet(){
   const L = st.notifs || [];
   return `<div class="backdrop" data-act="nclose"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("nT")}"><div class="grab"></div>
     <h2 style="margin:0">${tx("nT")}</h2>
+    ${pushBlock()}
     ${!L.length ? `<p class="muted" style="margin:0;font-size:14px">${tx("nNone")}</p>` : `<div class="nlist">${L.map(x => `<button class="nrow${x.read ? "" : " un"}" data-act="ngo" data-k="${esc(x.kind)}"><span class="grow">${nText(x)}</span><small>${ago(x.created_at)}</small></button>`).join("")}</div>`}
     <div class="row" style="border-top:1px solid var(--line2);padding-top:12px"><div class="grow"><b style="font-size:14px">${tx("nEmail")}</b><p class="small" style="margin:2px 0 0;text-align:left">${tx("nEmailSub")}</p></div><button class="switch" role="switch" aria-checked="${st.nEmail !== false}" aria-label="${tx("nEmail")}" data-act="nemail"></button></div>
     <button class="btn btn-line" data-act="nclose">${t("amClose")}</button></div>`;
@@ -3833,6 +3885,7 @@ function me(){
 <!--/F-->
     <!--F:rew-->${rewardsBlock()}<!--/F-->
     <!--F:set--><span id="settings" style="scroll-margin-top:12px"></span>
+    <button class="card row epnotif" data-act="nopen"><span class="pushok">🔔</span><span class="grow" style="text-align:left"><b>${tx("pushT")}</b><br><small class="muted">${st.push && st.push.on ? tx("pushOnT") : tx("pushGo")}</small></span><span class="chev" aria-hidden="true" style="font-size:22px;color:var(--gold)">›</span></button>
     <div class="card eplook"><p class="eyebrow gold">${tx("epLook")}</p><div class="row" style="gap:16px"><label class="mc-av ep-av" for="avfile" aria-label="${t("changePhoto")}">${u.avatar ? `<img src="${esc(u.avatar)}" alt="">` : `<span>${esc(((u.name||"?").trim().charAt(0)||"?").toUpperCase())}</span>`}<i>${I.cam}</i></label>
       <div class="grow" style="display:flex;flex-direction:column;gap:8px;min-width:0"><label class="btn btn-line" for="avfile" style="min-height:44px;font-size:14px">${I.cam} ${t("changePhoto")}</label>${u.avatar ? `<button class="linkbtn avdel${st.avAsk ? " ask" : ""}" data-act="avdel" style="align-self:flex-start">${st.avAsk ? tx("avSure") : tx("avDel")}</button>` : ""}</div></div>
       <button class="btn btn-gold" data-act="lkopen" style="min-height:48px;font-size:14px">🎨 ${tx("lkEdit")} · ${tx("epCover")}</button></div>
@@ -4132,7 +4185,10 @@ app.addEventListener("click", e => {
     case "vpick": st.vPick = st.vPick === +el.dataset.id ? null : +el.dataset.id; break;
     case "vuse": { const id = +el.dataset.id; sb.rpc("voucher_use", {p_id:id, p_start:null, p_today:todayISO()}).then(({ data }) => {
         toast(data === "ok" ? tx("pmVOk") : data === "expired" ? tx("pmVExp") : (data === "paid" || data === "lifetime") ? tx("pmVPaid") : t("netErr")); loadPrem(); }).catch(() => toast(t("netErr"))); break; }
-    case "nopen": st.nOpen = true; if((st.notifs||[]).some(x => !x.read) && sb){ sb.rpc("notifs_read").then(() => { (st.notifs||[]).forEach(x => x.read = true); }).catch(() => {}); } break;
+    case "pushon": pushOn(); return;
+    case "pushoff": pushOffAll(); return;
+    case "pushcat": { const k = el.dataset.k; st.pushPrefs = st.pushPrefs || {}; st.pushPrefs[k] = st.pushPrefs[k] === false; if(sb) sb.rpc("push_prefs_set", {p_prefs: st.pushPrefs}).catch(() => {}); break; }
+    case "nopen": st.nOpen = true; pushState(); if((st.notifs||[]).some(x => !x.read) && sb){ sb.rpc("notifs_read").then(() => { (st.notifs||[]).forEach(x => x.read = true); }).catch(() => {}); } break;
     case "nclose": st.nOpen = false; (st.notifs||[]).forEach(x => x.read = true); break;
     case "nemail": st.nEmail = st.nEmail === false; cloud.save({notif_email: st.nEmail}); break;
     case "ngo": { const k = el.dataset.k; st.nOpen = false; (st.notifs||[]).forEach(x => x.read = true);
@@ -4600,7 +4656,9 @@ window.addEventListener("online", () => cloud.flushPending());
 cloud.loadReviews(); cloud.loadFaq(); try{ pgDaily(); }catch(e){}
 if("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("/sw.js").catch(() => {});
 /* new version check: on open and every time the app comes back to the screen */
-const APP_V = "bbt-v61";
+(() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
+setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
+const APP_V = "bbt-v62";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }

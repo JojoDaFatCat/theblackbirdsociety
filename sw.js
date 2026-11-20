@@ -1,5 +1,5 @@
 /* Black Bird Training offline support: the app shell is cached so workouts run without a signal. */
-const CACHE = "bbt-v61";
+const CACHE = "bbt-v62";
 const SHELL = ["/app", "/icon-192.png", "/icon-512.png", "/maskable-512.png", "/apple-touch-icon.png", "/favicon.ico", "/manifest.json", "/qrcode.min.js"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -26,4 +26,18 @@ self.addEventListener("fetch", e => {
     }));
   }
   /* everything else (Supabase API, Paddle, images) goes straight to the network */
+});
+
+/* phone notifications */
+self.addEventListener("push", e => {
+  let d = {}; try{ d = e.data ? e.data.json() : {}; }catch(x){ d = {body: e.data ? e.data.text() : ""}; }
+  e.waitUntil(self.registration.showNotification(d.title || "The Black Bird Society", {body: d.body || "", icon: "/icon-192.png", badge: "/favicon-96.png", tag: d.tag || undefined, renotify: !!d.tag, data: {url: d.url || "/app?n=1"}}));
+});
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || "/app?n=1";
+  e.waitUntil(self.clients.matchAll({type: "window", includeUncontrolled: true}).then(cs => {
+    for(const c of cs){ if(new URL(c.url).pathname.startsWith("/app")){ c.focus(); try{ c.navigate(url); }catch(x){} return; } }
+    return self.clients.openWindow(url);
+  }));
 });
