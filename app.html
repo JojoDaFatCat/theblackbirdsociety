@@ -1570,7 +1570,7 @@ function instSheet(){
     <button class="btn btn-line" data-act="instx">${t("close")}</button></div>`;
 }
 function topBar(){
-  return `<header class="top"><div class="brand">${BIRD}<div><b>BLACK BIRD</b><small>TRAINING</small></div></div>
+  return `<header class="top"><a class="brand" href="https://theblackbirdsociety.com/" target="_blank" rel="noopener" aria-label="theblackbirdsociety.com" style="color:inherit;text-decoration:none">${BIRD}<div><b>BLACK BIRD</b><small>TRAINING</small></div></a>
   <div class="topr">${st.user && st.user.cloud ? bellChip() : ""}${st.profile ? flameChip() : ""}${STANDALONE ? "" : `<button class="pill instp" data-act="install" aria-label="${t("instT")}">${I.dl}<span>${t("instShort")}</span></button>`}<button class="pill" data-act="lang" aria-label="Language">${st.lang.toUpperCase()}</button></div></header>`;
 }
 function tabs(){
@@ -4711,7 +4711,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v66";
+const APP_V = "bbt-v67";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
