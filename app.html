@@ -212,6 +212,7 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 .fshelp{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;text-decoration:none;color:inherit}.fshelp b{display:block;font-size:15px}.fshelp small{color:var(--muted);font-size:12px}.fshelp em{font-style:normal;font:700 16px var(--font-d);color:var(--gold);white-space:nowrap}
 .fsgbar{height:8px;border-radius:4px;background:rgba(124,255,79,.12);overflow:hidden}.fsgbar i{display:block;height:100%;background:var(--gold);box-shadow:0 0 12px rgba(124,255,79,.6)}
 .fsmsl{display:flex;flex-direction:column;gap:6px}.fsms{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line,#1d241b);border-radius:3px}.fsms.next{border-color:var(--gold-dim)}.fsms.won{border-color:var(--gold);background:rgba(124,255,79,.07)}.fsms b{display:block;font-size:14px}.fsms small{color:var(--muted);font-size:12px}.fsmi{flex:none;width:40px;text-align:center;font-size:16px;white-space:nowrap;letter-spacing:-2px}.fsmi svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2.6}
+.qrbox{align-self:center;width:min(78vw,300px);aspect-ratio:1;max-width:100%;background:#fff;border-radius:10px;padding:10px;display:grid;place-items:center;box-shadow:0 0 30px rgba(124,255,79,.3)}.qrbox svg{width:100%;height:100%;display:block}
 .fssteps{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
 .fsb{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;background:none;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer}.fsb.on{border-color:var(--gold-dim);background:rgba(124,255,79,.06)}
 .fsbox{flex:none;width:20px;height:20px;border:1.5px solid var(--gold-dim);border-radius:4px;display:grid;place-items:center}.fsb.on .fsbox{background:var(--gold);border-color:var(--gold)}.fsbox svg{width:14px;height:14px;stroke:var(--gold-ink);fill:none;stroke-width:3}
@@ -2672,7 +2673,7 @@ function akMic(){
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
 /* ================= back button = go back inside the app ================= */
-const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen","invW","crsOpen","fsOpen"];
+const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen","invW","crsOpen","fsOpen","qrOpen"];
 const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
 const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
 let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
@@ -3067,6 +3068,24 @@ function ssCalLinks(x){
 { const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done"},
 fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+/* ===== my invite QR (21 Nov 2026): show it, a friend scans, joins with your link and gets 7 days Premium ===== */
+const QRIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1"/><path d="M14 14h2.5v2.5H14zM18 18h2.5v2.5H18zM14 18.5h1.5M18.5 14H20.5"/></svg>`;
+function qrOpen(){ st.qrOpen = true; st.qrM = null; render(); qrMatrix(SITE + "/?ref=" + st.user.no).then(m => { st.qrM = m; render(); }); }
+function qrSheet(){
+  const u = st.user || {}, url = SITE + "/?ref=" + u.no, m = st.qrM;
+  const svg = m ? (() => { const n = m.length; let d = ""; m.forEach((row, r) => row.forEach((on, c) => { if(on) d += `M${c+2},${r+2}h1v1h-1z`; })); return `<svg viewBox="0 0 ${n+4} ${n+4}" shape-rendering="crispEdges" aria-label="QR"><rect width="${n+4}" height="${n+4}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`; })() : `<p class="muted" style="margin:0">…</p>`;
+  return `<div class="backdrop" data-act="qrx"></div><div class="sheet qrsheet" role="dialog" aria-modal="true" aria-label="${tx("qrT")}"><div class="grab"></div>
+    <div class="row"><h2 class="grow" style="margin:0">${tx("qrT")}</h2><button class="xbtn" data-act="qrx" aria-label="${t("close")}">${I.x}</button></div>
+    <p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("qrSub")}</p>
+    <div class="qrbox">${svg}</div>
+    <p style="margin:0;text-align:center"><b>${esc(u.name || "")}</b> · ${t("memberNo")} #${String(u.no||1).padStart(4,"0")}</p>
+    <div class="crsdeal" style="text-align:center">🎁 ${tx("qrGift")}</div>
+    <button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${tx("qrShare")}</button>
+    <p class="small" style="margin:0;text-align:center;word-break:break-all">${url.replace("https://","")}</p></div>`;
+}
+{ const X = {en:{qrBtn:"My QR",qrT:"My invite QR",qrSub:"Show this to a friend. They scan it with their phone camera and join the Society with your invite.",qrGift:"They get 7 days of Premium free when they join.",qrShare:"Share my link"},
+fr:{qrBtn:"Mon QR",qrT:"Mon QR d'invitation",qrSub:"Montre-le à un ami. Il le scanne avec l'appareil photo de son téléphone et rejoint la Society avec ton invitation.",qrGift:"Il reçoit 7 jours de Premium offerts en s'inscrivant.",qrShare:"Partager mon lien"}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Fresh Start (21 Nov 2026): a calm corner to get back on track. Private: day counter + basics stay on the phone only ===== */
 function fsData(){ const d = store.get("bbt_fs", null) || {}; d.days = d.days || []; d.b = d.b || []; return d; }
 function fsSave(d){ store.set("bbt_fs", d); }
@@ -3436,7 +3455,7 @@ function shareInvCard(){
   return `<div class="card shinv"><p class="eyebrow gold" style="margin:0">${tx("siT")}</p>
     <div class="shopt"><div class="row" style="gap:10px;align-items:center"><span class="shic" aria-hidden="true">🎁</span><b class="grow">${tx("siInvT")}</b>${cnt}</div>
       <p class="muted">${unlim ? tx("siInvSU") : left ? tx("siInvS") : tx("siInvFull")}</p>
-      ${cloud ? `<button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${t("invBtn")}</button>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div></div>`;
+      ${cloud ? `<div class="btnrow"><button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${t("invBtn")}</button><button class="btn btn-line" data-act="qropen" style="min-height:46px;font-size:14px">${QRIC} ${tx("qrBtn")}</button></div>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div></div>`;
 }
 function inviteCard(){
   return "";
@@ -4308,6 +4327,7 @@ function render(){
   if(st.fbOpen) h += fbSheet();
   if(st.crsOpen) h += crsSheet();
   if(st.fsOpen) h += fsSheet();
+  if(st.qrOpen) h += qrSheet();
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
   if(st.nOpen) h += nSheet();
@@ -4552,6 +4572,8 @@ app.addEventListener("click", e => {
     case "crsx": st.crsOpen = false; break;
     case "fs": e.preventDefault(); st.fsOpen = true; fsSrv("fs_state"); break;
     case "fsx": st.fsOpen = false; breathStop(); break;
+    case "qropen": if(st.user && st.user.no) qrOpen(); return;
+    case "qrx": st.qrOpen = false; break;
     case "fsstart": { if(!st.fsAgree){ toast(tx("fsAgreeNeed")); break; } const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsDay1T")); fsSrv("fs_pledge", () => fsSrv("fs_checkin")); break; }
     case "fsagree": st.fsAgree = !st.fsAgree; break;
     case "fscheck": { const d = fsData(); if(!d.days.includes(todayISO())) d.days.push(todayISO()); fsSave(d); toast(tx("fsChecked")); fsSrv(st.fsS && st.fsS.pledged ? "fs_checkin" : "fs_pledge", () => fsSrv("fs_checkin")); break; }
@@ -5049,7 +5071,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v82";
+const APP_V = "bbt-v83";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
