@@ -468,6 +468,7 @@ select.field{appearance:auto}
 .chform textarea{flex:1;min-height:46px;max-height:140px;resize:none;font:inherit;font-size:16px;padding:11px 14px;border-radius:22px}
 .chsend{flex:none;width:46px;height:46px;min-height:46px;padding:0;border-radius:50%;display:grid;place-items:center}
 .chblocked{margin:0;padding:16px;text-align:center;color:var(--muted);border-top:1px solid var(--line2)}
+.ph-body .btnrow .btn{white-space:nowrap;font-size:13px;letter-spacing:.06em;padding-left:10px;padding-right:10px;gap:8px}
 .ranks{display:flex;gap:6px}
 .ranks span{flex:1;text-align:center;font-family:var(--font-d);font-size:13px;padding:4px 0;border:1px solid var(--line2);border-radius:2px;color:var(--muted)}
 .ranks span.on{border-color:var(--gold-dim);color:var(--gold)}
@@ -2577,12 +2578,12 @@ function meTiles(html){
     if(k === "rep") return `${(st.msgReps||[]).filter(r => !r.handled).length} ${tx("mePend")}`;
     if(k === "rv") return `${(st.rvAdmin||[]).filter(x => x.status === "pending").length} ${tx("mePend")}`;
     return ""; };
-  const tiles = order.length ? `<div class="metiles">${order.map(k => { const [ic, lab] = ME_TILES[k] || ["•", k], sb = sub(k);
+  const tiles = order.length ? `<div class="metiles">${order.filter(k => k !== "set").map(k => { const [ic, lab] = ME_TILES[k] || ["•", k], sb = sub(k);
     return `<button class="card metile" data-act="meopen" data-k="${k}"><span class="mtic" aria-hidden="true">${meIc(k) || ic}</span><b>${tx(lab)}</b>${sb ? `<small>${sb}</small>` : ""}</button>`; }).join("")}</div>` : "";
   html = html.replace("<!--TILES-->", tiles);
   const k = st.meSheet;
   if(k && parts[k]) html += `<div class="backdrop" data-act="meclose"></div><div class="sheet mesheet" role="dialog" aria-modal="true" aria-label="${tx(ME_TILES[k][1])}"><div class="grab"></div>
-    <div class="row"><h2 class="grow mshh" style="margin:0"><span class="mtic">${meIc(k) || ME_TILES[k][0]}</span>${tx(ME_TILES[k][1])}</h2><button class="xbtn" data-act="meclose" aria-label="${t("close")}">${I.x}</button></div>${parts[k]}</div>`;
+    <div class="row"><h2 class="grow mshh" style="margin:0"><span class="mtic">${meIc(k) || ME_TILES[k][0]}</span>${k === "set" ? t("editProfile") : tx(ME_TILES[k][1])}</h2><button class="xbtn" data-act="meclose" aria-label="${t("close")}">${I.x}</button></div>${parts[k]}</div>`;
   return html;
 }
 /* ================= supplements ================= */
@@ -2949,10 +2950,7 @@ function shareInvCard(){
   return `<div class="card shinv"><p class="eyebrow gold" style="margin:0">${tx("siT")}</p>
     <div class="shopt"><div class="row" style="gap:10px;align-items:center"><span class="shic" aria-hidden="true">🎁</span><b class="grow">${tx("siInvT")}</b>${cnt}</div>
       <p class="muted">${unlim ? tx("siInvSU") : left ? tx("siInvS") : tx("siInvFull")}</p>
-      ${cloud ? `<button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${t("invBtn")}</button>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div>
-    <div class="shopt"><div class="row" style="gap:10px;align-items:center"><span class="shic" aria-hidden="true">🪪</span><b class="grow">${tx("siCardT")}</b></div>
-      <p class="muted">${tx("siCardS")}</p>
-      <button class="btn btn-line" data-act="share" data-k="card" style="min-height:46px;font-size:14px">${I.share} ${t("shareCard")}</button></div></div>`;
+      ${cloud ? `<button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${t("invBtn")}</button>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div></div>`;
 }
 function inviteCard(){
   return "";
@@ -3460,7 +3458,7 @@ function profileHead(u){
       <div><div class="ph-name">${esc(u.name)}${u.last ? " "+esc(u.last) : ""}</div>
         <div class="ph-sub">${u.username ? `<span>@${esc(u.username)}</span>` : ""}<span><b>${t("memberNo")} #${no}</b></span>${st.showRank ? `<span><i class="rune">${RUNES[r]}</i> ${RN(r)}</span>` : ""}</div>${lk.motto ? `<div class="ph-motto">“${esc(lk.motto)}”</div>` : ""}${lk.bio ? `<p class="ph-bio">${esc(lk.bio)}</p>` : ""}</div>
       <div class="ph-stats"><div><b>${st.total}</b><span>${t("workouts")}</span></div><div><b>${weekDone().length}</b><span>${t("streakW")}</span></div><div><b class="rune">${RUNES[r]}</b><span>${t("rankL")}</span></div></div>
-      <div class="btnrow"><button class="btn btn-gold" data-act="share" data-k="card">${I.share} ${t("shareCard")}</button><button class="btn btn-line" data-act="editprof">${t("editProfile")}</button></div>
+      <div class="btnrow"><button class="btn btn-gold" data-act="share" data-k="card">${I.share} ${t("shareCard")}</button><button class="btn btn-line" data-act="editprof"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg> ${t("editProfile")}</button></div>
     </div></section>`;
 }
 function memberCard(u){
