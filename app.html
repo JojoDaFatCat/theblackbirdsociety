@@ -213,7 +213,7 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 .fsgbar{height:8px;border-radius:4px;background:rgba(124,255,79,.12);overflow:hidden}.fsgbar i{display:block;height:100%;background:var(--gold);box-shadow:0 0 12px rgba(124,255,79,.6)}
 .fsmsl{display:flex;flex-direction:column;gap:6px}.fsms{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line,#1d241b);border-radius:3px}.fsms.next{border-color:var(--gold-dim)}.fsms.won{border-color:var(--gold);background:rgba(124,255,79,.07)}.fsms b{display:block;font-size:14px}.fsms small{color:var(--muted);font-size:12px}.fsmi{flex:none;width:40px;text-align:center;font-size:16px;white-space:nowrap;letter-spacing:-2px}.fsmi svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2.6}
 .qrbox{align-self:center;width:min(78vw,300px);aspect-ratio:1;max-width:100%;background:#fff;border-radius:10px;padding:10px;display:grid;place-items:center;box-shadow:0 0 30px rgba(124,255,79,.3)}.qrbox svg{width:100%;height:100%;display:block}
-.fsacc{display:flex;flex-direction:column;gap:0;padding:0!important;overflow:hidden}.fsacch{display:flex;align-items:center;gap:10px;width:100%;min-height:54px;padding:12px 16px;background:none;border:0;color:var(--fg,#eef5ea);font:700 15px var(--font-d,inherit);letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer}.fsacc.open .fsacch{color:var(--gold)}.fschev{flex:none;display:grid;place-items:center;width:22px;height:22px;transition:transform .2s;font-style:normal}.fschev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}.fsacc.open .fschev{transform:rotate(180deg)}.fsaccb{display:flex;flex-direction:column;gap:8px;padding:0 16px 16px}.fsgift{border-color:var(--gold-dim)}
+.fsacc{display:flex;flex-direction:column;gap:0;padding:0!important;overflow:hidden;flex:none}.fsacch{display:flex;align-items:center;gap:10px;width:100%;min-height:54px;padding:12px 16px;background:none;border:0;color:var(--fg,#eef5ea);font:700 15px var(--font-d,inherit);letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer}.fsacc.open .fsacch{color:var(--gold)}.fschev{flex:none;display:grid;place-items:center;width:22px;height:22px;transition:transform .2s;font-style:normal}.fschev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}.fsacc.open .fschev{transform:rotate(180deg)}.fsaccb{display:flex;flex-direction:column;gap:8px;padding:0 16px 16px}.fsgift{border-color:var(--gold-dim)}
 .fssteps{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
 .fsb{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;background:none;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer}.fsb.on{border-color:var(--gold-dim);background:rgba(124,255,79,.06)}
 .fsbox{flex:none;width:20px;height:20px;border:1.5px solid var(--gold-dim);border-radius:4px;display:grid;place-items:center}.fsb.on .fsbox{background:var(--gold);border-color:var(--gold)}.fsbox svg{width:14px;height:14px;stroke:var(--gold-ink);fill:none;stroke-width:3}
@@ -3066,8 +3066,8 @@ function ssCalLinks(x){
   const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Black Bird Training//EN","BEGIN:VEVENT","UID:bbt-sess-" + x.id + "@theblackbirdsociety.com","DTSTAMP:" + z(new Date()),"DTSTART:" + z(st0),"DTEND:" + z(en),"SUMMARY:" + esc2(title),"DESCRIPTION:" + esc2(desc),"URL:https://theblackbirdsociety.com","BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:" + esc2(title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   return {g, o, ics:"data:text/calendar;charset=utf-8," + encodeURIComponent(ics)};
 }
-{ const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done"},
-fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé"}};
+{ const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done",mNewFolderOpt:"New folder…"},
+fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé",mNewFolderOpt:"Nouveau dossier…"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== my invite QR (21 Nov 2026): show it, a friend scans, joins with your link and gets 7 days Premium ===== */
 const QRIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1"/><path d="M14 14h2.5v2.5H14zM18 18h2.5v2.5H18zM14 18.5h1.5M18.5 14H20.5"/></svg>`;
@@ -3082,10 +3082,11 @@ function qrSheet(){
     <p style="margin:0;text-align:center"><b>${esc(u.name || "")}</b> · ${t("memberNo")} #${String(u.no||1).padStart(4,"0")}</p>
     <div class="crsdeal" style="text-align:center">🎁 ${tx("qrGift")}</div>
     <button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${tx("qrShare")}</button>
+    <button class="instlink" data-act="share" data-k="card" style="align-self:center;font-size:13px">${tx("cardImg")}</button>
     <p class="small" style="margin:0;text-align:center;word-break:break-all">${url.replace("https://","")}</p></div>`;
 }
-{ const X = {en:{qrBtn:"My QR",qrT:"My invite QR",qrSub:"Show this to a friend. They scan it with their phone camera and join the Society with your invite.",qrGift:"They get 7 days of Premium free when they join.",qrShare:"Share my link"},
-fr:{qrBtn:"Mon QR",qrT:"Mon QR d'invitation",qrSub:"Montre-le à un ami. Il le scanne avec l'appareil photo de son téléphone et rejoint la Society avec ton invitation.",qrGift:"Il reçoit 7 jours de Premium offerts en s'inscrivant.",qrShare:"Partager mon lien"}};
+{ const X = {en:{qrBtn:"My QR",qrT:"My invite QR",qrSub:"Show this to a friend. They scan it with their phone camera and join the Society with your invite.",qrGift:"They get 7 days of Premium free when they join.",qrShare:"Share my invite link",qrShow:"Show my QR",cardImg:"Share my member card (image)"},
+fr:{qrBtn:"Mon QR",qrT:"Mon QR d'invitation",qrSub:"Montre-le à un ami. Il le scanne avec l'appareil photo de son téléphone et rejoint la Society avec ton invitation.",qrGift:"Il reçoit 7 jours de Premium offerts en s'inscrivant.",qrShare:"Partager mon lien d'invitation",qrShow:"Afficher mon QR",cardImg:"Partager ma carte de membre (image)"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Fresh Start (21 Nov 2026): a calm corner to get back on track. Private: day counter + basics stay on the phone only ===== */
 function fsData(){ const d = store.get("bbt_fs", null) || {}; d.days = d.days || []; d.b = d.b || []; return d; }
@@ -3460,7 +3461,8 @@ function shareInvCard(){
   return `<div class="card shinv"><p class="eyebrow gold" style="margin:0">${tx("siT")}</p>
     <div class="shopt"><div class="row" style="gap:10px;align-items:center"><span class="shic" aria-hidden="true">🎁</span><b class="grow">${tx("siInvT")}</b>${cnt}</div>
       <p class="muted">${unlim ? tx("siInvSU") : left ? tx("siInvS") : tx("siInvFull")}</p>
-      ${cloud ? `<div class="btnrow"><button class="btn btn-gold" data-act="invite" style="min-height:46px;font-size:14px">${I.share} ${t("invBtn")}</button><button class="btn btn-line" data-act="qropen" style="min-height:46px;font-size:14px">${QRIC} ${tx("qrBtn")}</button></div>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div></div>`;
+      ${cloud ? `<button class="btn btn-gold" data-act="invite" style="min-height:48px;font-size:14px">${I.share} ${tx("qrShare")}</button>
+      <div class="row" style="gap:18px;justify-content:center;flex-wrap:wrap"><button class="instlink" data-act="qropen" style="font-size:13px">${tx("qrShow")}</button><button class="instlink" data-act="share" data-k="card" style="font-size:13px">${tx("cardImg")}</button></div>` : `<p class="small" style="margin:0;text-align:left">${tx("siJoin")}</p>`}</div></div>`;
 }
 function inviteCard(){
   return "";
@@ -3905,7 +3907,7 @@ function gym(){
     <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px"><p class="eyebrow gold">${t("yourMachines")}</p><p class="muted" style="font-size:14px">${t("machineHint")}</p></div>
     <div class="btnrow"><label class="btn btn-gold" for="snap" style="font-size:14px"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> ${tx("snapCam")}</label><label class="btn btn-line" for="snap2" style="font-size:14px"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5.5-5 4 3.5 2.5-2 4 3.5"/></svg> ${tx("snapUp")}</label></div>
     <input id="snap" type="file" accept="image/*" capture="environment" hidden><input id="snap2" type="file" accept="image/*" hidden>
-    ${st.machines.length ? mFolderBar() : ""}
+    ${mFolderBar()}
     ${st.mtab === "fav" && !st.machines.some(m => m.fav) ? `<p class="muted" style="font-size:14px;margin:0">${tx("mFavNone")}</p>` : ""}
     ${mInFolder() && !st.machines.some(m => m.f === st.mtab) ? `<p class="muted" style="font-size:14px;margin:0">${tx("mFolderEmpty")}</p>` : ""}
     <div class="mgrid">${st.machines.map((m,k)=> !mShow(m) ? "" : `<div class="mcell"><div class="mimg"><img src="${m.img}" alt=""><button class="mstar${m.fav ? " on" : ""}" data-act="mfav" data-i="${k}" aria-pressed="${!!m.fav}" aria-label="${tx("mFav")}">${m.fav ? "★" : "☆"}</button></div><div style="padding:10px;display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">${m.name.replace(/</g,"&lt;")}</b><span class="muted" style="font-size:12px">${eqName(m.type)}</span>${st.mfolders.length ? `<label class="mfwrap"><span aria-hidden="true">📁</span><select class="mfsel" data-i="${k}" aria-label="${tx("mFolder")}"><option value="">${tx("mNoFolder")}</option>${st.mfolders.map(f => `<option value="${f.id}"${m.f === f.id ? " selected" : ""}>${esc(f.name)}</option>`).join("")}</select></label>` : ""}${MG[m.type] ? `<button class="linkbtn" style="align-self:flex-start;padding:4px 0;color:var(--gold)" data-act="mgopen" data-id="${m.type}">${t("mgHow")}</button>` : ""}<button class="linkbtn" style="align-self:flex-start;padding:4px 0" data-act="delmachine" data-i="${k}">${t("removeMachine")}</button></div></div>`).join("")}</div>
@@ -3932,6 +3934,9 @@ function machineSheet(){
       <input class="field" id="mf-name" maxlength="40" placeholder="${t("machineName")}">
       <label class="eyebrow" for="mf-type">${t("machineType")}</label>
       <select class="field" id="mf-type">${Object.keys(EQ).map(k=>`<option value="${k}">${eqName(k)}</option>`).join("")}</select>
+      <label class="eyebrow" for="mf-folder">📁 ${tx("mFolder")}</label>
+      <select class="field" id="mf-folder"><option value="">${tx("mNoFolder")}</option>${st.mfolders.map(f => `<option value="${f.id}"${mInFolder() && st.mtab === f.id ? " selected" : ""}>${esc(f.name)}</option>`).join("")}<option value="__new">+ ${tx("mNewFolderOpt")}</option></select>
+      <input class="field" id="mf-newf" maxlength="24" placeholder="${tx("mFolderPh")}" hidden>
       <button class="btn btn-gold" type="submit">${t("saveMachine")}</button>
     </form>
     <p class="small">${t("aiSoon")}</p></div>`;
@@ -4094,7 +4099,7 @@ function profileHead(u){
       <div><div class="ph-name">${esc(u.name)}${u.last ? " "+esc(u.last) : ""}</div>
         <div class="ph-sub">${u.username ? `<span>@${esc(u.username)}</span>` : ""}<span><b>${t("memberNo")} #${no}</b></span>${st.showRank ? `<span><i class="rune">${RUNES[r]}</i> ${RN(r)}</span>` : ""}</div>${lk.motto ? `<div class="ph-motto">“${esc(lk.motto)}”</div>` : ""}${lk.bio ? `<p class="ph-bio">${esc(lk.bio)}</p>` : ""}</div>
       <div class="ph-stats"><div><b>${st.total}</b><span>${t("workouts")}</span></div><div><b>${weekDone().length}</b><span>${t("streakW")}</span></div><div><b class="rune">${RUNES[r]}</b><span>${t("rankL")}</span></div></div>
-      <div class="btnrow"><button class="btn btn-gold" data-act="share" data-k="card">${I.share} ${t("shareCard")}</button><button class="btn btn-line" data-act="editprof"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg> ${t("editProfile")}</button></div>
+      <div class="btnrow"><button class="btn btn-gold" data-act="qropen">${QRIC} ${tx("qrBtn")}</button><button class="btn btn-line" data-act="editprof"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg> ${t("editProfile")}</button></div>
     </div></section>`;
 }
 function memberCard(u){
@@ -4847,6 +4852,7 @@ app.addEventListener("click", e => {
   render();
 });
 app.addEventListener("change", e => {
+  if(e.target.id === "mf-folder"){ const i = document.getElementById("mf-newf"); if(i){ i.hidden = e.target.value !== "__new"; if(!i.hidden) i.focus(); } return; }
   if(e.target.classList && e.target.classList.contains("mfsel")){ const m = st.machines[+e.target.dataset.i]; if(m){ if(e.target.value) m.f = e.target.value; else delete m.f; store.set("bbt_machines", st.machines); toast(tx("mMoved")); render(); } return; }
   if((e.target.id !== "snap" && e.target.id !== "snap2") || !e.target.files || !e.target.files[0]) return;
   const r = new FileReader();
@@ -5005,7 +5011,10 @@ app.addEventListener("submit", e => {
   if(e.target.id === "machineform"){
     e.preventDefault();
     const name = document.getElementById("mf-name").value.trim(), type = document.getElementById("mf-type").value;
-    st.machines.push({name: name || eqName(type), type, img: st.draft.img});
+    const fsel = (document.getElementById("mf-folder")||{}).value || "", fnew = ((document.getElementById("mf-newf")||{}).value || "").trim().slice(0,24);
+    let fid = fsel === "__new" ? "" : fsel;
+    if(fsel === "__new" && fnew){ fid = "f" + Date.now().toString(36); st.mfolders.push({id: fid, name: fnew}); store.set("bbt_mfolders", st.mfolders); }
+    st.machines.push(Object.assign({name: name || eqName(type), type, img: st.draft.img}, fid ? {f: fid} : {}));
     store.set("bbt_machines", st.machines); st.gym.add(type); store.set("bbt_gym",[...st.gym]);
     st.draft = null; toast(t("machineAdded")); render(); return;
   }
@@ -5077,7 +5086,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v84";
+const APP_V = "bbt-v85";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
