@@ -215,6 +215,8 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 .qrbox{align-self:center;width:min(78vw,300px);aspect-ratio:1;max-width:100%;background:#fff;border-radius:10px;padding:10px;display:grid;place-items:center;box-shadow:0 0 30px rgba(124,255,79,.3)}.qrbox svg{width:100%;height:100%;display:block}
 .fsacc{display:flex;flex-direction:column;gap:0;padding:0!important;overflow:hidden;flex:none}.fsacch{display:flex;align-items:center;gap:10px;width:100%;min-height:54px;padding:12px 16px;background:none;border:0;color:var(--fg,#eef5ea);font:700 15px var(--font-d,inherit);letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer}.fsacc.open .fsacch{color:var(--gold)}.fschev{flex:none;display:grid;place-items:center;width:22px;height:22px;transition:transform .2s;font-style:normal}.fschev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}.fsacc.open .fschev{transform:rotate(180deg)}.fsaccb{display:flex;flex-direction:column;gap:8px;padding:0 16px 16px}.fsgift{border-color:var(--gold-dim)}
 .surcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-color:var(--gold-dim)!important;background:radial-gradient(80% 140% at 0% 50%,rgba(124,255,79,.12),transparent 60%),var(--card,#0c0f0b)}.surcard b{display:block;font:700 16px var(--font-d);letter-spacing:.04em;text-transform:uppercase}.surcard small{display:block;font-size:13px;line-height:1.4;margin-top:2px}.surcard svg{flex:none;width:20px;height:20px;color:var(--gold)}.surdice{flex:none;font-size:30px;line-height:1}
+.tpick{display:flex;flex-direction:column;gap:8px}.tstep{display:flex;align-items:center;gap:10px}.tstep button{width:44px;height:44px;flex:none;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:var(--gold);font:700 22px var(--font-d);cursor:pointer}.tstep b{min-width:88px;text-align:center;font:700 18px var(--font-d);letter-spacing:.04em}
+.surkit{border:1px dashed var(--gold-dim);border-radius:4px;padding:12px}.hgchips .pill.on,.surkit .pill.on{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}
 .surmood{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.surmood button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer}.surmood span{font-size:26px;line-height:1}.surmood b{font-size:13px}.surmood button.on{border-color:var(--gold);background:rgba(124,255,79,.1);color:var(--gold)}
 .surchips{display:flex;flex-wrap:wrap;gap:6px}.surchips .pill.on{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}
 .surres ol{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}.surres li{font-size:14px}.surres li span{display:block;color:var(--muted);font-size:12px}
@@ -1488,7 +1490,7 @@ const nm = id => L2(EX[id]);
 let timer=null, toastTimer=null, wakeLock=null, raf=0, figStart=performance.now();
 
 function fmt(n){ n = +n || 0; return Number.isInteger(n) ? String(n) : String(+n.toFixed(2)); }
-function stepOf(ex){ return ex.eq.includes("dumbbell") ? 2 : 2.5; }
+function stepOf(ex){ return ex.eq.includes("h_bottle") ? 0.5 : ex.eq.includes("h_bag") ? 1 : ex.eq.includes("dumbbell") ? 2 : 2.5; }
 function convert(from,to,w){
   if(to.f==null) return null;
   const base = from.f==null ? 20 : w/from.f, s = stepOf(to);
@@ -1517,9 +1519,10 @@ function hcSet(){ const a = new Set(); (st.hc||[]).forEach(k => { const c = HC.f
 function avoidSet(){
   const a = new Set(); myInj().forEach(k => (INJ[k]||[]).forEach(id => a.add(id))); mamaSet().forEach(id => a.add(id)); hcSet().forEach(id => a.add(id));
   if(st.profile && st.profile.age === "65") AGE_GENTLE.forEach(id => a.add(id));
+  Object.values(EX).forEach(e => { if(e.src && a.has(e.src)) a.add(e.id); });
   return a;
 }
-function injPartsFor(id){ return myInj().filter(k => (INJ[k]||[]).includes(id)).map(k => t(INJ_LABEL[k]).toLowerCase()); }
+function injPartsFor(id){ const sr = EX[id] && EX[id].src; return myInj().filter(k => (INJ[k]||[]).includes(id) || (sr && (INJ[k]||[]).includes(sr))).map(k => t(INJ_LABEL[k]).toLowerCase()); }
 function fixReps(item, from, to){ if(to.tm && !from.tm) item.reps = 30; else if(!to.tm && from.tm) item.reps = 12; }
 function makeSafe(item){
   if(myInj().includes("shoulder") && EX[item.ex].slot === "shoulder_press") item.care = true;
@@ -1541,6 +1544,42 @@ INJ.elbow = ["bench_dips","chair_dip","diamond_pushup","db_oh_ext","s_ohext","bb
 INJ.ankle = ["jump_squat","burpee","high_knees","calf_raise","mtn_climber","rev_lunge","split_bw","bulgarian","bulgarian_bw","sl_rdl","goblet"];
 INJ.foot = ["jump_squat","burpee","high_knees","calf_raise","mtn_climber","rev_lunge","split_bw","bulgarian_bw","bulgarian"];
 INJ.hip.push("rev_lunge","bulgarian_bw");
+
+/* ===== home-gear exercises (water bottles, backpack, band, towel) — 21 Nov 2026 ===== */
+function HX(id,en,fr,slot,eq,src,tool,f,sen,sfr){ const b = EX[src]; EX[id] = {id,en,fr,slot,eq,fig:b.fig,tool:tool || b.tool,extra:[],f,ph:b.ph,sen,sfr,src}; }
+HX("hb_curl","Water bottle curl","Curl bouteilles d'eau","biceps",["h_bottle"],"db_curl",0,0.45,
+ ["Stand tall, a full bottle in each hand, palms forward.","Curl the bottles up to your shoulders, elbows stay by your sides.","Lower slowly, about 3 seconds."],["Debout, une bouteille pleine dans chaque main, paumes vers l'avant.","Monte les bouteilles vers les épaules, coudes collés au corps.","Redescends lentement, environ 3 secondes."]);
+HX("hb_lat","Water bottle lateral raise","Élévations latérales bouteilles","lateral",["h_bottle"],"db_lateral",0,1,
+ ["Stand tall, a bottle in each hand by your sides.","Raise your arms out to the sides up to shoulder height, elbows soft.","Lower slowly, no swinging."],["Debout, une bouteille dans chaque main le long du corps.","Monte les bras sur les côtés jusqu'à hauteur d'épaules, coudes souples.","Redescends lentement, sans élan."]);
+HX("hb_ohp","Water bottle shoulder press","Développé épaules bouteilles","shoulder_press",["h_bottle"],"db_ohp",0,0.4,
+ ["Hold a bottle in each hand at shoulder height.","Press up until your arms are almost straight, ribs down.","Lower back to your shoulders under control."],["Une bouteille dans chaque main à hauteur d'épaules.","Pousse vers le haut jusqu'à bras presque tendus, côtes basses.","Redescends aux épaules en contrôlant."]);
+HX("hb_ext","Overhead water bottle extension","Extension triceps bouteille","triceps",["h_bottle"],"db_oh_ext",0,0.6,
+ ["Hold one big bottle with both hands above your head.","Bend your elbows to lower it behind your head, elbows pointing up.","Straighten your arms to lift it back up."],["Tiens une grosse bouteille à deux mains au-dessus de la tête.","Plie les coudes pour la descendre derrière la tête, coudes vers le haut.","Tends les bras pour remonter."]);
+HX("hb_rdl","Water bottle Romanian deadlift","Soulevé roumain bouteilles","hinge",["h_bottle"],"rdl_db",0,0.45,
+ ["Stand with a bottle in each hand in front of your thighs.","Push your hips back, flat back, bottles slide down your legs.","Squeeze your glutes to stand back up."],["Debout, une bouteille dans chaque main devant les cuisses.","Recule les hanches, dos plat, les bouteilles glissent le long des jambes.","Serre les fessiers pour remonter."]);
+HX("hp_squat","Backpack squat","Squat sac à dos","squat",["h_bag"],"goblet",0,0.35,
+ ["Fill a backpack (books, water bottles) and hug it to your chest.","Sit down between your heels, chest up, knees follow your toes.","Push the floor away to stand."],["Remplis un sac à dos (livres, bouteilles) et serre-le contre ta poitrine.","Descends entre tes talons, poitrine haute, genoux dans l'axe des pieds.","Pousse le sol pour remonter."]);
+HX("hp_row","Backpack bent-over row","Rowing penché sac à dos","row",["h_bag"],"bb_row","dbv",0.55,
+ ["Hold the backpack by the straps, lean forward with a flat back.","Pull the bag to your belly, squeeze your shoulder blades.","Lower slowly until your arms are long."],["Tiens le sac par les bretelles, penche-toi en avant dos plat.","Tire le sac vers le ventre, serre les omoplates.","Redescends lentement, bras longs."]);
+HX("hp_rdl","Backpack Romanian deadlift","Soulevé roumain sac à dos","hinge",["h_bag"],"rdl_db","dbv",0.45,
+ ["Hold the backpack in front of your thighs.","Push your hips back with a flat back until you feel your hamstrings.","Squeeze your glutes to stand back up."],["Tiens le sac à dos devant les cuisses.","Recule les hanches dos plat jusqu'à sentir l'arrière des cuisses.","Serre les fessiers pour remonter."]);
+HX("hp_lunge","Backpack reverse lunge","Fente arrière sac à dos","quad_iso",["h_bag"],"rev_lunge",0,0.3,
+ ["Wear the backpack on both shoulders, straps tight.","Step one foot back and lower until both knees are at about 90°.","Push through the front foot to come back. Switch sides."],["Porte le sac sur les deux épaules, bretelles serrées.","Recule un pied et descends jusqu'à environ 90° aux deux genoux.","Pousse sur le pied avant pour revenir. Change de côté."]);
+HX("hp_pushup","Backpack push-up","Pompes sac à dos","chest_press",["h_bag"],"pushup",0,0.3,
+ ["Wear the backpack, straps tight, hands a bit wider than your shoulders.","Lower your chest to the floor, body in one straight line.","Push back up. Too hard? Do them on your knees."],["Porte le sac, bretelles serrées, mains un peu plus larges que les épaules.","Descends la poitrine vers le sol, corps bien aligné.","Remonte. Trop dur ? Fais-les sur les genoux."]);
+HX("hp_press","Backpack overhead press","Développé sac à dos","shoulder_press",["h_bag"],"db_ohp","dbv",0.35,
+ ["Hold the backpack by its sides at chest height.","Press it above your head, ribs down, don't arch your back.","Lower it back to your chest under control."],["Tiens le sac par les côtés à hauteur de poitrine.","Pousse-le au-dessus de la tête, côtes basses, sans creuser le dos.","Redescends-le à la poitrine en contrôlant."]);
+HX("hd_row","Band bent-over row","Rowing penché élastique","row",["h_band"],"bb_row","none",null,
+ ["Stand on the middle of the band, one end in each hand, lean forward with a flat back.","Pull your hands to your belly, elbows close, squeeze your shoulder blades.","Let your arms go long slowly."],["Debout sur le milieu de l'élastique, une extrémité dans chaque main, penche-toi dos plat.","Tire les mains vers le ventre, coudes serrés, omoplates serrées.","Relâche lentement, bras longs."]);
+HX("hd_curl","Band curl","Curl élastique","biceps",["h_band"],"cable_curl","none",null,
+ ["Stand on the band, one end in each hand, palms forward.","Curl up to your shoulders, elbows by your sides.","Lower slowly, keep the band tight."],["Debout sur l'élastique, une extrémité dans chaque main, paumes vers l'avant.","Monte vers les épaules, coudes le long du corps.","Redescends lentement, garde l'élastique tendu."]);
+HX("hd_pull","Band lat pulldown","Tirage vertical élastique","vpull",["h_band"],"sa_pulldown","none",null,
+ ["Anchor the band high (top of a door, closed and locked) or hold it overhead.","Pull your elbows down toward your ribs, chest up.","Let it rise slowly."],["Accroche l'élastique en hauteur (haut d'une porte fermée à clé) ou tiens-le au-dessus de la tête.","Tire les coudes vers les côtes, poitrine sortie.","Laisse remonter lentement."]);
+HX("ht_pull","Towel pulldown","Tirage serviette","vpull",["h_towel"],"sa_pulldown","none",null,
+ ["Hold a towel overhead with both hands, wide grip, pull it tight.","Keep pulling it apart while you bring it down behind your head to your upper back.","Go back up slowly, never stop pulling the towel apart."],["Tiens une serviette au-dessus de la tête, mains écartées, bien tendue.","Continue de l'écarter en la descendant derrière la tête jusqu'au haut du dos.","Remonte lentement, sans jamais relâcher la tension."]);
+const HKIT = {dumbbell:"db", pullupbar:"bar", bench:"chair", h_bottle:"bottle", h_bag:"bag", h_band:"band", h_towel:"towel"};
+const HKW = {h_bottle:1.5, h_bag:6};
+function homeOk(e){ const H = hgEq(); return e.eq.every(q => HKIT[q] && H.has(HKIT[q])); }
 function alts(item){
   const cur = EX[item.ex];
   const av = avoidSet();
@@ -2003,17 +2042,19 @@ function peekSheet(){
 }
 function preSheet(){
   const p = getP(st.pre.id); if(!p) return "";
-  const ph = p.id !== "stretch", eqs = [...new Set(p.items.flatMap(([e]) => (EX[e] && EX[e].eq) || []))].filter(q => EQ[q]);
+  const ph = p.id !== "stretch", eqs = [...new Set(p.items.flatMap(([e]) => (EX[e] && EX[e].eq) || []))].filter(q => EQ[q] || q.startsWith("h_"));
   const ord = (st.pre.ord && st.pre.ord.length === p.items.length) ? st.pre.ord : p.items.map((_,k) => k), N = ord.length;
   const rows = ord.map((ix,k) => { const [e,s,r,wt] = p.items[ix], ex = EX[e]; if(!ex) return "";
     const mv = `<span class="bmv"><button data-act="premv" data-k="${k}" data-d="-1" aria-label="${tx("mvUp")}"${k===0?" disabled":""}><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button><button data-act="premv" data-k="${k}" data-d="1" aria-label="${tx("mvDown")}"${k===N-1?" disabled":""}><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></span>`;
-    return `<div class="row peekrow" data-pk="${k}">${mv}<span class="bnum">${k+1}</span><span class="ico">${figureSVG(ex,1,true)}</span><span class="grow" style="min-width:0"><b>${nm(e)}</b>${ex.eq.length ? `<br><small class="muted">${ex.eq.map(q => EQ[q] ? eqName(q) : "").filter(Boolean).join(" · ")}</small>` : ""}</span><span class="muted" style="text-align:right;white-space:nowrap">${s} × ${r}${ex.tm?" s":""}${UNI.includes(e)?" "+tx("perSide"):""}${ex.f!=null && wt ? `<br><small>${fmt(wt)} kg</small>` : ""}</span></div>`; }).join("");
+    return `<div class="row peekrow" data-pk="${k}">${mv}<span class="bnum">${k+1}</span><span class="ico">${figureSVG(ex,1,true)}</span><span class="grow" style="min-width:0"><b>${nm(e)}</b>${ex.eq.length ? `<br><small class="muted">${ex.eq.map(q => EQ[q] || q.startsWith("h_") ? eqName(q) : "").filter(Boolean).join(" · ")}</small>` : ""}</span><span class="muted" style="text-align:right;white-space:nowrap">${st.pre.mins ? scaleList(p.items.map(x => ({sets:x[1]})), st.pre.mins, ph).list[ix].sets : s} × ${r}${ex.tm?" s":""}${UNI.includes(e)?" "+tx("perSide"):""}${ex.f!=null && wt ? `<br><small>${fmt(wt)} kg</small>` : ""}</span></div>`; }).join("");
   const phRow = (k,i,m) => `<div class="row peekrow phpk"><span class="bmv" style="visibility:hidden"><button></button></span><span class="bnum" style="border-style:dashed"></span><span class="ico">${figureSVG(EX[i],1,true)}</span><b class="grow">${tx(k)}</b><span class="muted">~${m} ${t("min")}</span></div>`;
   const own = st.custom.some(x => x.id === p.id);
   return `<div class="backdrop" data-act="preclose"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(L2(p))}"><div class="grab"></div>
     <div class="row"><p class="eyebrow gold grow" style="margin:0">${tx("preT")}</p><button class="xbtn" data-act="preclose" aria-label="${t("close")}">${I.x}</button></div>
     <h2 style="margin-top:-6px">${L2(p)}</h2>
-    <div class="prestat"><div><b>${p.items.length}</b><span>${t("exs")}</span></div><div><b>~${minsOf(p) + (ph ? 7 : 0)}</b><span>${t("min")}</span></div><div><b>${p.items.reduce((a,x)=>a+x[1],0)}</b><span>${tx("preSets")}</span></div></div>
+    ${(() => { const sc = scaleList(p.items.map(x => ({sets:x[1]})), st.pre.mins, ph), sets = sc.list.reduce((a,x) => a + x.sets, 0);
+      return `<div class="prestat"><div><b>${p.items.length}</b><span>${sc.rounds > 1 ? t("exs") + " · " + sc.rounds + " " + tx("tpRounds") : t("exs")}</span></div><div><b>~${st.pre.mins || minsOf(p) + (ph ? 7 : 0)}</b><span>${t("min")}</span></div><div><b>${sets}</b><span>${tx("preSets")}</span></div></div>`; })()}
+    <div><p class="eyebrow" style="margin:0 0 6px">⏱ ${tx("tpT")}</p>${timePick("premin", st.pre.mins == null ? null : st.pre.mins, minsOf(p) + (ph ? 7 : 0))}<p class="muted" style="font-size:12px;margin:6px 0 0">${tx("tpNote")}</p></div>
     <div><p class="eyebrow" style="margin:0 0 8px">${tx("preEq")}</p><div class="chips">${eqs.length ? eqs.map(q => `<span class="chip on">${eqName(q)}</span>`).join("") : `<span class="chip on">${t("bw")}</span>`}<span class="chip">${tx("preWater")}</span></div></div>
     <p class="muted" style="font-size:13px;margin:-4px 0 -6px">${tx(own ? "preOrdOwn" : "preOrd")}</p>
     <div class="card" style="display:flex;flex-direction:column;gap:10px">${ph ? phRow("phS1","high_knees",4) : ""}${rows}${ph ? phRow("phS3","quad_stretch",3) : ""}</div>
@@ -3077,6 +3118,30 @@ function ssCalLinks(x){
 { const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done",mNewFolderOpt:"New folder…"},
 fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé",mNewFolderOpt:"Nouveau dossier…"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+
+/* ===== session length: pick any time, every workout scales (21 Nov 2026) ===== */
+const TP_Q = [20,30,45,60,90,120,180];
+function timePick(act, cur, normal){
+  const c = (v, l, on) => `<button class="pill${on ? " on" : ""}" data-act="${act}" data-v="${v}" aria-pressed="${on}">${l}</button>`;
+  return `<div class="tpick"><div class="surchips">${normal ? c("n", tx("tpNormal") + " · " + normal + " min", cur == null) : ""}${TP_Q.map(m => c(m, m < 60 ? m + " min" : (m % 60 ? (m/60).toFixed(1).replace(".", st.lang === "fr" ? "," : ".") : m/60) + " h", cur === m)).join("")}</div>
+    <div class="tstep"><button data-act="${act}" data-v="-" aria-label="${tx("tpLess")}">−</button><b>${cur == null ? "~" + normal : cur} min</b><button data-act="${act}" data-v="+" aria-label="${tx("tpMore")}">+</button></div></div>`;
+}
+function tpNext(cur, v, normal){
+  const b = cur == null ? (normal || 30) : cur;
+  if(v === "n") return null; if(v === "+") return Math.min(240, b + (b >= 60 ? 15 : 5)); if(v === "-") return Math.max(10, b - (b > 60 ? 15 : 5)); return +v;
+}
+/* scale a list of {sets} items to a target session length (warm-up + stretch take ~7 min) */
+function scaleList(list, mins, ph){
+  if(!mins || !list.length) return {list, rounds:1};
+  const total = list.reduce((a,x) => a + x.sets, 0), target = Math.max(list.length, Math.round((mins - (ph ? 7 : 0)) / 2.5));
+  const rounds = Math.max(1, Math.ceil(target / (list.length * 6))), f = target / total / rounds;
+  const one = list.map(x => Object.assign({}, x, {sets: Math.max(1, Math.min(6, Math.round(x.sets * f)))}));
+  let out = one; for(let r = 1; r < rounds; r++) out = out.concat(one.map(x => Object.assign({}, x, {done:0, round:r+1})));
+  return {list:out, rounds};
+}
+{ const X = {en:{tpNormal:"Normal",tpLess:"Less time",tpMore:"More time",tpT:"Session time",tpRounds:"rounds",tpNote:"Pick any time: the sets change to fit. Long sessions repeat the list in rounds."},
+fr:{tpNormal:"Normal",tpLess:"Moins de temps",tpMore:"Plus de temps",tpT:"Durée de la séance",tpRounds:"tours",tpNote:"Choisis le temps que tu veux : les séries s'adaptent. Les longues séances répètent la liste en plusieurs tours."}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== Surprise me (21 Nov 2026): pick your mood + what you feel like, get a random workout ===== */
 const SUR_F = {
   legs:["squat","hinge","quad_iso","ham_iso","calves","squat"], glutes:["hinge","squat","quad_iso","hinge","core","quad_iso"],
@@ -3093,19 +3158,22 @@ function surGen(){
   const seat = d.pl === "seat", foci = seat ? Object.keys(SUR_SEAT) : Object.keys(SUR_F);
   let f = d.f && d.f !== "any" && d.f !== "chill" ? d.f : foci[Math.floor(Math.random()*foci.length)];
   if(seat && !SUR_SEAT[f]) f = "up"; if(!seat && !SUR_F[f]) f = "full";
-  const slots = (seat ? SUR_SEAT[f] : SUR_F[f]).slice(0, d.min <= 15 ? 3 : d.min <= 30 ? 5 : 6);
-  const ok = e => !av.has(e.id) && !used.has(e.id) && (d.pl === "gym" ? e.eq.every(q => st.gym.has(q)) : e.eq.length === 0);
+  const base = seat ? SUR_SEAT[f] : SUR_F[f], target = Math.max(4, Math.round((d.min - 7) / 2.5));
+  const n = Math.max(3, Math.min(12, Math.round(target / E0.sets))), slots = Array.from({length:n}, (_,i) => base[i % base.length]);
+  const ok = e => !av.has(e.id) && !used.has(e.id) && (d.pl === "gym" ? e.eq.every(q => st.gym.has(q)) : d.pl === "home" ? (e.eq.length === 0 || homeOk(e)) : e.eq.length === 0);
   const items = [];
   slots.forEach(sl => {
     let c = Object.values(EX).filter(e => e.slot === sl && ok(e));
     const alt = {row:"ad_pull", vpull:"ad_pull", biceps:"ad_arms", lateral:"ad_shoulder", chest_fly:"chest_press", ham_iso:"hinge", shoulder_press:"ad_shoulder", triceps:"ad_arms"};
     if(!c.length) c = Object.values(EX).filter(e => e.slot === sl && !av.has(e.id) && !used.has(e.id) && e.eq.length === 0);
     if(!c.length && alt[sl]) c = Object.values(EX).filter(e => (e.slot === alt[sl] || e.slot === sl) && !av.has(e.id) && !used.has(e.id) && e.eq.length === 0);
-    if(d.pl === "gym" && c.some(e => e.eq.length)) c = c.filter(e => e.eq.length);
+    if((d.pl === "gym" || (d.pl === "home" && Math.random() < .75)) && c.some(e => e.eq.length)) c = c.filter(e => e.eq.length);
     if(!c.length) return; const e = c[Math.floor(Math.random()*c.length)]; used.add(e.id);
-    const wt = e.f == null ? 0 : Math.max(2.5, Math.round(e.f * E0.kg / 2.5) * 2.5);
-    items.push([e.id, d.min <= 15 ? Math.min(E0.sets, 3) : E0.sets, e.tm ? E0.hold : E0.reps, wt]);
+    const hw = e.eq.find(q => HKW[q]), wt = hw ? HKW[hw] : e.f == null ? 0 : Math.max(2, Math.round(e.f * E0.kg / stepOf(e)) * stepOf(e));
+    items.push([e.id, E0.sets, e.tm ? E0.hold : E0.reps, wt]);
   });
+  const per = items.length ? target / items.length : 0;
+  items.forEach(x => x[1] = Math.max(1, Math.min(8, Math.round(per))));
   st.surprise = {id:"surprise", en:"🎲 Surprise · " + TX.en["surF_" + f], fr:"🎲 Surprise · " + (TX.fr["surF_" + f] || TX.en["surF_" + f]), items, rest:E0.rest, sur:true};
   store.set("bbt_surprise", st.surprise);
 }
@@ -3121,11 +3189,12 @@ function surSheet(){
     <div class="surmood">${[["low","😮‍💨",tx("surLow")],["ok","🙂",tx("surOk")],["fire","🔥",tx("surFire")]].map(([v,e,l]) => `<button class="${d.en === v ? "on" : ""}" data-act="suren" data-v="${v}" aria-pressed="${d.en === v}"><span>${e}</span><b>${l}</b></button>`).join("")}</div>
     <p class="eyebrow gold" style="margin:4px 0 0">${tx("surQ2")}</p>
     <div class="surchips">${chip("surf","any","🎲 " + tx("surAny"), !d.f || d.f === "any")}${foci.map(f => chip("surf", f, tx("surF_" + f), d.f === f)).join("")}</div>
-    <div class="row" style="gap:16px;flex-wrap:wrap"><div><p class="eyebrow" style="margin:0 0 6px">${tx("surTime")}</p><div class="surchips">${[15,30,45].map(m => chip("surmin", m, m + " min", d.min === m)).join("")}</div></div>
-      <div><p class="eyebrow" style="margin:0 0 6px">${tx("surWhere")}</p><div class="surchips">${[["gym",t("gym")],["home",tx("surHome")],["seat",tx("surSeat")]].map(([v,l]) => chip("surpl", v, l, d.pl === v)).join("")}</div></div></div>
+    <div><p class="eyebrow" style="margin:0 0 6px">${tx("surWhere")}</p><div class="surchips">${[["gym",t("gym")],["home",tx("surHome")],["seat",tx("surSeat")]].map(([v,l]) => chip("surpl", v, l, d.pl === v)).join("")}</div></div>
+    ${d.pl === "home" ? `<div class="surkit"><p class="eyebrow" style="margin:0 0 4px">${tx("surKit")}</p><p class="muted" style="margin:0 0 8px;font-size:13px">${tx("surKitSub")}</p><div class="surchips">${["bottle","bag","band","towel","chair","db","bar"].map(k => `<button class="pill${hgEq().has(k) ? " on" : ""}" data-act="hgeq" data-k="${k}" aria-pressed="${hgEq().has(k)}">${tx("he_" + k)}</button>`).join("")}</div></div>` : ""}
+    ${d.f === "chill" ? "" : `<div><p class="eyebrow" style="margin:0 0 6px">${tx("surTime")}</p>${timePick("surmin", d.min, 0)}</div>`}
     ${d.f === "chill" ? `<button class="btn btn-gold" data-act="start" data-id="stretch" style="min-height:52px">🧘 ${tx("surChillGo")}</button>`
-      : P && P.items && P.items.length ? `<div class="card surres"><p class="eyebrow gold" style="margin:0">${esc(P[L] || P.en)}</p>
-        <ol>${P.items.map(([id,se,re]) => `<li><b>${esc(EX[id][L] || EX[id].en)}</b><span>${se} × ${EX[id].tm ? re + " s" : re}</span></li>`).join("")}</ol></div>
+      : P && P.items && P.items.length ? `<div class="card surres"><p class="eyebrow gold" style="margin:0">${esc(P[L] || P.en)} · ~${minsOf(P) + 7} min</p>
+        <ol>${P.items.map(([id,se,re]) => `<li><b>${esc(EX[id][L] || EX[id].en)}</b><span>${se} × ${EX[id].tm ? re + " s" : re}${EX[id].eq.find(q => HKW[q]) ? " · " + tx("he_" + EX[id].eq.find(q => HKW[q]).slice(2)) : ""}</span></li>`).join("")}</ol></div>
         <div class="btnrow"><button class="btn btn-line" data-act="surgo" style="min-height:48px;font-size:14px">🔄 ${tx("surAgain")}</button><button class="btn btn-gold" data-act="start" data-id="surprise" style="min-height:48px;font-size:14px">${tx("surStart")} ${I.arrow}</button></div>`
       : `<button class="btn btn-gold" data-act="surgo" style="min-height:52px;font-size:16px">🎲 ${tx("surGo")}</button>`}
   </div>`;
@@ -3135,11 +3204,11 @@ function surCard(){ return `<button class="card surcard" data-act="sur"><span cl
 en:{surT:"Surprise me",surCard:"No plan, no motivation? Tell us how you feel, we pick the workout.",surSub:"Tell us how you feel and what you feel like. We build a fresh workout for you, different every time.",
 surQ1:"How do you feel today?",surLow:"Low energy",surOk:"Ready",surFire:"Fired up",surQ2:"What would feel good today?",surAny:"Anything",
 surF_legs:"Legs",surF_glutes:"Glutes",surF_backbi:"Back & biceps",surF_chesttri:"Chest & triceps",surF_shoulders:"Shoulders",surF_arms:"Arms",surF_core:"Abs & core",surF_full:"Full body",surF_sweat:"Cardio sweat",surF_chill:"Stretch & chill",surF_up:"Upper body",
-surTime:"Time",surWhere:"Where",surHome:"Home",surSeat:"Seated",surGo:"Surprise me",surAgain:"Another one",surStart:"Let's go",surChillGo:"Start the stretch session",surTile:"Pick your mood, we pick the workout"},
+surTime:"Time",surWhere:"Where",surHome:"Home",surSeat:"Seated",surGo:"Surprise me",surAgain:"Another one",surStart:"Let's go",surChillGo:"Start the stretch session",surKit:"What do you have at home?",surKitSub:"Bottles of water, a backpack full of books... it all counts as weights.",surTile:"Pick your mood, we pick the workout"},
 fr:{surT:"Surprends-moi",surCard:"Pas de plan, pas de motivation ? Dis-nous comment tu te sens, on choisit la séance.",surSub:"Dis-nous comment tu te sens et ce qui te ferait du bien. On te crée une séance, différente à chaque fois.",
 surQ1:"Comment tu te sens aujourd'hui ?",surLow:"Peu d'énergie",surOk:"Prêt",surFire:"À fond",surQ2:"Qu'est-ce qui te ferait du bien ?",surAny:"N'importe quoi",
 surF_legs:"Jambes",surF_glutes:"Fessiers",surF_backbi:"Dos & biceps",surF_chesttri:"Pecs & triceps",surF_shoulders:"Épaules",surF_arms:"Bras",surF_core:"Abdos & gainage",surF_full:"Tout le corps",surF_sweat:"Cardio qui transpire",surF_chill:"Étirements & détente",surF_up:"Haut du corps",
-surTime:"Durée",surWhere:"Où",surHome:"Maison",surSeat:"Assis",surGo:"Surprends-moi",surAgain:"Une autre",surStart:"C'est parti",surChillGo:"Lancer la séance d'étirements",surTile:"Choisis ton humeur, on choisit la séance"}};
+surTime:"Durée",surWhere:"Où",surHome:"Maison",surSeat:"Assis",surGo:"Surprends-moi",surAgain:"Une autre",surStart:"C'est parti",surChillGo:"Lancer la séance d'étirements",surKit:"Qu'est-ce que tu as à la maison ?",surKitSub:"Des bouteilles d'eau, un sac à dos rempli de livres... tout ça compte comme des poids.",surTile:"Choisis ton humeur, on choisit la séance"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== typing suggestions everywhere (21 Nov 2026): native datalists + quick chips ===== */
 const SUGL = {
@@ -3963,7 +4032,7 @@ function doShare(kind){
   if(st.shareFile && st.shareKey===shareKey(kind)) go(st.shareFile);
   else prepShare(kind).then(go).catch(() => toast(t("netErr")));
 }
-function eqName(k){ return st.lang==="en" ? EQ[k][0] : st.lang==="fr" ? EQ[k][1] : EQX[k][["es","pt","de"].indexOf(st.lang)]; }
+function eqName(k){ if(k.startsWith("h_")) return tx("he_" + k.slice(2)); return st.lang==="en" ? EQ[k][0] : st.lang==="fr" ? EQ[k][1] : EQX[k][["es","pt","de"].indexOf(st.lang)]; }
 function done(){
   const w = st.w;
   let kg = 0, sets = 0;
@@ -4594,7 +4663,7 @@ app.addEventListener("click", e => {
     case "otpback": st.otp = null; break;
     case "locked": st.mpd = null; st.meal = null; st.peek = null; st.view = "pro"; break;
     case "gtab": st.gtab = el.dataset.v; store.set("bbt_gtab", st.gtab); break;
-    case "hgeq": { const k = el.dataset.k, E = hgEq(); E.has(k) ? E.delete(k) : E.add(k); store.set("bbt_homeeq", [...E]); break; }
+    case "hgeq": { const k = el.dataset.k, E = hgEq(); E.has(k) ? E.delete(k) : E.add(k); store.set("bbt_homeeq", [...E]); if(st.surOpen && st.surprise && st.sur && st.sur.pl === "home") surGen(); break; }
     case "hgnew": st.mvd = {sets:3, reps:10, kg:0}; break;
     case "hgedit": { const m = moves().find(x => x.id === el.dataset.id); if(m) st.mvd = {...m}; st.mvDelArm = false; break; }
     case "hgidea": { const M = moves(); M.push({id:"m"+Date.now().toString(36), n:tx(el.dataset.k), eq:"", sets:+el.dataset.s, reps:+el.dataset.r, kg:+el.dataset.w, note:""}); pgSave(); toast("+ " + tx(el.dataset.k)); break; }
@@ -4650,6 +4719,7 @@ app.addEventListener("click", e => {
     case "peek": st.peek = el.dataset.id; break;
     case "closepeek": st.peek = null; break;
     case "preclose": st.pre = null; break;
+    case "premin": { const p = getP(st.pre.id); if(!p) break; st.pre.mins = tpNext(st.pre.mins, el.dataset.v, minsOf(p) + (p.id !== "stretch" ? 7 : 0)); break; }
     case "premv": { const p = getP(st.pre.id); if(!p) break; const o = (st.pre.ord && st.pre.ord.length === p.items.length) ? st.pre.ord.slice() : p.items.map((_,k) => k), k = +el.dataset.k, j = k + (+el.dataset.d);
       if(j < 0 || j >= o.length) return; [o[k], o[j]] = [o[j], o[k]];
       const c = st.custom.find(x => x.id === p.id);
@@ -4715,7 +4785,7 @@ app.addEventListener("click", e => {
     case "surx": st.surOpen = false; break;
     case "suren": surD().en = el.dataset.v; if(st.surprise) surGen(); break;
     case "surf": surD().f = el.dataset.v; if(el.dataset.v !== "chill") surGen(); else st.surprise = null; setTimeout(() => { const r = document.querySelector(".surres + .btnrow") || document.querySelector(".surres"); r && r.scrollIntoView({behavior:"smooth", block:"end"}); }, 80); break;
-    case "surmin": surD().min = +el.dataset.v; if(st.surprise) surGen(); break;
+    case "surmin": surD().min = tpNext(surD().min, el.dataset.v, 30) || 30; if(st.surprise) surGen(); break;
     case "surpl": { const d = surD(); d.pl = el.dataset.v; if(d.pl === "seat" && !SUR_SEAT[d.f]) d.f = "any"; if(d.pl !== "seat" && d.f && !SUR_F[d.f] && d.f !== "chill" && d.f !== "any") d.f = "any"; if(st.surprise) surGen(); break; }
     case "surgo": surGen(); setTimeout(() => { const r = document.querySelector(".surres + .btnrow") || document.querySelector(".surres"); r && r.scrollIntoView({behavior:"smooth", block:"end"}); }, 80); break;
     case "fsstart": { if(!st.fsAgree){ toast(tx("fsAgreeNeed")); break; } const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsDay1T")); fsSrv("fs_pledge", () => fsSrv("fs_checkin")); break; }
@@ -4820,10 +4890,11 @@ app.addEventListener("click", e => {
     // falls through: start the chosen session
     case "start": { st.fsOpen = false; st.surOpen = false; breathStop();
       if(act === "start" && el.dataset.go !== "1"){ st.pre = {id: el.dataset.id, day: el.dataset.day != null && el.dataset.day !== "" ? el.dataset.day : ""}; break; }
-      const ord0 = st.pre && st.pre.id === el.dataset.id ? st.pre.ord : null; st.pre = null;
+      const ord0 = st.pre && st.pre.id === el.dataset.id ? st.pre.ord : null, mins0 = st.pre && st.pre.id === el.dataset.id ? st.pre.mins : null; st.pre = null;
       const p = getP(el.dataset.id);
       st.w = {pid:p.id, day:el.dataset.day!=null && el.dataset.day!=="" ? +el.dataset.day : -1, rest:p.rest||90, i:0, swaps:0, t0:Date.now(), list:p.items.map(([ex,sets,reps,wt]) => ({ex,sets,reps,w:wt,done:0,from:null,fromW:null}))};
       if(ord0 && ord0.length === st.w.list.length) st.w.list = ord0.map(i => st.w.list[i]);
+      if(mins0) st.w.list = scaleList(st.w.list, mins0, p.id !== "stretch").list;
       st.w.list.forEach(makeSafe); phInit(st.w); phStop(); st.phPause = null;
       st.view = "work"; stopRest(); figStart = performance.now(); keepAwake(true); break;
     }
@@ -5224,7 +5295,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v88";
+const APP_V = "bbt-v89";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
