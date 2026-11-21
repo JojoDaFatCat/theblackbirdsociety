@@ -221,6 +221,8 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 @keyframes tipbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}@media (prefers-reduced-motion:reduce){.tipfig{animation:none}}
 .preitem{align-items:flex-start;position:relative}.preitem .prenm{padding-right:40px}.prenm{display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer}.prenm b{text-decoration:underline dotted var(--gold-dim);text-underline-offset:3px}.preswapic{color:var(--gold);font-size:14px}.preitem small{display:block}
 .prectl{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}.prectl>button{width:32px;height:32px;flex:none;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:var(--gold);font:700 17px var(--font-d);cursor:pointer}.prectl>button:disabled{opacity:.35}.prectl b{font-size:14px;min-width:54px;text-align:center}.prectl small{display:inline!important}.prectl .predel{position:absolute;top:0;right:0;margin:0;color:var(--muted)}.prectl .predel svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4}
+.amvrow{display:flex;flex-direction:column;gap:3px;padding:10px 0;border-bottom:1px solid var(--line2,#2a3327)}.amvrow:last-child{border-bottom:0}.amvrow>span{font-size:14px;font-weight:700}.amvrow small{white-space:nowrap}
+.amvsum{display:flex;flex-wrap:wrap;gap:6px}.amvsum span{border:1px solid;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
 .tpick{display:flex;flex-direction:column;gap:8px}.tstep{display:flex;align-items:center;gap:10px}.tstep button{width:44px;height:44px;flex:none;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:var(--gold);font:700 22px var(--font-d);cursor:pointer}.tstep b{min-width:88px;text-align:center;font:700 18px var(--font-d);letter-spacing:.04em}
 .surkit{border:1px dashed var(--gold-dim);border-radius:4px;padding:12px}.hgchips .pill.on,.surkit .pill.on{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}
 .surmood{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.surmood button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer}.surmood span{font-size:26px;line-height:1}.surmood b{font-size:13px}.surmood button.on{border-color:var(--gold);background:rgba(124,255,79,.1);color:var(--gold)}
@@ -3692,8 +3694,25 @@ function memberSheet(){
       ${row(t("amWk"), m.workouts||0)}${row(t("amWeek"), m.workouts_week||0)}${row(t("amLast"), d(m.last_workout))}
       ${row(t("amPart"), m.partners||0)}${row(t("amInv"), m.invited||0)}${m.referred_by ? row(t("amBy"), "#"+String(m.referred_by).padStart(4,"0")) : ""}
       ${row(t("amRev"), m.review ? stars(m.review) : "—")}${row(t("amLang"), (m.lang||"en").toUpperCase())}${row(t("amMail"), esc(m.email||""))}
-    </div><button class="btn btn-line" data-act="amx">${t("amClose")}</button></div>`;
+    </div>
+    ${amVouchers(d)}
+    <button class="btn btn-line" data-act="amx">${t("amClose")}</button></div>`;
 }
+function amVouchers(d){
+  const V = st.amV; if(V === "x") return "";
+  const head = `<p class="eyebrow gold" style="margin:4px 0 -4px">🎟️ ${tx("amvT")}${Array.isArray(V) ? " (" + V.length + ")" : ""}</p>`;
+  if(V == null) return head + `<p class="muted" style="margin:0">${t("searching")}</p>`;
+  if(!V.length) return head + `<p class="muted" style="margin:0;font-size:14px">${tx("amvNone")}</p>`;
+  const src = s2 => tx(String(s2||"").includes("rank") ? "amvRank" : String(s2||"").includes("referral") ? "amvRef" : "amvGift");
+  const col = {used:"var(--muted)", planned:"var(--gold)", waiting:"var(--gold)", expired:"#ff8a7a"};
+  const stat = v => v.status === "used" ? tx("amvUsed") + " " + d(v.used) : v.status === "planned" ? tx("amvPlan") + " " + d(v.start_on) : v.status === "expired" ? tx("amvExp") + " " + d(v.expires) : tx("amvWait") + (v.expires ? " · " + tx("amvUntil") + " " + d(v.expires) : "");
+  const n = k => V.filter(v => v.status === k).length;
+  return head + `<div class="amvsum">${["waiting","planned","used","expired"].filter(k => n(k)).map(k => `<span style="border-color:${col[k]};color:${col[k]}">${n(k)} ${tx("amvS_" + k)}</span>`).join("")}</div>
+    <div class="card" style="display:flex;flex-direction:column;padding-top:8px;padding-bottom:8px">${V.map(v => `<div class="amvrow"><div class="row" style="gap:8px"><b class="grow">${v.days} ${tx("amvDays")} · ${src(v.source)}</b><small class="muted">${tx("amvGot")} ${d(v.created)}</small></div><span style="color:${col[v.status] || "inherit"}">${stat(v)}</span></div>`).join("")}</div>`;
+}
+{ const X = {en:{amvT:"Premium vouchers",amvNone:"No vouchers.",amvRank:"Rank reward",amvRef:"Invite reward",amvGift:"Gift",amvUsed:"Used",amvPlan:"Starts",amvExp:"Expired",amvWait:"Not used yet",amvUntil:"until",amvDays:"days",amvGot:"got",amvS_waiting:"waiting",amvS_planned:"planned",amvS_used:"used",amvS_expired:"expired"},
+fr:{amvT:"Bons Premium",amvNone:"Aucun bon.",amvRank:"Récompense de rang",amvRef:"Récompense d'invitation",amvGift:"Cadeau",amvUsed:"Utilisé",amvPlan:"Démarre",amvExp:"Expiré",amvWait:"Pas encore utilisé",amvUntil:"jusqu'au",amvDays:"jours",amvGot:"reçu le",amvS_waiting:"en attente",amvS_planned:"prévus",amvS_used:"utilisés",amvS_expired:"expirés"}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 function rvAdminBlock(){
   if(!st.user || st.user.no !== 1 || !st.rvAdmin) return "";
   const l = st.rvAdmin, n = l.filter(x => x.status==="pending").length;
@@ -4852,7 +4871,8 @@ app.addEventListener("click", e => {
       const items = L.map(x => [x.ex, x.sets, x.reps, x.w]), c = st.custom.find(x => x.id === p.id);
       if(c) c.items = items; else { const id = "c" + Date.now().toString(36); st.custom.push({id, en: `${L2(p)} · ${tx("preMine")}`, free: true, custom: true, items}); st.pre.id = id; }
       saveCustom(); st.pre.dirty = false; toast(tx("preSaved")); break; }
-    case "amopen": { const n = +el.dataset.n; st.amOpen = n; st.amData = null;
+    case "amopen": { const n = +el.dataset.n; st.amOpen = n; st.amData = null; st.amV = null;
+      sb.rpc("admin_member_vouchers", {p_no:n}).then(({ data, error }) => { if(st.amOpen !== n) return; st.amV = error ? "x" : (data || []); render(); }).catch(() => { st.amV = "x"; });
       sb.rpc("admin_member", {p_no:n}).then(({ data, error }) => { if(st.amOpen !== n) return; if(error || !data){ toast(t("netErr")); st.amOpen = null; render(); return; } st.amData = data; render(); }).catch(() => { toast(t("netErr")); st.amOpen = null; render(); });
       break; }
     case "mdplay": speak(+el.dataset.i); break;
@@ -5424,7 +5444,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v91";
+const APP_V = "bbt-v92";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
