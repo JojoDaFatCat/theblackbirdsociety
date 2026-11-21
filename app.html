@@ -462,6 +462,8 @@ button.meal{width:100%;text-align:left;align-items:stretch}
 .mimg{position:relative}.mimg img{display:block;width:100%}.mstar{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2,#2a3327);background:rgba(5,6,5,.75);color:var(--fg,#eef5ea);font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center}.mstar.on{color:var(--gold-ink,#050605);background:var(--gold);border-color:var(--gold)}
 .mchips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.mchips::-webkit-scrollbar{display:none}
 .mchip{flex:none;min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--line2,#2a3327);background:none;color:var(--muted);font:inherit;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer}.mchip[aria-selected="true"]{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}.mchip.add{border-style:dashed;color:var(--gold)}
+.fbshot{position:relative;border:1px solid var(--line2,#2a3327);border-radius:4px;overflow:hidden;max-height:240px}.fbshot img{display:block;width:100%;max-height:240px;object-fit:contain;background:#000}.fbshot .xbtn{position:absolute;top:6px;right:6px;background:rgba(5,6,5,.8)}
+.fbview{position:fixed;inset:0;z-index:91;display:grid;place-items:center;padding:16px}.fbview img{max-width:100%;max-height:100%;border-radius:4px;border:1px solid var(--gold-dim)}
 .sugchips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}.sugchips::-webkit-scrollbar{display:none}.sugchips .pill{flex:none;white-space:nowrap}
 .mpick{display:flex;flex-direction:column;gap:6px}
 .mfwrap{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px}.mfsel{flex:1;min-width:0;background:var(--surface,#0c0f0b);color:var(--fg,#eef5ea);border:1px solid var(--line2,#2a3327);border-radius:3px;padding:4px 6px;font:inherit;font-size:12px}
@@ -4011,15 +4013,37 @@ async function chatSend(){ const el = document.getElementById("ch-in"), c = st.c
   el.value = ""; st.chDraft = ""; c.list = [...(c.list||[]), {id:"tmp"+Date.now(), mine:true, body:b, created_at:new Date().toISOString(), read:false}]; render(); chatScroll();
   try{ const { data } = await sb.rpc("msg_send", {p_no:c.no, p_body:b}); if(data !== "ok") toast(tx({no:"chNo", slow:"chSlow"}[data] || "netErr")); }catch(e){ toast(t("netErr")); }
   loadThread(true); loadInbox(); }
+/* feedback with optional screenshot (21 Nov 2026): image goes to the private "feedback" bucket, only the owner can open it */
+async function fbSend(v){
+  const done = data => { if(data === "ok"){ st.fbOpen = false; st.fbShot = null; toast(tx("fbThanks")); } else toast(tx(data === "limit" ? "fbLimit" : "fbFail")); render(); };
+  try{
+    let path = null;
+    if(st.fbShot){ toast(tx("fbSending"));
+      const { data:{ session } } = await sb.auth.getSession();
+      if(session){ const blob = await (await fetch(st.fbShot)).blob(); path = session.user.id + "/" + Date.now() + ".jpg";
+        const { error } = await sb.storage.from("feedback").upload(path, blob, {contentType:"image/jpeg"}); if(error) path = null; } }
+    if(path){ const { data, error } = await sb.rpc("feedback_send2", {p_body: v, p_img: path}); if(!error){ done(data); return; } }
+    const { data } = await sb.rpc("feedback_send", {p_body: v + (st.fbShot && !path ? "\n[screenshot could not be attached]" : "")}); done(data);
+  }catch(e){ toast(tx("fbFail")); }
+}
+async function fbOpenImg(path){
+  try{ const { data } = await sb.storage.from("feedback").createSignedUrl(path, 600); if(data && data.signedUrl){ st.fbImg = data.signedUrl; render(); } else toast(tx("fbFail")); }catch(e){ toast(tx("fbFail")); }
+}
+{ const X = {en:{fbShotAdd:"Add a screenshot (optional)",fbShotDel:"Remove screenshot",fbSending:"Sending…",fbShotView:"📎 View screenshot"},
+fr:{fbShotAdd:"Ajouter une capture d'écran (facultatif)",fbShotDel:"Retirer la capture",fbSending:"Envoi…",fbShotView:"📎 Voir la capture"}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 function fbSheet(){
   return `<div class="backdrop" data-act="fbx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("fbT")}"><div class="grab"></div>
     <div class="row"><h2 class="grow" style="margin:0">${tx("fbT")}</h2><button class="xbtn" data-act="fbx" aria-label="${t("close")}">${I.x}</button></div>
     <p class="muted" style="margin:0;font-size:14px">${tx("fbSub")}</p>
-    ${st.user && st.user.cloud ? `<form id="fbform" style="display:flex;flex-direction:column;gap:10px"><textarea class="field" id="fb-in" rows="5" maxlength="2000" placeholder="${tx("fbPh")}" style="resize:vertical;min-height:120px;font:inherit"></textarea><button class="btn btn-gold" type="submit">${tx("fbSend")}</button></form>` : `<p class="note" style="margin:0">${tx("fbLogin")}</p>`}
+    ${st.user && st.user.cloud ? `<form id="fbform" style="display:flex;flex-direction:column;gap:10px"><textarea class="field" id="fb-in" rows="5" maxlength="2000" placeholder="${tx("fbPh")}" style="resize:vertical;min-height:120px;font:inherit"></textarea>
+      ${st.fbShot ? `<div class="fbshot"><img src="${st.fbShot}" alt=""><button type="button" class="xbtn" data-act="fbshotx" aria-label="${tx("fbShotDel")}">${I.x}</button></div>` : `<label class="btn btn-line" for="fb-img" style="min-height:46px;font-size:14px">📷 ${tx("fbShotAdd")}</label>`}
+      <input id="fb-img" type="file" accept="image/*" hidden>
+      <button class="btn btn-gold" type="submit">${tx("fbSend")}</button></form>` : `<p class="note" style="margin:0">${tx("fbLogin")}</p>`}
     <p class="small" style="margin:0;text-align:left">${tx("fbMail")} <a href="mailto:${SUPPORT}?subject=Feedback%20Black%20Bird%20Training" style="color:var(--gold)">${SUPPORT}</a></p></div>`;
 }
 function feedbackBlock(){ const F = st.fbAdm || []; if(!st.user || st.user.no !== 1) return "";
-  return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("fbAdmT")} · ${F.length}</p>${F.length ? F.map(f => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px"><span class="row" style="gap:8px"><b class="grow">${esc(f.name || "")}</b><small class="muted">${ago(f.created_at)}</small></span><span style="font-size:14px;white-space:pre-wrap">${esc(f.body)}</span></div>`).join("") : `<p class="muted" style="font-size:14px;margin:0">${tx("fbNone")}</p>`}</div>`;
+  return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("fbAdmT")} · ${F.length}</p>${F.length ? F.map(f => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px"><span class="row" style="gap:8px"><b class="grow">${esc(f.name || "")}</b><small class="muted">${ago(f.created_at)}</small></span><span style="font-size:14px;white-space:pre-wrap">${esc(f.body)}</span>${f.img ? `<button class="instlink" data-act="fbimg" data-p="${esc(f.img)}" style="align-self:flex-start;font-size:13px">${tx("fbShotView")}</button>` : ""}</div>`).join("") : `<p class="muted" style="font-size:14px;margin:0">${tx("fbNone")}</p>`}</div>`;
 }
 function reportsBlock(){ const R = st.msgReps || []; if(!st.user || st.user.no !== 1 || !R.length) return "";
   return `<div class="card" style="display:flex;flex-direction:column;gap:8px"><p class="eyebrow gold">${tx("chReps")} · ${R.filter(r => !r.handled).length}</p>${R.map(r => `<div class="adrow" style="display:flex;flex-direction:column;gap:4px;${r.handled ? "opacity:.5" : ""}"><span class="row" style="gap:8px"><b class="grow">@${esc(r.reported||"?")} <span class="muted" style="font-weight:400">${tx("chRepBy")} @${esc(r.reporter||"?")}</span></b><small class="muted">${ago(r.created_at)}</small></span>${r.body ? `<span style="font-size:14px">“${esc(r.body)}”</span>` : ""}<span class="row" style="gap:8px"><button class="pill" data-act="amopen" data-n="${r.reported_no}">${tx("chSeeM")}</button>${r.handled ? "" : `<button class="pill" data-act="repdone" data-id="${r.id}">✓ ${tx("chDone")}</button>`}</span></div>`).join("")}</div>`; }
@@ -4365,6 +4389,7 @@ function render(){
   if(st.crsOpen) h += crsSheet();
   if(st.fsOpen) h += fsSheet();
   if(st.qrOpen) h += qrSheet();
+  if(st.fbImg) h += `<div class="backdrop" data-act="fbimgx" style="z-index:90"></div><div class="fbview" data-act="fbimgx"><img src="${esc(st.fbImg)}" alt=""></div>`;
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
   if(st.nOpen) h += nSheet();
@@ -4605,6 +4630,9 @@ app.addEventListener("click", e => {
       const txt = tx("invMsg").replace("{w}", L2(p)).replace("{m}", minsOf(p)) + " " + link;
       if(navigator.share) navigator.share({text: txt}).catch(() => {}); else { try{ navigator.clipboard.writeText(txt).then(() => toast(t("linkCopied"))); }catch(e){ toast(txt); } } return; }
     case "fbopen": e.preventDefault(); st.fbOpen = true; break;
+    case "fbshotx": { const keep = (document.getElementById("fb-in")||{}).value || ""; st.fbShot = null; render(); const t2 = document.getElementById("fb-in"); if(t2) t2.value = keep; return; }
+    case "fbimg": fbOpenImg(el.dataset.p); return;
+    case "fbimgx": st.fbImg = null; break;
     case "fbx": st.fbOpen = false; break;
     case "crs": e.preventDefault(); st.crsOpen = true; loadCrs(); break;
     case "crsx": st.crsOpen = false; break;
@@ -4880,6 +4908,10 @@ app.addEventListener("click", e => {
   render();
 });
 app.addEventListener("change", e => {
+  if(e.target.id === "fb-img" && e.target.files && e.target.files[0]){
+    const keep = (document.getElementById("fb-in")||{}).value || ""; const r = new FileReader();
+    r.onload = () => { const im = new Image(); im.onload = () => { const M = 1400, sc = Math.min(1, M/Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.round(im.width*sc); c.height = Math.round(im.height*sc); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+      st.fbShot = c.toDataURL("image/jpeg", 0.8); render(); const t2 = document.getElementById("fb-in"); if(t2) t2.value = keep; }; im.src = r.result; }; r.readAsDataURL(e.target.files[0]); return; }
   if(e.target.id === "mf-folder"){ const i = document.getElementById("mf-newf"); if(i){ i.hidden = e.target.value !== "__new"; if(!i.hidden) i.focus(); } return; }
   if(e.target.classList && e.target.classList.contains("mfsel")){ const m = st.machines[+e.target.dataset.i]; if(m){ if(e.target.value) m.f = e.target.value; else delete m.f; store.set("bbt_machines", st.machines); toast(tx("mMoved")); render(); } return; }
   if((e.target.id !== "snap" && e.target.id !== "snap2") || !e.target.files || !e.target.files[0]) return;
@@ -5089,7 +5121,7 @@ app.addEventListener("submit", e => {
   if(e.target.id === "cpbest"){ e.preventDefault(); const c = cpGet(); ["sq","bp","dl"].forEach(k => { const f = parseFloat(String((document.getElementById("cpb-"+k)||{}).value||"").replace(",", ".")); c.best[k] = isFinite(f) && f > 0 && f < 600 ? f : ""; }); cpSave(); render(); return; }
   if(e.target.id === "cpchk"){ e.preventDefault(); const c = cpGet(), f = parseFloat(String((document.getElementById("cpc-kg")||{}).value||"").replace(",", ".")), n = ((document.getElementById("cpc-n")||{}).value||"").trim().slice(0,80); if(!(f > 20 && f < 400) && !n) return; c.checks.push({d: Date.now(), kg: f > 20 && f < 400 ? f : null, n}); cpSave(); render(); return; }
   if(e.target.id === "fbform"){ e.preventDefault(); const v = ((document.getElementById("fb-in")||{}).value || "").trim(); if(v.length < 3){ toast(tx("fbShort")); return; }
-    sb.rpc("feedback_send", {p_body: v}).then(({ data }) => { if(data === "ok"){ st.fbOpen = false; toast(tx("fbThanks")); } else toast(tx(data === "limit" ? "fbLimit" : "fbFail")); render(); }).catch(() => toast(tx("fbFail"))); return; }
+    fbSend(v); return; }
   if(e.target.id === "splform"){ e.preventDefault(); const v = (document.getElementById("spl-in")||{}).value || "", id = splParse(v);
     if(!id){ toast(tx("musBad")); return; } store.set("bbt_spl", id); st.musPlay = id; st.musOpen = false; toast(tx("musSaved")); render(); musDock(); return; }
   if(e.target.id === "grform"){ e.preventDefault(); const f = document.getElementById("gr-in"), v = (f && f.value || "").trim().slice(0,60); if(!v) return; st.groc.items.push({id: "u" + Date.now().toString(36), n: v, q: "", done: false, own: true}); grSave(); st.grQ = ""; render(); setTimeout(() => { const g = document.getElementById("gr-in"); if(g) g.focus(); }, 40); return; }
@@ -5114,7 +5146,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v86";
+const APP_V = "bbt-v87";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
