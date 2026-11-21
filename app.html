@@ -3212,6 +3212,20 @@ function tpNext(cur, v, normal){
   const b = cur == null ? (normal || 30) : cur;
   if(v === "n") return null; if(v === "+") return Math.min(240, b + (b >= 60 ? 15 : 5)); if(v === "-") return Math.max(10, b - (b > 60 ? 15 : 5)); return +v;
 }
+/* fit an edited list to a time, keeping every edit: adds or removes whole rounds at the end, then scales sets */
+function fitL(L, mins, ph){
+  if(!L.length) return L;
+  const rnd = x => x.round || 1, maxR = () => Math.max(...L.map(rnd));
+  const tgt = () => Math.max(L.length, Math.round((mins - (ph ? 7 : 0) - L.length) / 2.5));
+  let guard = 0;
+  while(tgt() / L.length > 6 && L.length < 60 && guard++ < 20){ const m = maxR(); L.push(...L.filter(x => rnd(x) === m).map(x => Object.assign({}, x, {round: m + 1}))); }
+  while(maxR() > 1 && guard++ < 40){ const m = maxR(), n = L.filter(x => rnd(x) !== m).length;
+    if(Math.max(n, Math.round((mins - (ph ? 7 : 0) - n) / 2.5)) / n > 6) break;
+    for(let i = L.length - 1; i >= 0; i--) if(rnd(L[i]) === m) L.splice(i, 1); }
+  const total = L.reduce((a,x) => a + x.sets, 0), f = tgt() / total;
+  L.forEach(x => x.sets = Math.max(1, Math.min(6, Math.round(x.sets * f))));
+  return L;
+}
 /* scale a list of {sets} items to a target session length (warm-up + stretch take ~7 min) */
 function scaleList(list, mins, ph){
   if(!mins || !list.length) return {list, rounds:1};
@@ -4818,8 +4832,7 @@ app.addEventListener("click", e => {
     case "preclose": st.pre = null; st.prePick = null; break;
     case "premin": { const p = getP(st.pre.id); if(!p) break; const ph = p.id !== "stretch";
       st.pre.mins = tpNext(st.pre.mins, el.dataset.v, minsOf(p) + (ph ? 7 : 0));
-      const core = preL(p).filter(x => !x.round);
-      st.pre.L = st.pre.mins == null ? core.map((x,i) => Object.assign({}, x, {sets: (p.items.find(y => y[0] === x.ex) || [0, x.sets])[1]})) : scaleList(core, st.pre.mins, ph).list.map(x => { const y = Object.assign({}, x); delete y.done; return y; });
+      st.pre.L = fitL(preL(p), st.pre.mins == null ? minsOf(p) + (ph ? 7 : 0) : st.pre.mins, ph);
       st.pre.dirty = true; break; }
     case "premv": { const L = st.pre.L; if(!L) break; const k = +el.dataset.k, j = k + (+el.dataset.d);
       if(j < 0 || j >= L.length) return; [L[k], L[j]] = [L[j], L[k]]; st.pre.dirty = true;
@@ -5411,7 +5424,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v90";
+const APP_V = "bbt-v91";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
