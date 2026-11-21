@@ -214,6 +214,10 @@ select.field{appearance:none;-webkit-appearance:none;background:var(--surface2);
 .fsmsl{display:flex;flex-direction:column;gap:6px}.fsms{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line,#1d241b);border-radius:3px}.fsms.next{border-color:var(--gold-dim)}.fsms.won{border-color:var(--gold);background:rgba(124,255,79,.07)}.fsms b{display:block;font-size:14px}.fsms small{color:var(--muted);font-size:12px}.fsmi{flex:none;width:40px;text-align:center;font-size:16px;white-space:nowrap;letter-spacing:-2px}.fsmi svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2.6}
 .qrbox{align-self:center;width:min(78vw,300px);aspect-ratio:1;max-width:100%;background:#fff;border-radius:10px;padding:10px;display:grid;place-items:center;box-shadow:0 0 30px rgba(124,255,79,.3)}.qrbox svg{width:100%;height:100%;display:block}
 .fsacc{display:flex;flex-direction:column;gap:0;padding:0!important;overflow:hidden;flex:none}.fsacch{display:flex;align-items:center;gap:10px;width:100%;min-height:54px;padding:12px 16px;background:none;border:0;color:var(--fg,#eef5ea);font:700 15px var(--font-d,inherit);letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer}.fsacc.open .fsacch{color:var(--gold)}.fschev{flex:none;display:grid;place-items:center;width:22px;height:22px;transition:transform .2s;font-style:normal}.fschev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}.fsacc.open .fschev{transform:rotate(180deg)}.fsaccb{display:flex;flex-direction:column;gap:8px;padding:0 16px 16px}.fsgift{border-color:var(--gold-dim)}
+.surcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-color:var(--gold-dim)!important;background:radial-gradient(80% 140% at 0% 50%,rgba(124,255,79,.12),transparent 60%),var(--card,#0c0f0b)}.surcard b{display:block;font:700 16px var(--font-d);letter-spacing:.04em;text-transform:uppercase}.surcard small{display:block;font-size:13px;line-height:1.4;margin-top:2px}.surcard svg{flex:none;width:20px;height:20px;color:var(--gold)}.surdice{flex:none;font-size:30px;line-height:1}
+.surmood{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.surmood button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border:1px solid var(--line2,#2a3327);border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer}.surmood span{font-size:26px;line-height:1}.surmood b{font-size:13px}.surmood button.on{border-color:var(--gold);background:rgba(124,255,79,.1);color:var(--gold)}
+.surchips{display:flex;flex-wrap:wrap;gap:6px}.surchips .pill.on{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}
+.surres ol{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}.surres li{font-size:14px}.surres li span{display:block;color:var(--muted);font-size:12px}
 .fssteps{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
 .fsb{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line,#1d241b);border-radius:3px;background:none;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer}.fsb.on{border-color:var(--gold-dim);background:rgba(124,255,79,.06)}
 .fsbox{flex:none;width:20px;height:20px;border:1.5px solid var(--gold-dim);border-radius:4px;display:grid;place-items:center}.fsb.on .fsbox{background:var(--gold);border-color:var(--gold)}.fsbox svg{width:14px;height:14px;stroke:var(--gold-ink);fill:none;stroke-width:3}
@@ -1464,7 +1468,7 @@ const L2 = o => o[st.lang] || o.en;
 const TRIBE = {"en": ["We didn't wait for the competition to be the best.", "Others go to the gym. We answer the call.", "Alone you train. Together, the Society rises.", "The Society doesn't do average.", "Ravens don't follow the crowd. They lead it.", "Machine taken? A Black Bird adapts. A Black Bird conquers.", "Right now, somewhere, a member of the Society is finishing a set. So are you.", "You weren't born exceptional. You chose it, one rep at a time.", "Odin gave an eye for wisdom. Give one more rep.", "Rare breed. Black feathers. Iron will.", "You're not a member. You're one of us.", "Show up. Adapt. Conquer. The Black Bird way."], "fr": ["On n'a pas attendu la concurrence pour être les meilleurs.", "Les autres vont à la salle. Nous, on répond à l'appel.", "Seul, tu t'entraînes. Ensemble, la Society s'élève.", "La Society ne fait pas dans la moyenne.", "Les corbeaux ne suivent pas la foule. Ils la mènent.", "Machine prise ? Un Black Bird s'adapte. Un Black Bird conquiert.", "En ce moment, quelque part, un membre de la Society termine sa série. Toi aussi.", "Tu n'es pas né exceptionnel. Tu l'as choisi, une rep à la fois.", "Odin a donné un œil pour la sagesse. Donne une rep de plus.", "Race rare. Plumes noires. Volonté de fer.", "Tu n'es pas un membre. Tu es l'un des nôtres.", "Présent. Adapté. Victorieux. La voie du Black Bird."], "es": ["No esperamos a la competencia para ser los mejores.", "Otros van al gimnasio. Nosotros respondemos a la llamada.", "Solo, entrenas. Juntos, la Society se eleva.", "La Society no hace nada a medias.", "Los cuervos no siguen a la multitud. La guían.", "¿Máquina ocupada? Un Black Bird se adapta. Un Black Bird conquista.", "Ahora mismo, en algún lugar, un miembro de la Society termina una serie. Tú también.", "No naciste excepcional. Lo elegiste, una rep a la vez.", "Odín dio un ojo por la sabiduría. Da una rep más.", "Raza rara. Plumas negras. Voluntad de hierro.", "No eres un miembro. Eres uno de los nuestros.", "Llegar. Adaptarse. Conquistar. El camino Black Bird."], "pt": ["Não esperamos a concorrência para ser os melhores.", "Os outros vão à academia. Nós atendemos ao chamado.", "Sozinho, você treina. Juntos, a Society voa alto.", "A Society não faz nada pela metade.", "Corvos não seguem a multidão. Eles a lideram.", "Aparelho ocupado? Um Black Bird se adapta. Um Black Bird conquista.", "Agora mesmo, em algum lugar, um membro da Society termina uma série. Você também.", "Você não nasceu excepcional. Você escolheu ser, uma rep de cada vez.", "Odin deu um olho pela sabedoria. Dê mais uma rep.", "Raça rara. Penas negras. Vontade de ferro.", "Você não é um membro. Você é um de nós.", "Chegar. Adaptar. Conquistar. O caminho Black Bird."], "de": ["Wir haben nicht auf die Konkurrenz gewartet, um die Besten zu sein.", "Andere gehen ins Gym. Wir folgen dem Ruf.", "Allein trainierst du. Gemeinsam steigt die Society.", "Die Society macht nichts halb.", "Raben folgen nicht der Masse. Sie führen sie.", "Gerät besetzt? Ein Black Bird passt sich an. Ein Black Bird siegt.", "Genau jetzt beendet irgendwo ein Mitglied der Society einen Satz. Du auch.", "Du wurdest nicht außergewöhnlich geboren. Du hast es gewählt, Wiederholung für Wiederholung.", "Odin gab ein Auge für Weisheit. Gib noch eine Wiederholung.", "Seltene Art. Schwarze Federn. Eiserner Wille.", "Du bist kein Mitglied. Du bist einer von uns.", "Auftauchen. Anpassen. Siegen. Der Black-Bird-Weg."]};
 const SITE = "https://theblackbirdsociety.com", AV_KEY = "bbt_avatar";
 st.custom = store.get("bbt_custom", []); st.build = null; st.pick = false; st.preview = null; st.shareFile = null; st.shareKey = "";
-function getP(id){ return PROGRAMS.find(x => x.id===id) || st.custom.find(x => x.id===id); }
+function getP(id){ return PROGRAMS.find(x => x.id===id) || st.custom.find(x => x.id===id) || (id === "surprise" ? (st.surprise || store.get("bbt_surprise", null)) : undefined); }
 const DEFW = {}; PROGRAMS.forEach(p => p.items.forEach(([e,,,w]) => { if(DEFW[e]==null) DEFW[e] = w; }));
 function defW(ex){
   if(ex.f==null) return 0; if(DEFW[ex.id]!=null) return DEFW[ex.id];
@@ -1667,6 +1671,7 @@ function hub(){
   return `<section class="hubwrap" id="explore"><p class="eyebrow">${t("explore")}</p><div class="hub">
     ${tile(`data-act="tab" data-v="meals"`, HI.meals, "hubMeals", t("hubMealsSub"))}
     <button class="card tile crstile" data-act="crs"><span class="ti">${HI.course}</span><b>${tx("crsT")} <i class="crsnew">${tx("crsNew")}</i></b><span class="muted">${tx("crsTile")}</span></button>
+    ${tile(`data-act="sur"`, "🎲", tx("surT"), tx("surTile"), 1)}
     ${tile(`data-act="fs"`, HI.sunrise, tx("fsT"), tx("fsTile"), 1)}
     ${tile(`data-act="mus"`, HI.music, tx("music"), tx("musTile"), 1)}
     ${tile(`data-act="gogrp" data-v="home"`, HI.homew, "hubHome", t("hubHomeSub"))}
@@ -2677,7 +2682,7 @@ function akMic(){
     r.start(); }catch(e){ toast(tx("micNo")); }
 }
 /* ================= back button = go back inside the app ================= */
-const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen","invW","crsOpen","fsOpen","qrOpen"];
+const NAVK = ["view","grOpen","grEd","bcOpen","lkd","ssCal","lvPickFor","mym","supp","meSheet","gtab","mvd","hgs","art","meal","peek","sheet","draft","mdArt","mmArt","hcOpen","team","mpd","codeOpen","runesOpen","progOpen","findOpen","amOpen","guideOpen","pick","mg","akOpen","musOpen","storyOpen","nOpen","mp","instOpen","preview","lw","rpOpen","chat","pre","fbOpen","invW","crsOpen","fsOpen","qrOpen","surOpen"];
 const navSnap = () => { const o = {}; NAVK.forEach(k => { const v = st[k]; if(v !== undefined && v !== null && v !== false) o[k] = v; }); return o; };
 const navKey = o => { try{ return JSON.stringify(o, (k, v) => (v && typeof v === "object" && k) ? (v.id || v.name || v.no || "o") : v); }catch(e){ return Math.random() + ""; } };
 let navStack = [], navCur = null, navIgnore = 0, navRestoring = false;
@@ -3071,6 +3076,70 @@ function ssCalLinks(x){
 }
 { const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done",mNewFolderOpt:"New folder…"},
 fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé",mNewFolderOpt:"Nouveau dossier…"}};
+Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+/* ===== Surprise me (21 Nov 2026): pick your mood + what you feel like, get a random workout ===== */
+const SUR_F = {
+  legs:["squat","hinge","quad_iso","ham_iso","calves","squat"], glutes:["hinge","squat","quad_iso","hinge","core","quad_iso"],
+  backbi:["vpull","row","row","biceps","biceps","vpull"], chesttri:["chest_press","chest_press","chest_fly","triceps","triceps","chest_press"],
+  shoulders:["shoulder_press","lateral","shoulder_press","lateral","core","row"], arms:["biceps","triceps","biceps","triceps","biceps","triceps"],
+  core:["core","core","core","core","core","core"], full:["squat","chest_press","row","hinge","shoulder_press","core"],
+  sweat:["ad_cardio_h","squat","ad_cardio_h","core","ad_cardio_h","quad_iso"]
+};
+const SUR_SEAT = {up:["ad_push","ad_pull","ad_shoulder","ad_arms","ad_core","ad_cardio"], arms:["ad_arms","ad_shoulder","ad_arms","ad_push","ad_arms","ad_pull"], core:["ad_core","ad_core","ad_cardio","ad_core","ad_core","ad_mob"], sweat:["ad_cardio","ad_push","ad_cardio","ad_pull","ad_cardio","ad_core"]};
+const SUR_E = {low:{sets:2,reps:12,hold:30,rest:60,kg:30}, ok:{sets:3,reps:10,hold:40,rest:75,kg:40}, fire:{sets:4,reps:8,hold:45,rest:90,kg:50}};
+function surD(){ return st.sur || (st.sur = {en:"ok", f:"", min:30, pl: st.profile && st.profile.place === "home" ? "home" : "gym"}); }
+function surGen(){
+  const d = surD(), E0 = SUR_E[d.en] || SUR_E.ok, av = avoidSet(), used = new Set();
+  const seat = d.pl === "seat", foci = seat ? Object.keys(SUR_SEAT) : Object.keys(SUR_F);
+  let f = d.f && d.f !== "any" && d.f !== "chill" ? d.f : foci[Math.floor(Math.random()*foci.length)];
+  if(seat && !SUR_SEAT[f]) f = "up"; if(!seat && !SUR_F[f]) f = "full";
+  const slots = (seat ? SUR_SEAT[f] : SUR_F[f]).slice(0, d.min <= 15 ? 3 : d.min <= 30 ? 5 : 6);
+  const ok = e => !av.has(e.id) && !used.has(e.id) && (d.pl === "gym" ? e.eq.every(q => st.gym.has(q)) : e.eq.length === 0);
+  const items = [];
+  slots.forEach(sl => {
+    let c = Object.values(EX).filter(e => e.slot === sl && ok(e));
+    const alt = {row:"ad_pull", vpull:"ad_pull", biceps:"ad_arms", lateral:"ad_shoulder", chest_fly:"chest_press", ham_iso:"hinge", shoulder_press:"ad_shoulder", triceps:"ad_arms"};
+    if(!c.length) c = Object.values(EX).filter(e => e.slot === sl && !av.has(e.id) && !used.has(e.id) && e.eq.length === 0);
+    if(!c.length && alt[sl]) c = Object.values(EX).filter(e => (e.slot === alt[sl] || e.slot === sl) && !av.has(e.id) && !used.has(e.id) && e.eq.length === 0);
+    if(d.pl === "gym" && c.some(e => e.eq.length)) c = c.filter(e => e.eq.length);
+    if(!c.length) return; const e = c[Math.floor(Math.random()*c.length)]; used.add(e.id);
+    const wt = e.f == null ? 0 : Math.max(2.5, Math.round(e.f * E0.kg / 2.5) * 2.5);
+    items.push([e.id, d.min <= 15 ? Math.min(E0.sets, 3) : E0.sets, e.tm ? E0.hold : E0.reps, wt]);
+  });
+  st.surprise = {id:"surprise", en:"🎲 Surprise · " + TX.en["surF_" + f], fr:"🎲 Surprise · " + (TX.fr["surF_" + f] || TX.en["surF_" + f]), items, rest:E0.rest, sur:true};
+  store.set("bbt_surprise", st.surprise);
+}
+function surSheet(){
+  const d = surD(), P = st.surprise, seat = d.pl === "seat";
+  const chip = (act, v, lab, on) => `<button class="pill${on ? " on" : ""}" data-act="${act}" data-v="${v}" aria-pressed="${on}">${lab}</button>`;
+  const foci = seat ? ["up","arms","core","sweat"] : ["legs","glutes","backbi","chesttri","shoulders","arms","core","full","sweat","chill"];
+  const L = st.lang === "fr" ? "fr" : "en";
+  return `<div class="backdrop" data-act="surx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("surT")}"><div class="grab"></div>
+    <div class="row"><h2 class="grow" style="margin:0">🎲 ${tx("surT")}</h2><button class="xbtn" data-act="surx" aria-label="${t("close")}">${I.x}</button></div>
+    <p class="muted" style="margin:0;font-size:14px;line-height:1.5">${tx("surSub")}</p>
+    <p class="eyebrow gold" style="margin:4px 0 0">${tx("surQ1")}</p>
+    <div class="surmood">${[["low","😮‍💨",tx("surLow")],["ok","🙂",tx("surOk")],["fire","🔥",tx("surFire")]].map(([v,e,l]) => `<button class="${d.en === v ? "on" : ""}" data-act="suren" data-v="${v}" aria-pressed="${d.en === v}"><span>${e}</span><b>${l}</b></button>`).join("")}</div>
+    <p class="eyebrow gold" style="margin:4px 0 0">${tx("surQ2")}</p>
+    <div class="surchips">${chip("surf","any","🎲 " + tx("surAny"), !d.f || d.f === "any")}${foci.map(f => chip("surf", f, tx("surF_" + f), d.f === f)).join("")}</div>
+    <div class="row" style="gap:16px;flex-wrap:wrap"><div><p class="eyebrow" style="margin:0 0 6px">${tx("surTime")}</p><div class="surchips">${[15,30,45].map(m => chip("surmin", m, m + " min", d.min === m)).join("")}</div></div>
+      <div><p class="eyebrow" style="margin:0 0 6px">${tx("surWhere")}</p><div class="surchips">${[["gym",t("gym")],["home",tx("surHome")],["seat",tx("surSeat")]].map(([v,l]) => chip("surpl", v, l, d.pl === v)).join("")}</div></div></div>
+    ${d.f === "chill" ? `<button class="btn btn-gold" data-act="start" data-id="stretch" style="min-height:52px">🧘 ${tx("surChillGo")}</button>`
+      : P && P.items && P.items.length ? `<div class="card surres"><p class="eyebrow gold" style="margin:0">${esc(P[L] || P.en)}</p>
+        <ol>${P.items.map(([id,se,re]) => `<li><b>${esc(EX[id][L] || EX[id].en)}</b><span>${se} × ${EX[id].tm ? re + " s" : re}</span></li>`).join("")}</ol></div>
+        <div class="btnrow"><button class="btn btn-line" data-act="surgo" style="min-height:48px;font-size:14px">🔄 ${tx("surAgain")}</button><button class="btn btn-gold" data-act="start" data-id="surprise" style="min-height:48px;font-size:14px">${tx("surStart")} ${I.arrow}</button></div>`
+      : `<button class="btn btn-gold" data-act="surgo" style="min-height:52px;font-size:16px">🎲 ${tx("surGo")}</button>`}
+  </div>`;
+}
+function surCard(){ return `<button class="card surcard" data-act="sur"><span class="surdice" aria-hidden="true">🎲</span><span class="grow" style="min-width:0;text-align:left"><b>${tx("surT")}</b><small class="muted">${tx("surCard")}</small></span>${I.arrow}</button>`; }
+{ const X = {
+en:{surT:"Surprise me",surCard:"No plan, no motivation? Tell us how you feel, we pick the workout.",surSub:"Tell us how you feel and what you feel like. We build a fresh workout for you, different every time.",
+surQ1:"How do you feel today?",surLow:"Low energy",surOk:"Ready",surFire:"Fired up",surQ2:"What would feel good today?",surAny:"Anything",
+surF_legs:"Legs",surF_glutes:"Glutes",surF_backbi:"Back & biceps",surF_chesttri:"Chest & triceps",surF_shoulders:"Shoulders",surF_arms:"Arms",surF_core:"Abs & core",surF_full:"Full body",surF_sweat:"Cardio sweat",surF_chill:"Stretch & chill",surF_up:"Upper body",
+surTime:"Time",surWhere:"Where",surHome:"Home",surSeat:"Seated",surGo:"Surprise me",surAgain:"Another one",surStart:"Let's go",surChillGo:"Start the stretch session",surTile:"Pick your mood, we pick the workout"},
+fr:{surT:"Surprends-moi",surCard:"Pas de plan, pas de motivation ? Dis-nous comment tu te sens, on choisit la séance.",surSub:"Dis-nous comment tu te sens et ce qui te ferait du bien. On te crée une séance, différente à chaque fois.",
+surQ1:"Comment tu te sens aujourd'hui ?",surLow:"Peu d'énergie",surOk:"Prêt",surFire:"À fond",surQ2:"Qu'est-ce qui te ferait du bien ?",surAny:"N'importe quoi",
+surF_legs:"Jambes",surF_glutes:"Fessiers",surF_backbi:"Dos & biceps",surF_chesttri:"Pecs & triceps",surF_shoulders:"Épaules",surF_arms:"Bras",surF_core:"Abdos & gainage",surF_full:"Tout le corps",surF_sweat:"Cardio qui transpire",surF_chill:"Étirements & détente",surF_up:"Haut du corps",
+surTime:"Durée",surWhere:"Où",surHome:"Maison",surSeat:"Assis",surGo:"Surprends-moi",surAgain:"Une autre",surStart:"C'est parti",surChillGo:"Lancer la séance d'étirements",surTile:"Choisis ton humeur, on choisit la séance"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
 /* ===== typing suggestions everywhere (21 Nov 2026): native datalists + quick chips ===== */
 const SUGL = {
@@ -3570,6 +3639,7 @@ function home(){
       <button class="btn btn-gold" data-act="${unlocked(first)?"start":"peek"}" data-id="${first.id}" data-day="${nextIdx}">${unlocked(first)?t("start"):t("locked")} ${I.arrow}</button>
     </div>
     <div class="phmini"><span>1 ${tx("phS1")}</span><i></i><span>2 ${tx("phS2")}</span><i></i><span>3 ${tx("phS3")}</span></div>
+    ${surCard()}
     <div class="rune-strip" aria-hidden="true">ᚠᚢᚱᚲᚷᚹᚾᛁᛃᛇᛒᛖᛗᛚᛜᛞ</div>
     ${tribe(dayIdx())}
     ${week}
@@ -4389,6 +4459,7 @@ function render(){
   if(st.crsOpen) h += crsSheet();
   if(st.fsOpen) h += fsSheet();
   if(st.qrOpen) h += qrSheet();
+  if(st.surOpen) h += surSheet();
   if(st.fbImg) h += `<div class="backdrop" data-act="fbimgx" style="z-index:90"></div><div class="fbview" data-act="fbimgx"><img src="${esc(st.fbImg)}" alt=""></div>`;
   if(st.lw) h += lwSheet();
   if(st.storyOpen) h += storySheet();
@@ -4640,6 +4711,13 @@ app.addEventListener("click", e => {
     case "fsx": st.fsOpen = false; breathStop(); break;
     case "qropen": if(st.user && st.user.no) qrOpen(); return;
     case "qrx": st.qrOpen = false; break;
+    case "sur": e.preventDefault(); st.surOpen = true; break;
+    case "surx": st.surOpen = false; break;
+    case "suren": surD().en = el.dataset.v; if(st.surprise) surGen(); break;
+    case "surf": surD().f = el.dataset.v; if(el.dataset.v !== "chill") surGen(); else st.surprise = null; setTimeout(() => { const r = document.querySelector(".surres + .btnrow") || document.querySelector(".surres"); r && r.scrollIntoView({behavior:"smooth", block:"end"}); }, 80); break;
+    case "surmin": surD().min = +el.dataset.v; if(st.surprise) surGen(); break;
+    case "surpl": { const d = surD(); d.pl = el.dataset.v; if(d.pl === "seat" && !SUR_SEAT[d.f]) d.f = "any"; if(d.pl !== "seat" && d.f && !SUR_F[d.f] && d.f !== "chill" && d.f !== "any") d.f = "any"; if(st.surprise) surGen(); break; }
+    case "surgo": surGen(); setTimeout(() => { const r = document.querySelector(".surres + .btnrow") || document.querySelector(".surres"); r && r.scrollIntoView({behavior:"smooth", block:"end"}); }, 80); break;
     case "fsstart": { if(!st.fsAgree){ toast(tx("fsAgreeNeed")); break; } const d = fsData(); d.start = todayISO(); d.days = [todayISO()]; fsSave(d); toast(tx("fsDay1T")); fsSrv("fs_pledge", () => fsSrv("fs_checkin")); break; }
     case "fsagree": st.fsAgree = !st.fsAgree; break;
     case "fssec": { const k = el.dataset.k; st.fsSec = Object.assign({day:true}, st.fsSec || {}); st.fsSec[k] = !st.fsSec[k]; break; }
@@ -4740,7 +4818,7 @@ app.addEventListener("click", e => {
       break; }
     case "usepass": store.set("bbt_pass", weekKey()); st.peek = null;
     // falls through: start the chosen session
-    case "start": { st.fsOpen = false; breathStop();
+    case "start": { st.fsOpen = false; st.surOpen = false; breathStop();
       if(act === "start" && el.dataset.go !== "1"){ st.pre = {id: el.dataset.id, day: el.dataset.day != null && el.dataset.day !== "" ? el.dataset.day : ""}; break; }
       const ord0 = st.pre && st.pre.id === el.dataset.id ? st.pre.ord : null; st.pre = null;
       const p = getP(el.dataset.id);
@@ -5146,7 +5224,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v87";
+const APP_V = "bbt-v88";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
