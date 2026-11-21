@@ -462,6 +462,7 @@ button.meal{width:100%;text-align:left;align-items:stretch}
 .mimg{position:relative}.mimg img{display:block;width:100%}.mstar{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2,#2a3327);background:rgba(5,6,5,.75);color:var(--fg,#eef5ea);font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center}.mstar.on{color:var(--gold-ink,#050605);background:var(--gold);border-color:var(--gold)}
 .mchips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.mchips::-webkit-scrollbar{display:none}
 .mchip{flex:none;min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--line2,#2a3327);background:none;color:var(--muted);font:inherit;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer}.mchip[aria-selected="true"]{background:var(--gold);color:var(--gold-ink,#050605);border-color:var(--gold)}.mchip.add{border-style:dashed;color:var(--gold)}
+.sugchips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}.sugchips::-webkit-scrollbar{display:none}.sugchips .pill{flex:none;white-space:nowrap}
 .mpick{display:flex;flex-direction:column;gap:6px}
 .mfwrap{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px}.mfsel{flex:1;min-width:0;background:var(--surface,#0c0f0b);color:var(--fg,#eef5ea);border:1px solid var(--line2,#2a3327);border-radius:3px;padding:4px 6px;font:inherit;font-size:12px}
 .mcell{border:1px solid var(--line);background:var(--surface);border-radius:3px;overflow:hidden;min-width:0}
@@ -2790,8 +2791,8 @@ function moveSheet(){
   return `<div class="backdrop" data-act="mvx"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="${tx("hgAdd")}"><div class="grab"></div>
     <h2 style="margin:0">${d.id ? tx("hgEdit") : tx("hgAdd")}</h2>
     <form id="moveform" style="display:flex;flex-direction:column;gap:10px" novalidate autocomplete="off">
-      <label class="eyebrow" for="mv-n">${tx("hgName")}</label><input class="field" id="mv-n" maxlength="40" value="${esc(d.n||"")}" placeholder="${tx("hgNamePh")}" data-1p-ignore data-lpignore="true" data-form-type="other">
-      <label class="eyebrow" for="mv-e">${tx("hgWith")}</label><input class="field" id="mv-e" maxlength="40" value="${esc(d.eq||"")}" placeholder="${tx("hgWithPh")}" data-1p-ignore data-lpignore="true" data-form-type="other">
+      <label class="eyebrow" for="mv-n">${tx("hgName")}</label><input class="field" id="mv-n" list="dl-move" autocomplete="off" maxlength="40" value="${esc(d.n||"")}" placeholder="${tx("hgNamePh")}" data-1p-ignore data-lpignore="true" data-form-type="other">
+      <label class="eyebrow" for="mv-e">${tx("hgWith")}</label><input class="field" id="mv-e" list="dl-eq" autocomplete="off" maxlength="40" value="${esc(d.eq||"")}" placeholder="${tx("hgWithPh")}" data-1p-ignore data-lpignore="true" data-form-type="other">
       <div class="hgnums"><label><span class="eyebrow">${tx("hgSets")}</span><input class="field" id="mv-s" type="number" inputmode="numeric" min="1" max="20" value="${d.sets||3}"></label>
         <label><span class="eyebrow">${tx("hgReps")}</span><input class="field" id="mv-r" type="number" inputmode="numeric" min="1" max="300" value="${d.reps||10}"></label>
         <label><span class="eyebrow">${tx("hgKg")}</span><input class="field" id="mv-w" type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" min="0" max="500" step="0.1" value="${d.kg||0}"></label></div>
@@ -3069,6 +3070,31 @@ function ssCalLinks(x){
 { const X = {en:{snapCam:"Camera",snapUp:"Gallery",mAll:"All",mFav:"Favorites",mFavNone:"No favorites yet. Tap the ☆ on a machine to add it here.",mFavOn:"Added to favorites ★",mFavOff:"Removed from favorites",mNewFolder:"Folder",mFolderPh:"Folder name, e.g. Legs",mCreate:"Create",mSave:"Save",mRename:"Rename folder",mDelFolder:"Delete folder",mDelSure:"Tap again to delete (machines stay in All)",mDeleted:"Folder deleted",mFolderOk:"Folder saved 📁",mFolder:"Folder",mNoFolder:"No folder",mMoved:"Machine moved 📁",mFolderEmpty:"This folder is empty. Tap “Add machines” to fill it.",mAddTo:"Add machines to {f}",mDone:"Done",mNewFolderOpt:"New folder…"},
 fr:{snapCam:"Photo",snapUp:"Galerie",mAll:"Toutes",mFav:"Favoris",mFavNone:"Pas encore de favoris. Touche le ☆ d'une machine pour l'ajouter ici.",mFavOn:"Ajoutée aux favoris ★",mFavOff:"Retirée des favoris",mNewFolder:"Dossier",mFolderPh:"Nom du dossier, ex. Jambes",mCreate:"Créer",mSave:"Enregistrer",mRename:"Renommer le dossier",mDelFolder:"Supprimer le dossier",mDelSure:"Touche encore pour supprimer (les machines restent dans Toutes)",mDeleted:"Dossier supprimé",mFolderOk:"Dossier enregistré 📁",mFolder:"Dossier",mNoFolder:"Aucun dossier",mMoved:"Machine déplacée 📁",mFolderEmpty:"Ce dossier est vide. Touche « Ajouter des machines » pour le remplir.",mAddTo:"Ajouter des machines à {f}",mDone:"Terminé",mNewFolderOpt:"Nouveau dossier…"}};
 Object.keys(X).forEach(l=>Object.assign(TX[l]=TX[l]||{},X[l])); }
+/* ===== typing suggestions everywhere (21 Nov 2026): native datalists + quick chips ===== */
+const SUGL = {
+ en:{fold:["Legs","Back","Chest","Arms","Shoulders","Abs & Core","Glutes","Cardio","Push day","Pull day","Leg day","Upper body","Lower body","Full body","Warm-up","Stretching","Home","Outdoor"],
+  mach:["Hack squat","Hip thrust machine","Seated row","Cable crossover","Treadmill","Rowing machine","Exercise bike","Elliptical","Stair climber","Abductor machine","Adductor machine","Calf raise machine","Preacher curl bench","Dip station","Assisted pull-up machine","T-bar row","Glute kickback machine","Ab crunch machine","Back extension bench","Kettlebells","Rope","Battle ropes"],
+  work:["Push Day","Pull Day","Leg Day","Upper Body Blast","Lower Body Burn","Full Body Express","Arm Destroyer","Core Crusher","Glute Builder","Back & Biceps","Chest & Triceps","Shoulder Day","Morning Wake-up","20-min Home Sweat","Recovery & Stretch"],
+  move:["Push-ups","Squats","Lunges","Plank","Burpees","Deadlift","Bench press","Pull-ups","Dips","Hip thrust","Bicep curls","Tricep extensions","Lateral raises","Shoulder press","Bent-over rows","Mountain climbers","Jumping jacks","Russian twists","Glute bridge","Calf raises","Kettlebell swings","Farmer's walk","Wall sit","Step-ups"],
+  eq:["Bodyweight","Dumbbells","Kettlebell","Resistance band","Barbell","Chair","Bench","Water bottles","Backpack","Towel","Stairs","Pull-up bar","Mat","Medicine ball"]},
+ fr:{fold:["Jambes","Dos","Pectoraux","Bras","Épaules","Abdos & Gainage","Fessiers","Cardio","Push (poussée)","Pull (tirage)","Jour jambes","Haut du corps","Bas du corps","Full body","Échauffement","Étirements","Maison","Extérieur"],
+  mach:["Hack squat","Machine hip thrust","Tirage horizontal","Poulie vis-à-vis","Tapis de course","Rameur","Vélo","Elliptique","Escalier (stair climber)","Machine abducteurs","Machine adducteurs","Machine mollets","Pupitre à biceps","Barres à dips","Traction assistée","Rowing T-bar","Machine fessiers","Machine abdos","Banc à lombaires","Kettlebells","Corde","Cordes ondulatoires"],
+  work:["Push Day","Pull Day","Jour jambes","Haut du corps explosif","Bas du corps en feu","Full body express","Destructeur de bras","Gainage de fer","Fessiers sculptés","Dos & Biceps","Pecs & Triceps","Jour épaules","Réveil du matin","20 min à la maison","Récup & étirements"],
+  move:["Pompes","Squats","Fentes","Gainage","Burpees","Soulevé de terre","Développé couché","Tractions","Dips","Hip thrust","Curl biceps","Extensions triceps","Élévations latérales","Développé épaules","Rowing buste penché","Mountain climbers","Jumping jacks","Russian twists","Pont fessier","Mollets debout","Swing kettlebell","Marche du fermier","Chaise contre le mur","Montées sur banc"],
+  eq:["Poids du corps","Haltères","Kettlebell","Élastique","Barre","Chaise","Banc","Bouteilles d'eau","Sac à dos","Serviette","Escaliers","Barre de traction","Tapis","Médecine-ball"]}};
+function sugL(k){ return (SUGL[st.lang] || SUGL.en)[k] || SUGL.en[k]; }
+let sugLang = "";
+function sugLists(){
+  if(sugLang === st.lang && document.getElementById("bbt-dl")) return; sugLang = st.lang;
+  let box = document.getElementById("bbt-dl"); if(!box){ box = document.createElement("div"); box.id = "bbt-dl"; box.hidden = true; document.body.appendChild(box); }
+  const dl = (id, arr) => `<datalist id="${id}">${arr.map(v => `<option value="${esc(v)}"></option>`).join("")}</datalist>`;
+  let mach = []; try{ mach = Object.keys(EQ).map(eqName); }catch(e){}
+  box.innerHTML = dl("dl-fold", sugL("fold")) + dl("dl-mach", [...new Set(mach.concat(sugL("mach")))]) + dl("dl-work", sugL("work")) + dl("dl-move", sugL("move")) + dl("dl-eq", sugL("eq"));
+}
+function foldChips(target){
+  const used = new Set((st.mfolders || []).map(f => f.name.toLowerCase()));
+  return `<div class="sugchips">${sugL("fold").filter(v => !used.has(v.toLowerCase())).slice(0, 10).map(v => `<button type="button" class="pill" data-act="sugfill" data-t="${target}" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div>`;
+}
 /* ===== my invite QR (21 Nov 2026): show it, a friend scans, joins with your link and gets 7 days Premium ===== */
 const QRIC = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1"/><path d="M14 14h2.5v2.5H14zM18 18h2.5v2.5H18zM14 18.5h1.5M18.5 14H20.5"/></svg>`;
 function qrOpen(){ st.qrOpen = true; st.qrM = null; render(); qrMatrix(SITE + "/?ref=" + st.user.no).then(m => { st.qrM = m; render(); }); }
@@ -3700,7 +3726,7 @@ function builder(){
       <div class="row" style="gap:8px">${stepper(k,1,t("sets"),it[1])}${stepper(k,2,t("reps"),it[2])}</div></div>`; }).join("");
   return `${topBar()}<main>
     <div><p class="eyebrow gold">${t("myWorkouts")}</p><h1 style="margin-top:6px">${t("buildTitle")}</h1></div>
-    <input class="field" id="bname" maxlength="30" value="${esc(b.name)}" placeholder="${t("wNamePh")}" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other">
+    <input class="field" id="bname" list="dl-work" maxlength="30" value="${esc(b.name)}" placeholder="${t("wNamePh")}" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" data-form-type="other">
     ${b.items.length > 1 ? `<p class="muted" style="font-size:13px;margin-bottom:-6px">${tx("mvHint")}</p>` : ""}
     <div class="blist">${rows || `<p class="muted">${t("noEx")}</p>`}</div>
     <button class="btn btn-line" data-act="bpick">+ ${t("addEx")}</button>
@@ -3920,7 +3946,7 @@ function mFolderBar(){
   const chip = (v, label) => `<button role="tab" class="mchip" data-act="mtab" data-v="${v}" aria-selected="${sel(v)}">${label}</button>`;
   const cur = mInFolder() ? st.mfolders.find(f => f.id === st.mtab) : null;
   return `<div class="mchips" role="tablist">${chip("all", tx("mAll") + " · " + st.machines.length)}${chip("fav", "★ " + tx("mFav") + " · " + st.machines.filter(m => m.fav).length)}${st.mfolders.map(f => chip(f.id, "📁 " + esc(f.name) + " · " + st.machines.filter(m => m.f === f.id).length)).join("")}<button class="mchip add" data-act="mfnew">+ ${tx("mNewFolder")}</button></div>
-    ${st.mfNew ? `<form id="mfform" class="row" style="gap:8px"><input class="field grow" id="mf-fname" maxlength="24" placeholder="${tx("mFolderPh")}" value="${cur && st.mfNew === "rename" ? esc(cur.name) : ""}" style="min-height:44px"><button class="pill gopill" type="submit">${tx(st.mfNew === "rename" ? "mSave" : "mCreate")}</button><button class="pill" type="button" data-act="mfcancel">${t("close")}</button></form>` : ""}
+    ${st.mfNew ? `<form id="mfform" class="row" style="gap:8px"><input class="field grow" id="mf-fname" list="dl-fold" autocomplete="off" maxlength="24" placeholder="${tx("mFolderPh")}" value="${cur && st.mfNew === "rename" ? esc(cur.name) : ""}" style="min-height:44px"><button class="pill gopill" type="submit">${tx(st.mfNew === "rename" ? "mSave" : "mCreate")}</button><button class="pill" type="button" data-act="mfcancel">${t("close")}</button></form>${foldChips("mf-fname")}` : ""}
     ${cur && !st.mfNew ? `<button class="btn btn-line" data-act="mfadd" style="min-height:44px;font-size:14px">${st.mfAdd ? "✓ " + tx("mDone") : "+ " + tx("mAddTo").replace("{f}", esc(cur.name))}</button>
       ${st.mfAdd ? `<div class="mpick">${st.machines.map((m,k) => `<button class="fsb${m.f === cur.id ? " on" : ""}" data-act="mfput" data-i="${k}" aria-pressed="${m.f === cur.id}"><span class="fsbox">${m.f === cur.id ? I.check : ""}</span><span>${esc(m.name)}</span></button>`).join("")}</div>` : ""}
       <div class="row" style="gap:14px"><button class="instlink" data-act="mfren" style="font-size:13px">${tx("mRename")}</button><button class="instlink" data-act="mfdel" style="font-size:13px">${st.mfDelArm ? tx("mDelSure") : tx("mDelFolder")}</button></div>` : ""}`;
@@ -3931,12 +3957,12 @@ function machineSheet(){
     <div class="row"><h2 class="grow">${t("whatIs")}</h2><button class="xbtn" data-act="closemachine" aria-label="${t("close")}">${I.x}</button></div>
     <img src="${d.img}" alt="" style="width:100%;max-height:220px;object-fit:cover;border-radius:3px;border:1px solid var(--line2)">
     <form id="machineform" style="display:flex;flex-direction:column;gap:10px" novalidate>
-      <input class="field" id="mf-name" maxlength="40" placeholder="${t("machineName")}">
+      <input class="field" id="mf-name" list="dl-mach" autocomplete="off" maxlength="40" placeholder="${t("machineName")}">
       <label class="eyebrow" for="mf-type">${t("machineType")}</label>
       <select class="field" id="mf-type">${Object.keys(EQ).map(k=>`<option value="${k}">${eqName(k)}</option>`).join("")}</select>
       <label class="eyebrow" for="mf-folder">📁 ${tx("mFolder")}</label>
       <select class="field" id="mf-folder"><option value="">${tx("mNoFolder")}</option>${st.mfolders.map(f => `<option value="${f.id}"${mInFolder() && st.mtab === f.id ? " selected" : ""}>${esc(f.name)}</option>`).join("")}<option value="__new">+ ${tx("mNewFolderOpt")}</option></select>
-      <input class="field" id="mf-newf" maxlength="24" placeholder="${tx("mFolderPh")}" hidden>
+      <input class="field" id="mf-newf" list="dl-fold" autocomplete="off" maxlength="24" placeholder="${tx("mFolderPh")}" hidden>
       <button class="btn btn-gold" type="submit">${t("saveMachine")}</button>
     </form>
     <p class="small">${t("aiSoon")}</p></div>`;
@@ -4305,6 +4331,7 @@ function pro(){
 /* ================= render + behaviour ================= */
 const app = document.getElementById("app");
 function render(){
+  try{ sugLists(); }catch(e){}
   document.body.classList.toggle("calm", !!st.calm);
   document.documentElement.lang = st.lang;
   let h = "";
@@ -4463,6 +4490,7 @@ app.addEventListener("click", e => {
     case "mfadd": st.mfAdd = !st.mfAdd; break;
     case "mfput": { const m = st.machines[+el.dataset.i]; if(m){ if(m.f === st.mtab) delete m.f; else m.f = st.mtab; store.set("bbt_machines", st.machines); } break; }
     case "mfcancel": st.mfNew = null; break;
+    case "sugfill": { const i = document.getElementById(el.dataset.t); if(i){ i.value = el.dataset.v; i.focus(); } return; }
     case "mfdel": if(!st.mfDelArm){ st.mfDelArm = true; break; } st.mfDelArm = false; { const id = st.mtab; st.mfolders = st.mfolders.filter(f => f.id !== id); st.machines.forEach(m => { if(m.f === id) delete m.f; }); store.set("bbt_mfolders", st.mfolders); store.set("bbt_machines", st.machines); st.mtab = "all"; toast(tx("mDeleted")); } break;
     case "mfav": { const m = st.machines[+el.dataset.i]; if(m){ m.fav = !m.fav; store.set("bbt_machines", st.machines); toast(tx(m.fav ? "mFavOn" : "mFavOff")); } break; }
     case "delmachine": st.machines.splice(+el.dataset.i,1); store.set("bbt_machines", st.machines); break;
@@ -5086,7 +5114,7 @@ if("serviceWorker" in navigator && location.protocol === "https:") navigator.ser
 /* new version check: on open and every time the app comes back to the screen */
 (() => { try{ if(new URLSearchParams(location.search).get("n") === "1"){ setTimeout(() => { if(st.user){ st.nOpen = true; pushState(); render(); } }, 900); history.replaceState(history.state, "", location.pathname); } }catch(e){} })();
 setTimeout(() => { if(st.user && st.user.cloud) pushState(); }, 3000);
-const APP_V = "bbt-v85";
+const APP_V = "bbt-v86";
 function verCheck(){ if(location.protocol !== "https:") return;
   if(st.newV){ if(st.view !== "work") updNow(); return; }
   fetch("/sw.js?v=" + Date.now(), {cache:"no-store"}).then(r => r.text()).then(tx2 => { const m = tx2.match(/bbt-v\d+/); if(m && +m[0].slice(5) > +APP_V.slice(5)){ st.newV = m[0]; if(st.view !== "work") updNow(); } }).catch(() => {}); }
